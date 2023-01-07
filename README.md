@@ -39,6 +39,7 @@ As I'm mainly working with Golang & Java, I usually use: (TODO: should make into
 - htop : system profiller
 - vimwiki / Notes : personal note taking apps
 - Fig : for CLI Autocompletion
+- lf : file manager
 
 2. Gui-based:
 - VSCode : as my debugging tools (i only open it to debug my apps lol...)
@@ -47,6 +48,7 @@ As I'm mainly working with Golang & Java, I usually use: (TODO: should make into
 - Postman : for my API Client GUI apps
 - Mockoon : for my Mock API apps
 - Firefox : browser
+- Filezilla: SFTP-file manager
 - Zoom : online video meeting
 
 ## How to setup...
