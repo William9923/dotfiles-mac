@@ -28,23 +28,26 @@ While it feels great for me, Tyranitar might not works well for you, so this rep
 
 ## Application
 As I'm mainly working with Golang & Java, I usually use: (TODO: should make into a table...)
+1. Terminal-based:
 - alacritty : as my terminal emulator
 - tmux : to control pane and window in terminal
 - zsh : as my shell
 - Neovim : as my fully Text Editor
-- VSCode : as my debugging tools (i only open it to debug my apps lol...)
-- Intellij : as my IDE (when working with Java), along with the .ideavimrc
 - Lazygit + Delta: as my git client and git diff visualizer
 - Lazydocker : to help view my running docker application
 - redis-cli : as my redis client
+- htop : system profiller
+- vimwiki / Notes : personal note taking apps
+- Fig : for CLI Autocompletion
+
+2. Gui-based:
+- VSCode : as my debugging tools (i only open it to debug my apps lol...)
+- Intellij : as my IDE (when working with Java), along with the .ideavimrc
 - dbeaver : as my database client GUI apps
 - Postman : for my API Client GUI apps
 - Mockoon : for my Mock API apps
-- htop : system profiller
-- vimwiki / Notes : personal note taking apps
 - Firefox : browser
 - Zoom : online video meeting
-- Fig : for CLI Autocompletion
 
 ## How to setup...
 Here is the step by step to setup all my work laptop. This is not going to be a script that are run once, but a step by step and reference on how to install it.
@@ -86,9 +89,20 @@ $ ln .zshrc ~/.zshrc
 ```
 2. Install omz for theme
 ```bash
+$ sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 ```
 3. Setup terminal prompt (POWERLEVEL 10K)
-4. Install directory jumper
+```bash
+$ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+4. Configure powerlevel10k with helper wizard
+```bash
+$ p10k configure
+```
+5. Install directory jumper (guide:
+https://github.com/agkozak/zsh-z#installation)
+6. Install zsh autosuggestion (guide:
+https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh)
 
 **Jetbrains Mono Nerd Font**
 1. Tap the homebrew
