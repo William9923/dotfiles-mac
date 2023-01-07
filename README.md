@@ -132,7 +132,7 @@ $ cp -r .config/nvim ~/.config/nvim
 ```
 3. (Optional) Or, link the directory
 ```bash
-$ ln -s .config/nvim ~/.config/nvim
+$ cd ~/.config && ln -s <path-to-dotfile>/.config/nvim nvim
 ```
 4. Save the plugin file to re-download all neovim plugin used
 ```bash

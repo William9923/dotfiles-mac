@@ -1,0 +1,29 @@
+#!/bin/sh
+
+#######################
+# Linter & Formatting #
+#######################
+echo "executing formatter & linter..."
+
+check=true
+# staged files (not deleted ones)
+staged_files=$(git diff --diff-filter=d --name-only --staged | grep .lua)
+
+no_staged_files=$(echo "$staged_files" | sed 's/ /\n/g' | wc -l)
+
+if [[ $no_staged_files -ne 0 ]]; then
+	echo "files that are staged (excluding deleted ones): "
+	echo "$staged_files"
+
+	for FILE in $staged_files; do
+		stylua "${FILE}"
+		git add "$FILE"
+	done
+fi
+
+if [ "$check" = true ]; then
+	echo 'lint check passed'
+else
+	echo "lint check failed"
+	exit 1
+fi
