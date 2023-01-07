@@ -5,7 +5,6 @@
 <p align="center">
     <img alt="MacOS" src="https://img.shields.io/badge/Mac-silver?style=flat-square&logo=MacOS" />
     <img alt="Editor" src="https://img.shields.io/badge/editor-nvim-019733?style=flat-square&logo=neovim" />
-    <img alt="Dashboard" src="https://img.shields.io/badge/dashboard-wtf-yellow?style=flat-square" />
     <img alt="Git" src="https://img.shields.io/badge/git-lazygit-pink?style=flat-square&logo=git" />
     <img alt="Workflow Manager" src="https://img.shields.io/badge/multiplexer-tmux-1BB91F?style=flat-square&logo=tmux" />
   </p>
@@ -16,7 +15,8 @@
 * [Application](#Application)
 
 ## Screenshots
-![MacOS Rice](./docs/screenshot/MacOS Ricing.png)
+
+<img alt="MacOS Rice" src="docs/screenshot/rice.png" />
 
 ## Overview
 Tyranitar is my MacOS specific workflow & tools for my daily work (as software engineer) in Shopee.
