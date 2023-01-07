@@ -1,6 +1,6 @@
 # Tyranitar Dotfiles
 
-<p align="center"> <img src="./docs/logo.png" /> </p>
+<p align="center"> <img src="./docs/logo.png" height="300px" /> </p>
 <p align="center"><b>Tyranitar: My Personal MacOS Work Setup</b></p>
 
 <p align="center">
