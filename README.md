@@ -28,13 +28,13 @@ While it feels great for me, Tyranitar might not works well for you, so this rep
 
 ## Application
 As I'm mainly working with Golang & Java, I usually use: (TODO: should make into a table...)
-- tmux : to control pane and window in terminal
 - alacritty : as my terminal emulator
+- tmux : to control pane and window in terminal
 - zsh : as my shell
 - Neovim : as my fully Text Editor
 - VSCode : as my debugging tools (i only open it to debug my apps lol...)
 - Intellij : as my IDE (when working with Java), along with the .ideavimrc
-- Lazygit : as my git client
+- Lazygit + Delta: as my git client and git diff visualizer
 - Lazydocker : to help view my running docker application
 - redis-cli : as my redis client
 - dbeaver : as my database client GUI apps
@@ -77,10 +77,44 @@ $ brew install node
 
 **Zsh**
 0. Install zsh
+```bash
+$ brew install zsh
+```
 1. Setup the .zshrc & alias with PATH
+```bash
+$ ln .zshrc ~/.zshrc 
+```
 2. Install omz for theme
+```bash
+```
 3. Setup terminal prompt (POWERLEVEL 10K)
 4. Install directory jumper
+
+**Jetbrains Mono Nerd Font**
+1. Tap the homebrew
+```bash
+$ brew tap homebrew/cask-fonts
+```
+2. Install the font
+```bash
+$ brew install --cask font-jetbrains-mono
+```
+3. Check if the font already installed or not in the Font Book (Mac Built-in
+Apps)
+
+**Alacritty**
+1. Install alacritty via homebrew
+```bash
+$ brew install --cask alacritty
+```
+2. Enable application from system preference
+![Security&Privacy -> General](./docs/screenshot/security-privacy.png)
+
+3. Setup alacritty with custom configuration
+```bash
+$ cd ~/.config/ && ln <path-to-dotfile>/alacritty alacritty
+```
+4. Reload...
 
 **Vim**
 1. Vim installation should be done by system (available immediately...)
@@ -90,21 +124,21 @@ $ cp .vimrc ~/.vimrc
 ```
 3. (Optional) Or, link the .vimrc to the ~/.vimrc
 ```bash
-$ ln -s .vimrc ~/.vimrc
+$ ln .vimrc ~/.vimrc
 ```
 
 **Git**
 1. Copy the .gitconfig file (or you could link it)
 ```bash
-$ ln -s .gitconfig ~/.gitconfig
+$ ln .gitconfig ~/.gitconfig
 ```
 2. Copy the .ssh folder (or you could link it) -> maybe not available in repo
 ```bash
-$ ln -s .ssh ~/.ssh
+$ cd && ln <path-to-dotfile>/.ssh .ssh
 ```
 3. Copy the .netrc file for authentication issue when accessing some repo
 ```bash
-$ ln -s .netrc ~/.netrc
+$ ln .netrc ~/.netrc
 ```
 
 **Tmux**
@@ -118,7 +152,7 @@ $ cp ./tmux.conf ~/.tmux.conf && cp ./tmux.conf.local ~/.tmux.conf.local
 ```
 3. Or, can link the config file to the ~/ directory
 ```bash
-$ ln -s ./tmux.conf ~/.tmux.conf && ln -s ./tmux.conf.local ~/.tmux.conf.local
+$ ln ./tmux.conf ~/.tmux.conf && ln /tmux.conf.local ~/.tmux.conf.local
 ```
 
 **Neovim**
@@ -132,7 +166,7 @@ $ cp -r .config/nvim ~/.config/nvim
 ```
 3. (Optional) Or, link the directory
 ```bash
-$ cd ~/.config && ln -s <path-to-dotfile>/.config/nvim nvim
+$ cd ~/.config && ln <path-to-dotfile>/.config/nvim nvim
 ```
 4. Save the plugin file to re-download all neovim plugin used
 ```bash
@@ -161,8 +195,10 @@ $ brew install --cask firefox-developer-edition
 6. Apply Firefox CSS (ref: https://github.com/andreasgrafen/cascade)
 
 **Fig**
-
-![]()
+1. Install using brew
+```bash
+$ brew install fig
+```
 
 **Zoom**
 1. Install Zoom using homebrew

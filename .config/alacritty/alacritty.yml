@@ -1,0 +1,63 @@
+import:
+  # - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+  # - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
+  # - ~/.config/alacritty/catppuccin/catppuccin-frappe.yml
+  # - ~/.config/alacritty/catppuccin/catppuccin-latte.yml
+  - ~/.config/alacritty/color.yml
+
+window:
+  padding:
+    x: 8
+    y: 8
+  class:
+    instance: Alacritty
+    general: Alacritty
+  opacity: 0.95
+  dimensions:
+    columns: 135
+    lines: 38
+  decorations: Buttonless
+
+scrolling:
+  history: 1000
+  multiplier: 3
+
+font:
+  normal:
+    family: 'JetBrainsMonoMedium Nerd Font Mono'
+    style: Medium
+  bold:
+    family: 'JetBrainsMonoExtraBold Nerd Font Mono'
+    style: 'Extra Bold'
+  size: 17.0
+
+draw_bold_text_with_bright_colors: true
+tabspaces: 4
+
+env:
+  TERM: xterm-256color
+
+dynamic_title: true
+
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+
+live_config_reload: true
+
+cursor:
+  style: Block
+  unfocused_hollow: true
+  vi_mode_style: Block
+
+shell:
+  program: /bin/zsh
+  args:
+    - -l
+    - -c
+    - cd ~/dev/garena && exec zsh
+
+key_bindings:
+  - { key: Return, mods: Super|Shift, action: SpawnNewInstance }
+  - { key: Left, mods: Alt, chars: "\eb" }
+  - { key: Right, mods: Alt, chars: "\ef" }
