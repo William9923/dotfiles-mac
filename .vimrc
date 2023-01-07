@@ -1,4 +1,5 @@
 " Vim configuration file "
+" By: William
 
 " enable mouse support "
 set mouse=a
