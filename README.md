@@ -153,7 +153,15 @@ $ nvim ~/.config/nvim/lua/user/plugin.lua
 $ brew tap homebrew/cask-versions
 $ brew install --cask firefox-developer-edition
 ```
-2. Import bookmark
+2. Import bookmark (from bookmark manager)
+![Import Bookmark Guide](./docs/screenshot/import-bookmark.png)
+3. Change the theme to Gruvbox (ref: https://addons.mozilla.org/en-US/firefox/addon/gruvbox-dark-theme/)
+4. Add Vimium addsOn (ref: https://addons.mozilla.org/en-US/firefox/addon/vimium-c/)
+5. Add Youtube AddsOn (ref: https://addons.mozilla.org/id/firefox/addon/adblock-for-youtube/)
+6. Apply Firefox CSS (ref: https://github.com/andreasgrafen/cascade)
+
+**Fig**
+
 ![]()
 
 **Zoom**
