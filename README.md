@@ -11,10 +11,12 @@
   </p>
 
 ## ✨ Table of Contents
-* [Overview](#Overview)
 * [Screenshots](#Screenshots)
+* [Overview](#Overview)
 * [Application](#Application)
-* [Reference](#Reference)
+
+## Screenshots
+![MacOS Rice](./docs/screenshot/MacOS Ricing.png)
 
 ## Overview
 Tyranitar is my MacOS specific workflow & tools for my daily work (as software engineer) in Shopee.
