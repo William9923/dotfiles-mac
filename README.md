@@ -28,29 +28,43 @@ While it feels great for me, Tyranitar might not works well for you, so this rep
  I'm using [Gruvbox Theme](https://github.com/morhetz/gruvbox) as my color scheme for my daily usage theme (as it pretty comfortable in my eye, others might find it quite old but I like it) and [Jetbrains Nerd Font](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete/JetBrains%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.ttf) as default font.
 
 ## Application
-As I'm mainly working with Golang & Java, I usually use: (TODO: should make into a table...)
-1. Terminal-based:
-- alacritty : as my terminal emulator
-- tmux : to control pane and window in terminal
-- zsh : as my shell
-- Neovim : as my fully Text Editor
-- Lazygit + Delta: as my git client and git diff visualizer
-- Lazydocker : to help view my running docker application
-- redis-cli : as my redis client
-- htop : system profiller
-- vimwiki / Notes : personal note taking apps
-- Fig : for CLI Autocompletion
-- lf : file manager
 
-2. Gui-based:
-- VSCode : as my debugging tools (i only open it to debug my apps lol...)
-- Intellij : as my IDE (when working with Java), along with the .ideavimrc
-- dbeaver : as my database client GUI apps
-- Postman : for my API Client GUI apps
-- Mockoon : for my Mock API apps
-- Firefox : browser
-- Filezilla: SFTP-file manager
-- Zoom : online video meeting
+As I'm mainly working with Golang & Java, I usually use:
+- Terminal-based Dev Tools:
+| Apps        | Description                           |
+| ----------- | -----------                           |
+| Alacritty   | Terminal Emulator                     |
+| Tmux        | Terminal Multiplexer                  |
+| Zsh         | Shell Program in Terminal             |
+| Vim         | For editing config file / remote file |
+| Neovim      | Personal Text Editor                  |
+| Lazygit     | Git Client                            |
+| Lazydocker  | Docker Viewer                         |
+| redis-cli   | Redis Client                          |
+| vimwiki     | Note Taking Apps                      |
+| htop        | System Usage Profiller                |
+| lf          | File Manager                          |
+
+- GUI-based Dev Tools:
+| Apps        | Description                                                      | Reference               |
+| ----------- | -----------                                                      | -----------             |
+| VSCode      | Alternative Text Editor & Debugging Tools                        | |
+| Intellij    | Java IDE                                                         | |
+| Dbeaver     | SQL Editor & Database Client                                     | |
+| Robo3T      | NoSQL Editor & NoSQL Database Client                             | |
+| Postman     | API Client                                                       | |
+| Mockoon     | Mock API Server (for mocking external API / other microservices) | |
+| Firefox     | Browser. it works so don't change it                             |   |
+| Filezilla   | SFTP-based Client for accessing remote file                      |   |
+| Zoom        | Online Video Meeting                                             |   |
+
+- Productivity / Utility Tools:
+| Apps            | Description                   | Reference               |
+| -----------     | -----------                   | -----------             |
+| Fig             | Shell program autocompletion  | https://fig.io/download |
+| Scroll reverser | Emulate natural scroll in Mac | https://pilotmoon.com/scrollreverser/                        |
+| Clipy           | Clipboard Manager             | https://clipy-app.com/                 |
+| Amethyst        | Tiling manager                | https://ianyh.com/amethyst/                       |
 
 ## How to setup...
 Here is the step by step to setup all my work laptop. This is not going to be a script that are run once, but a step by step and reference on how to install it.
@@ -216,6 +230,15 @@ $ brew install --cask firefox-developer-edition
 ```bash
 $ brew install fig
 ```
+
+Amethyst
+1. Install using brew
+```bash
+$ brew install --cask amethyst
+```
+2. Configure it by launching it (Go to Preference)
+3. Need to configure some `system preference` in Mac (refer [here](https://github.com/ianyh/Amethyst))
+4. Should work out of the box
 
 **Zoom**
 1. Install Zoom using homebrew
