@@ -16,7 +16,6 @@ window:
   dimensions:
     columns: 135
     lines: 38
-  decorations: Buttonless
 
 scrolling:
   history: 1000

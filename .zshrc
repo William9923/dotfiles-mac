@@ -66,7 +66,7 @@ alias lla="ll -a"
 
 # scripts shortcuts
 alias zshconfig="nvim ~/.zshrc"
-alias mysql="/usr/local/Cellar/mysql@5.7/5.7.38/bin/mysql"
+# alias mysql="/usr/local/Cellar/mysql@5.7/5.7.38/bin/mysql"
 alias syncnotes="z vimwiki && sh ~/vimwiki/sync.sh"
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
@@ -77,7 +77,7 @@ source ~/dev/plugin/zsh-z.plugin.zsh
 # Aliases
 
 # aliases
-export PATH="/usr/local/Cellar/mysql@5.7/5.7.38/bin/:$PATH"
+export PATH="/usr/local/Cellar/mysql@5.7/5.7.39/bin/:$PATH"
 export PATH="/usr/local/opt/go@1.17/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$HOME/.cargo/env"
