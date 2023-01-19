@@ -58,7 +58,6 @@ alias lg=lazygit
 alias ld=lazydocker
 alias t=tmux
 alias v=nvim
-alias htop=bpytop
 alias ping=gping
 
 alias ll="exa -l -g --icons"
