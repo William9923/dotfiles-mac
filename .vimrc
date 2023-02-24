@@ -1,5 +1,7 @@
 " Vim configuration file "
+"
 " By: William
+"
 
 " enable mouse support "
 set mouse=a
@@ -24,12 +26,13 @@ set number
 
 " Optimize for fast terminal connections
 set ttyfast
+
 " Add the g flag to search/replace by default
 set gdefault
 
 " highlight current line "
 set cursorline
-:highlight Cursorline cterm=bold ctermbg=black 
+:highlight Cursorline cterm=bold ctermbg=black
 
 " enable highlight search pattern "
 set hlsearch
@@ -86,53 +89,13 @@ set termguicolors
 :set relativenumber
 :set rnu
 
-"------------------------------------------------------------"
-" Status Line
-"" statusline
-set laststatus=2
-set statusline=                          " left align
-set statusline+=%2*\                     " blank char
-set statusline+=%2*\%{StatuslineMode()}
-set statusline+=%2*\
-set statusline+=%1*\ <<
-set statusline+=%1*\ %f                  " short filename
-set statusline+=%1*\ >>
-set statusline+=%=                       " right align
-set statusline+=%*
-set statusline+=%3*\%h%m%r               " file flags (help, read-only, modified)
-set statusline+=%3*\%.25F                " long filename (trimmed to 25 chars)
-set statusline+=%3*\::
-set statusline+=%3*\%l/%L\\|             " line count
-set statusline+=%3*\%y                   " file type
-hi User1 ctermbg=black ctermfg=grey guibg=black guifg=grey
-hi User2 ctermbg=green ctermfg=black guibg=green guifg=black
-hi User3 ctermbg=black ctermfg=lightgreen guibg=black guifg=lightgreen
+colorscheme desert
 
-"" statusline functions
-function! StatuslineMode()
-    let l:mode=mode()
-    if l:mode==#"n"
-        return "NORMAL"
-    elseif l:mode==?"v"
-        return "VISUAL"
-    elseif l:mode==#"i"
-        return "INSERT"
-    elseif l:mode==#"R"
-        return "REPLACE"
-    endif
-endfunction
-
-function! StatuslineGitBranch()
-  let b:gitbranch=""
-  if &modifiable
-    lcd %:p:h
-    let l:gitrevparse=system("git rev-parse --abbrev-ref HEAD")
-    lcd -
-    if l:gitrevparse!~"fatal: not a git repository"
-      let b:gitbranch="(".substitute(l:gitrevparse, '\n', '', 'g').") "
-    endif
-  endif
-endfunction
+try 
+    set undodir=~/.vim_runtime/temp_dirs/undodir
+    set undofile
+catch
+endtry
 
 "Keymap
 nnoremap <C-d> <C-d>zz
@@ -166,26 +129,74 @@ if has("autocmd")
 	" Treat .md files as Markdown
 	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
-"-------------------------------------------------------------"
-"Bonus. " Find & Replace (if you use the ignorecase, smartcase these are mandatory) "
-"            :%s/<find>/<replace>/g   "replace global (e.g. :%s/mass/grass/g)"
-"            :%s/<find>/<replace>/gc  "replace global with confirmation"
-"            :%s/<find>/<replace>/gi  "replace global case insensitive"
-"            :%s/<find>/<replace>/gI  "replace global case sensitive"
-"            :%s/<find>/<replace>/gIc "replace global case sensitive with confirmation"
 
-"        " Vim (book)marks "
-"            mn     "replace n with a word A-Z or number 0-9"
-"            :'n     "go to mark n"
-"            :`.     "go to the last change"
-"            :marks  "show all declared marks"
-"            :delm n "delete mark n"
+set history=500
+filetype plugin on
+filetype indent on
+set autoread
+set lazyredraw
+set magic
+set showmatch
 
-"        " Delete range selection "
-"            :<line_number>,<line_number>d "(e.g. :2,10d deletes lines 2-10)"
+set regexpengine=0
 
-"        " LaTeX shortcuts "
-"            nnoremap <F1> :! pdflatex %<CR><CR>
-"            nnoremap <F2> :! bibtex $(echo % \| sed 's/.tex$//') & disown<CR><CR>
-"            nnoremap <F3> :! evince $(echo % \| sed 's/tex$/pdf/') & disown<CR><CR>
-"            nnoremap <F4> :! rm *.log *.aux *.out *.blg & disown<CR><CR>
+set nobackup
+set noswapfile
+set nowb
+
+set si
+set ai
+set wrap
+
+" Status Line
+"" statusline
+set laststatus=2
+set statusline=                          " left align
+set statusline+=%2*\                     " blank char
+set statusline+=%2*\%{StatuslineMode()}%2*\ 
+set statusline+=%1*\ <
+set statusline+=%1*\ %f                  " short filename
+set statusline+=%1*\ >
+set statusline+=%=                       " right align
+set statusline+=%*
+set statusline+=%3*\%h%m%r               " file flags (help, read-only, modified)
+set statusline+=%3*\%.25F                " long filename (trimmed to 25 chars)
+set statusline+=%3*\:
+set statusline+=%3*\%l/%L\\|             " line count
+set statusline+=%3*\%y                   " file type
+
+hi User1 ctermbg=black ctermfg=grey guibg=black guifg=grey
+hi User2 ctermbg=green ctermfg=black guibg=cyan guifg=black
+hi User3 ctermbg=black ctermfg=grey guibg=black guifg=grey
+
+"" statusline functions
+function! StatuslineMode()
+    let l:mode=mode()
+    if l:mode==#"n"
+        hi User2 ctermbg=green ctermfg=black guibg=cyan guifg=black
+        return "NORMAL"
+    elseif l:mode==?"v"
+        hi User2 ctermbg=green ctermfg=black guibg=magenta guifg=black
+        return "VISUAL"
+    elseif l:mode==#"i"
+        hi User2 ctermbg=green ctermfg=black guibg=orange guifg=black
+        return "INSERT"
+    elseif l:mode==#"R"
+        hi User2 ctermbg=green ctermfg=black guibg=red guifg=black
+        return "REPLACE"
+    endif
+    hi User2 ctermbg=green ctermfg=black guibg=yellow guifg=black
+    return "EXTRA"
+endfunction
+
+function! StatuslineGitBranch()
+  let b:gitbranch=""
+  if &modifiable
+    lcd %:p:h
+    let l:gitrevparse=system("git rev-parse --abbrev-ref HEAD")
+    lcd -
+    if l:gitrevparse!~"fatal: not a git repository"
+      let b:gitbranch="(".substitute(l:gitrevparse, '\n', '', 'g').") "
+    endif
+  endif
+endfunction
