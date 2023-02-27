@@ -1,0 +1,147 @@
+set ideamarks
+
+" system clipboard
+vmap p _dP
+
+"easier replace
+nmap r R
+
+" increment / decrement
+nmap + <C-a>
+nmap - <C-x>
+
+" select all with control-a
+nmap <C-a> gg<S-v>G
+vmap <C-a> gg<S-v>G
+
+" search faster
+nmap . ;
+vmap . ;
+
+" save faster using normal windows binding
+nmap <C-s> :w<CR>
+
+" better search navigation
+nmap n nzzzv
+nmap N Nzzzv
+
+" clear search highlight
+nmap <leader>h <cmd>nohlsearch<CR>
+
+" delete without yanking
+nmap d _d
+
+" stay in indent mode
+vmap < <gv
+vmap > >gv
+
+"Keymap
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzzzv
+nnoremap N Nzzzv
+inoremap kk <ESC>
+
+
+"Line Number
+hi LineNrAbove guifg=yellow ctermfg=yellow
+hi LineNrBelow guifg=cyan ctermfg=green
+
+set clipboard+=unnamed
+set clipboard+=ideaput
+
+nnoremap \e :e ~/.ideavimrc<CR>
+nnoremap ;r :action IdeaVim.ReloadVimRc.reload<CR>
+inoremap kk <ESC>
+let mapleader=" "
+
+
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set nu
+
+""" Plugins  --------------------------------
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+
+""" Idea specific settings ------------------
+set idearefactormode=keep
+set ideajoin
+set ideastatusicon=cyan
+
+" mapping
+nnoremap <CR> i<CR><ESC>
+vnoremap <CR> i<CR><ESC>
+
+vnoremap <S-j> :move .+1<CR>==gv
+vnoremap <S-k> :move .-2<CR>==gv
+xnoremap <S-j> :move .+1<CR>==gv
+xnoremap <S-k> :move .-2<CR>==gv
+
+" actions
+nnoremap <C-z> :action ToggleDistractionFreeMode<CR>
+nnoremap <leader>ff :action ReformatCode<CR>
+
+" window navigation
+nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>sv :action SplitVertically<CR>
+nnoremap <leader>ss :action SplitHorizontally<CR>
+nnoremap <leader>sq :action Unsplit<CR>
+nnoremap <leader>sm :action MoveEditorToOppositeTabGroup<CR>
+
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+
+nnoremap <TAB> :action PreviousTab<CR>
+nnoremap <S-TAB> :action NextTab<CR>
+
+" Code navigation
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+
+nnoremap ]e :action GotoNextError<CR>
+nnoremap [e :action GotoPreviousError<CR>
+
+nnoremap <c-o> :action Back<CR>
+nnoremap <c-i> :action Forward<CR>
+
+" Comment
+nnoremap <leader>/ :action CommentByLineComment<CR>
+vnoremap <leader>/ :action CommentByLineComment<CR>
+
+" Refactoring
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+vnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+
+nnoremap <leader>lr :action RenameElement<CR>
+vnoremap <leader>lr :action RenameElement<CR>
+nnoremap <leader>la :action OptimizeImports<CR>
+
+" LSP
+nnoremap gh :action FindUsages<CR>
+nnoremap <leader>a :action CallHierarchy<CR>
+
+nnoremap gc :action GotoClass<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gp :action GoToSuperMethod<CR>
+nnoremap gt :action GotoTest<CR>
+
+""" Running and Debugging
+nnoremap <leader>r :action Run<CR>
+nnoremap <leader>cr :action ChooseRunConfiguration<CR>
+
+nnoremap <leader>b :action ToggleLineBreakpoint<CR>
+nnoremap <leader>d :action ContextDebug<CR>
+
+nnoremap ,n :action ActivateDebugToolWindow<CR>
+nnoremap ,t :action ActivateRunToolWindow<CR>
