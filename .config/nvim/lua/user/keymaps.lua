@@ -35,6 +35,7 @@ keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
 -- Better paste
 keymap("v", "p", '"_dP', opts)
 
+-- Better keybinding when searching
 keymap("n", ".", ";")
 keymap("v", ".", ";")
 
