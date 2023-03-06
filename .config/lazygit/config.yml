@@ -1,0 +1,14 @@
+git:
+  paging:
+    colorArg: never
+    pager: delta --dark --paging=never
+gui:
+  theme:
+    selectedLineByColor:
+      - underline
+    selectedRangeByColor:
+      - underline
+  showIcons: true
+os:
+ editCommand: 'vim'
+ editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
