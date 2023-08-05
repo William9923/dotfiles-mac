@@ -12,7 +12,7 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="archcraft-dwm"
 
 # Uncomment one of the following lines to change the auto-update behavior
 zstyle ':omz:update' mode reminder  # just remind me to update when it's time
@@ -65,10 +65,11 @@ alias lla="ll -a"
 
 # scripts shortcuts
 alias zshconfig="nvim ~/.zshrc"
-# alias mysql="/usr/local/Cellar/mysql@5.7/5.7.38/bin/mysql"
 alias syncnotes="z vimwiki && sh ~/vimwiki/sync.sh"
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
 # Load directory jumper scripts
 source ~/dev/plugin/zsh-z.plugin.zsh
@@ -77,8 +78,7 @@ source ~/dev/plugin/zsh-z.plugin.zsh
 
 # aliases
 export PATH="/usr/local/Cellar/mysql@5.7/5.7.39/bin/:$PATH"
-export PATH="/usr/local/opt/go@1.17/bin:$PATH"
-export PATH="$PATH:$HOME/go/bin"
+export PATH="/usr/local/Cellar/mysql-client@5.7/5.7.42/bin/:$PATH"
 export PATH="$PATH:$HOME/.cargo/env"
 
 export FZF_DEFAULT_OPTS=" \
@@ -104,3 +104,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+export PATH=$PATH:$(go env GOPATH)/bin
+alias mockgen="~/go/bin/mockgen"
+source ~/smc-zsh-plugin/zsh-smc
