@@ -20,51 +20,79 @@
 <img alt="MacOS Rice" src="docs/screenshot/rice.png" />
 
 ## Overview
-Tyranitar is my MacOS specific workflow & tools for my daily work (as software engineer) in Shopee.
-It contains most of the configuration that I use, mainly application and customization for my programming setup. 
+Tyranitar is my MacOS specific workflow & tools for my work (as software engineer) in various tech company (Tokopedia, Shopee, and in the future).
 
-While it feels great for me, Tyranitar might not works well for you, so this repo is meant to archive my my dev toolbox along the year. Think of this dotfiles as your "engineer" work toolbox. A great engineer usually have their own set of tools that they bring everywhere because they feel comfortable using them.
+It contains most of the configuration that I use, mainly tools, application and customization that I use to boost my productivity during working. 
 
- I'm using [Gruvbox Theme](https://github.com/morhetz/gruvbox) as my color scheme for my daily usage theme (as it pretty comfortable in my eye, others might find it quite old but I like it) and [Jetbrains Nerd Font](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete/JetBrains%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.ttf) as default font.
+While it feels great for me, Tyranitar might not works well for you, so this repo is meant to archive my my dev toolbox along the year. Think of this dotfiles as your "engineer" work toolbox. A great engineer usually have their own set of tools that they bring everywhere because they feel comfortable using them. Also, lot's of these tools either: 1) Works out of the box after installation, 2) Can be easily configureable using a config file (text)
+
+But, I haven't had time to bootstrap all of these tools setup into a script, so
+for now let's be satisfied with the step by step on how to apply these changes.
+
+Also, I'm using [Gruvbox Theme](https://github.com/morhetz/gruvbox) as my color scheme for my daily usage theme (as it pretty comfortable in my eye, others might find it quite old but I like it) and [Jetbrains Nerd Font](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete/JetBrains%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.ttf) as default font => because it works well with a lot of Jetbrains tools, something that I use quite often during my work.
 
 ## Application
 
 As I'm mainly working with Golang & Java, I usually use:
 - Terminal-based Dev Tools:
-| Apps        | Description                           |
-| ----------- | -----------                           |
-| Alacritty   | Terminal Emulator                     |
-| Tmux        | Terminal Multiplexer                  |
-| Zsh         | Shell Program in Terminal             |
-| Vim         | For editing config file / remote file |
-| Neovim      | Personal Text Editor                  |
-| Lazygit     | Git Client                            |
-| Lazydocker  | Docker Viewer                         |
-| redis-cli   | Redis Client                          |
-| vimwiki     | Note Taking Apps                      |
-| htop        | System Usage Profiller                |
-| lf          | File Manager                          |
 
-- GUI-based Dev Tools:
-| Apps        | Description                                                      | Reference               |
-| ----------- | -----------                                                      | -----------             |
-| VSCode      | Alternative Text Editor & Debugging Tools                        | |
-| Intellij    | Java IDE                                                         | |
-| Dbeaver     | SQL Editor & Database Client                                     | |
-| Robo3T      | NoSQL Editor & NoSQL Database Client                             | |
-| Postman     | API Client                                                       | |
-| Mockoon     | Mock API Server (for mocking external API / other microservices) | |
-| Firefox     | Browser. it works so don't change it                             |   |
-| Filezilla   | SFTP-based Client for accessing remote file                      |   |
-| Zoom        | Online Video Meeting                                             |   |
+| Apps        | Description                                |
+| ----------- | -----------                                |
+| Alacritty   | Terminal Emulator                          |
+| Tmux        | Terminal Multiplexer                       |
+| Zsh         | Shell Program in Terminal                  |
+| Vim         | For editing config file / remote file      |
+| Neovim      | Personal Text Editor (more resource usage) |
+| Lazygit     | Git Client                                 |
+| Lazydocker  | Docker Viewer                              |
+| redis-cli   | Redis Client                               |
+| vimwiki     | Note Taking Apps                           |
+| bypytop     | System Usage Profiller                     |
+| lf          | File Manager                               |
 
 - Productivity / Utility Tools:
-| Apps            | Description                   | Reference               |
-| -----------     | -----------                   | -----------             |
-| Fig             | Shell program autocompletion  | https://fig.io/download |
-| Scroll reverser | Emulate natural scroll in Mac | https://pilotmoon.com/scrollreverser/                        |
-| Clipy           | Clipboard Manager             | https://clipy-app.com/                 |
-| Amethyst        | Tiling manager                | https://ianyh.com/amethyst/                       |
+
+| Apps               | Description                   | Reference                                                                         |
+| -----------        | -----------                   | -----------                                                                       |
+| Fig                | Shell program autocompletion  | https://fig.io/download                                                           |
+| Scroll reverser    | Emulate natural scroll in Mac | https://pilotmoon.com/scrollreverser/                                             |
+| Clipy              | Clipboard Manager             | https://clipy-app.com/                                                            |
+| zsh-autosuggestion | Terminal Autosuggestion help  | https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh |
+| z                  | Directory Jumper (for zsh)    | https://github.com/agkozak/zsh-z                                                  |
+
+
+- GUI-based Dev Tools:
+
+| Apps                                    | Description                                                      |
+| -----------                             | -----------                                                      |
+| Intellij (v 2022.1.5)                   | Java IDE                                                         |
+| Goland (v 2023.1.1)                     | Golang IDE                                                       |
+| Webstorm (v 2023.3.4)                   | React + Javascript IDE                                           |
+| Dbeaver (v 22.2.5)                      | SQL Editor & Database Client                                     |
+| Robo3T                                  | NoSQL Editor & NoSQL Database Client                             |
+| Another Redis Desktop Manager (v 1.5.8) | Redis Client                                                     |
+| Postman (v10.16)                        | API Client                                                       |
+| Mockoon                       | Mock API Server (for mocking external API / other microservices) |
+| Firefox                       | Browser. i like it so I don't change it                          |
+| Filezilla  (v 3.64.0)         | SFTP-based Client for accessing remote file                      |
+| Zoom                                    | Online Video Meeting                                             |
+
+- Online Dev Tools (no need installation) :
+
+| Apps         | Description                                                   | Link / Reference                      |
+| -----------  | -----------                                                   | -----------                           |
+| Excalidraw   | An online whiteboard (for initial planning of task / project) | https://excalidraw.com/               |
+| JSON editor  | An online json editor (because vieweing it is hard)           | https://jsoneditoronline.org          |
+| UML editor   | An online plant-UML based editor (to draw sequence diagram)   | https://plantuml-editor.kkeisuke.com/ |
+| Yaml linter  | An online yaml linter (to yaml based configuration)           | https://yamlchecker.com/ |
+
+
+- Browser Extension:
+
+| Apps                | Description                                                      | Reference                                             |
+| -----------         | -----------                                                      | -----------                                           |
+| Vimium C            | An extension to help using vim keybind on firefox/chrome browser | https://github.com/gdh1995/vimium-c                   |
+| Youtube Ads Blocker | An extension to help listen to music without ads                 | https://mybrowseraddon.com/adblocker-for-youtube.html |
 
 ## How to setup...
 Here is the step by step to setup all my work laptop. This is not going to be a script that are run once, but a step by step and reference on how to install it.
@@ -95,7 +123,7 @@ $ brew install go@1.17
 $ brew install node
 ```
 
-**Zsh**
+**Zsh** (need change later)
 0. Install zsh
 ```bash
 $ brew install zsh
@@ -204,9 +232,7 @@ $ cd ~/.config && ln <path-to-dotfile>/.config/nvim nvim
 $ nvim ~/.config/nvim/lua/user/plugin.lua  
 ```
 
-**VSCode**
-
-**Intellij**
+**Intellij / Go / Webstorm**
 
 **Lazygit**
 
@@ -230,23 +256,6 @@ $ brew install --cask firefox-developer-edition
 ```bash
 $ brew install fig
 ```
-
-Amethyst
-1. Install using brew
-```bash
-$ brew install --cask amethyst
-```
-2. Configure it by launching it (Go to Preference)
-3. Need to configure some `system preference` in Mac (refer [here](https://github.com/ianyh/Amethyst))
-4. Should work out of the box
-
-**Zoom**
-1. Install Zoom using homebrew
-```bash
-brew install --cask zoom
-```
-2. Login your account
-
 
 ## ❤️ Support
 If you feel that this repo have helped you provide more example on learning software engineering, then it is enough for me! Wanna contribute more? Please ⭐ this repo so other can see it too!

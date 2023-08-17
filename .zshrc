@@ -107,3 +107,4 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 export PATH=$PATH:$(go env GOPATH)/bin
 alias mockgen="~/go/bin/mockgen"
 source ~/smc-zsh-plugin/zsh-smc
+eval "$(atuin init zsh)"
