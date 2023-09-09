@@ -36,19 +36,20 @@ Also, I'm using [Gruvbox Theme](https://github.com/morhetz/gruvbox) as my color 
 As I'm mainly working with Golang & Java, I usually use:
 - Terminal-based Dev Tools:
 
-| Apps        | Description                                          |
-| ----------- | -----------                                          |
-| Alacritty   | Terminal Emulator                                    |
-| Tmux        | Terminal Multiplexer                                 |
-| Zsh         | Shell Program in Terminal                            |
-| Vim         | For editing config file / remote file                |
-| Neovim      | Personal Text Editor (more resource usage)           |
-| Lazygit     | Git Client                                           |
-| Ctop        | Docker Viewer (similar to htop => but for container) |
-| redis-cli   | Redis Client                                         |
-| vimwiki     | Note Taking Apps                                     |
-| bypytop     | System Usage Profiller                               |
-| lf          | File Manager                                         |
+| Apps           | Description                                          |
+| -----------    | -----------                                          |
+| Alacritty      | Terminal Emulator                                    |
+| Tmux           | Terminal Multiplexer                                 |
+| Zsh            | Shell Program in Terminal                            |
+| Vim            | For editing config file / remote file                |
+| Neovim         | Personal Text Editor (more resource usage)           |
+| Lazygit        | Git Client                                           |
+| Ctop           | Docker Viewer (similar to htop => but for container) |
+| redis-cli      | Redis Client                                         |
+| vimwiki        | Note Taking Apps                                     |
+| bypytop        | System Usage Profiller                               |
+| lf             | File Manager                                         |
+| magic-wormhole | Send file to other computer easily & securely        |
 
 - Productivity / Utility Tools:
 
@@ -91,6 +92,7 @@ As I'm mainly working with Golang & Java, I usually use:
 | JSON editor | An online json editor (because vieweing it is hard)                                    | https://jsoneditoronline.org          |
 | UML editor  | An online plant-UML based editor (to draw sequence diagram)                            | https://plantuml-editor.kkeisuke.com/ |
 | Yaml linter | An online yaml linter (to yaml based configuration)                                    | https://yamlchecker.com/              |
+| PwPush      | An online password & credential sharing system                                      | https://pwpush.com/              |
 
 
 - Browser Extension:
