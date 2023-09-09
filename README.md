@@ -36,30 +36,33 @@ Also, I'm using [Gruvbox Theme](https://github.com/morhetz/gruvbox) as my color 
 As I'm mainly working with Golang & Java, I usually use:
 - Terminal-based Dev Tools:
 
-| Apps        | Description                                |
-| ----------- | -----------                                |
-| Alacritty   | Terminal Emulator                          |
-| Tmux        | Terminal Multiplexer                       |
-| Zsh         | Shell Program in Terminal                  |
-| Vim         | For editing config file / remote file      |
-| Neovim      | Personal Text Editor (more resource usage) |
-| Lazygit     | Git Client                                 |
-| Lazydocker  | Docker Viewer                              |
-| redis-cli   | Redis Client                               |
-| vimwiki     | Note Taking Apps                           |
-| bypytop     | System Usage Profiller                     |
-| lf          | File Manager                               |
+| Apps        | Description                                          |
+| ----------- | -----------                                          |
+| Alacritty   | Terminal Emulator                                    |
+| Tmux        | Terminal Multiplexer                                 |
+| Zsh         | Shell Program in Terminal                            |
+| Vim         | For editing config file / remote file                |
+| Neovim      | Personal Text Editor (more resource usage)           |
+| Lazygit     | Git Client                                           |
+| Ctop        | Docker Viewer (similar to htop => but for container) |
+| redis-cli   | Redis Client                                         |
+| vimwiki     | Note Taking Apps                                     |
+| bypytop     | System Usage Profiller                               |
+| lf          | File Manager                                         |
 
 - Productivity / Utility Tools:
 
-| Apps               | Description                   | Reference                                                                         |
-| -----------        | -----------                   | -----------                                                                       |
-| Fig                | Shell program autocompletion  | https://fig.io/download                                                           |
-| Scroll reverser    | Emulate natural scroll in Mac | https://pilotmoon.com/scrollreverser/                                             |
-| Clipy              | Clipboard Manager             | https://clipy-app.com/                                                            |
-| zsh-autosuggestion | Terminal Autosuggestion help  | https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh |
-| z                  | Directory Jumper (for zsh)    | https://github.com/agkozak/zsh-z                                                  |
-
+| Apps               | Description                                                                                                             | Reference                                                                         |
+| -----------        | -----------                                                                                                             | -----------                                                                       |
+| Scroll reverser    | Emulate natural scroll in Mac                                                                                           | https://pilotmoon.com/scrollreverser/                                             |
+| Clipy              | Clipboard Manager                                                                                                       | https://clipy-app.com/                                                            |
+| zsh-autosuggestion | Terminal Autosuggestion help                                                                                            | https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh |
+| z                  | Directory Jumper (for zsh)                                                                                              | https://github.com/agkozak/zsh-z                                                  |
+| navi               | Command cheatsheet                                                                                                      | https://github.com/denisidoro/navi                                                |
+| tre                | Jump to file / folder in a directory                                                                                    | https://github.com/dduan/tre                                                      |
+| rip                | Rm with safety (since i like to remove a file => then later want it back)                                               | https://github.com/nivekuil/rip                                                   |
+| fuck               | (don't use it often) sometimes when bad moon, good to have (just type the word and the hopefully command become better) | https://github.com/nvbn/thefuck                                                   |
+| atuin              | (very useful) to check old command history => with fzf                                                                  | https://github.com/atuinsh/atuin                                                   |
 
 - GUI-based Dev Tools:
 
@@ -75,16 +78,19 @@ As I'm mainly working with Golang & Java, I usually use:
 | Mockoon                       | Mock API Server (for mocking external API / other microservices) |
 | Firefox                       | Browser. i like it so I don't change it                          |
 | Filezilla  (v 3.64.0)         | SFTP-based Client for accessing remote file                      |
-| Zoom                                    | Online Video Meeting                                             |
+| Zoom                          | Online Video Meeting                                             |
 
-- Online Dev Tools (no need installation) :
+- Online Dev Tools (no need installation, can bookmark first!) :
 
-| Apps         | Description                                                   | Link / Reference                      |
-| -----------  | -----------                                                   | -----------                           |
-| Excalidraw   | An online whiteboard (for initial planning of task / project) | https://excalidraw.com/               |
-| JSON editor  | An online json editor (because vieweing it is hard)           | https://jsoneditoronline.org          |
-| UML editor   | An online plant-UML based editor (to draw sequence diagram)   | https://plantuml-editor.kkeisuke.com/ |
-| Yaml linter  | An online yaml linter (to yaml based configuration)           | https://yamlchecker.com/ |
+| Apps        | Description                                                                            | Link / Reference                      |
+| ----------- | -----------                                                                            | -----------                           |
+| ChatGPT     | An AI master for alot of my programming problem                                        | https://chat.openai.com/              |
+| Bard        | An AI master for alot of my programming problem (when i need to reference on internet) | https://bard.google.com/              |
+| Excalidraw  | An online whiteboard (for initial planning of task / project)                          | https://excalidraw.com/               |
+| Tldraw      | (Same whiteboard) But more useful when writing flowchart & sequence diagram            | https://www.tldraw.com/               |
+| JSON editor | An online json editor (because vieweing it is hard)                                    | https://jsoneditoronline.org          |
+| UML editor  | An online plant-UML based editor (to draw sequence diagram)                            | https://plantuml-editor.kkeisuke.com/ |
+| Yaml linter | An online yaml linter (to yaml based configuration)                                    | https://yamlchecker.com/              |
 
 
 - Browser Extension:
@@ -94,7 +100,16 @@ As I'm mainly working with Golang & Java, I usually use:
 | Vimium C            | An extension to help using vim keybind on firefox/chrome browser | https://github.com/gdh1995/vimium-c                   |
 | Youtube Ads Blocker | An extension to help listen to music without ads                 | https://mybrowseraddon.com/adblocker-for-youtube.html |
 
+- Gaming:
+| Apps                | Description                                                      | Reference                                             |
+| -----------         | -----------                                                      | -----------                                           |
+| XPAD                | For controller setting in linux based system                     | https://github.com/paroj/xpad                         |
+| Bottles             | Run .exe in linux                                                | https://github.com/bottlesdevs/Bottles                |
+
 ## How to setup...
+(anyway, the below process is a little bit deprecated (i don't always update this part since it contains a lot)) => just remember, there are only few tools that we need to setup correctly => like neovim, gitconfig (lazygit), and tmux => for the other one, i won't complain even if we only use default setup provided by the tools)
+
+
 Here is the step by step to setup all my work laptop. This is not going to be a script that are run once, but a step by step and reference on how to install it.
 
 **Homebrew**
