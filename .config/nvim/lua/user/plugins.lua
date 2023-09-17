@@ -52,8 +52,6 @@ return packer.startup(function(use)
 	use({ "JoosepAlviste/nvim-ts-context-commentstring", commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269" })
 	use({ "kyazdani42/nvim-web-devicons", commit = "563f3635c2d8a7be7933b9e547f7c178ba0d4352" })
 	use({ "kyazdani42/nvim-tree.lua", commit = "7282f7de8aedf861fe0162a559fc2b214383c51c" })
-	use({ "akinsho/bufferline.nvim", commit = "83bf4dc7bff642e145c8b4547aa596803a8b4dc4" })
-	use({ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" })
 	use({ "nvim-lualine/lualine.nvim", commit = "a52f078026b27694d2290e34efa61a6e4a690621" })
 	use({ "akinsho/toggleterm.nvim", commit = "2a787c426ef00cb3488c11b14f5dcf892bbd0bda" })
 	use({ "ahmedkhalf/project.nvim", commit = "628de7e433dd503e782831fe150bb750e56e55d6" })
@@ -69,6 +67,7 @@ return packer.startup(function(use)
 	-- Colorschemes
 	use({ "catppuccin/nvim", as = "catppuccin", commit = "4878d6ed7fc2c5b2b2623298f7a0beaae62834e2" })
 	use({ "ellisonleao/gruvbox.nvim", commit = "e863942494d7c72a7c8d2c54cf651f28fc5a76ab" })
+	use({ "gbprod/nord.nvim", commit = "39bfd79a9cb57eb7a652d12782c030d86e0095c0" })
 
 	-- cmp plugins
 	use({ "hrsh7th/nvim-cmp", commit = "b0dff0ec4f2748626aae13f011d1a47071fe9abc" }) -- The completion plugin
@@ -90,12 +89,12 @@ return packer.startup(function(use)
 	use({ "glepnir/lspsaga.nvim", commit = "f33bc99d0ed3ed691a58b3339decf4e1933c3f9e" }) -- simple to use language server installer
 
 	-- Telescope
-	use({ "nvim-telescope/telescope.nvim", commit = "76ea9a898d3307244dce3573392dcf2cc38f340f" })
+	use({ "nvim-telescope/telescope.nvim", commit = "b543aaa2c9cf8123ed2fe7dbb6c211a9cd415124" })
 
 	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
-		commit = "8e763332b7bf7b3a426fd8707b7f5aa85823a5ac",
+		commit = "794266a4edc8ab57b0d637626f01b5278a9123d8",
 	})
 	use({
 		"nvim-treesitter/nvim-treesitter-context",
@@ -106,12 +105,7 @@ return packer.startup(function(use)
 	use({ "lewis6991/gitsigns.nvim", commit = "f98c85e7c3d65a51f45863a34feb4849c82f240f" })
 	use({ "f-person/git-blame.nvim", commit = "1087c3c78ea9f7b7825a256e8fe1ec3af1ad88d0" })
 
-	-- DAP
-	use({ "mfussenegger/nvim-dap", commit = "6b12294a57001d994022df8acbe2ef7327d30587" })
-	use({ "rcarriga/nvim-dap-ui", commit = "1cd4764221c91686dcf4d6b62d7a7b2d112e0b13" })
-
 	-- Additional plugins
-	use({ "ggandor/leap.nvim", commit = "ef9d34620fa52d1c144fb41f838eea7bb06e61f9" })
 	use({
 		"folke/trouble.nvim",
 		commit = "929315ea5f146f1ce0e784c76c943ece6f36d786",
@@ -121,20 +115,6 @@ return packer.startup(function(use)
 	})
 	use({ "folke/todo-comments.nvim", commit = "98b1ebf198836bdc226c0562b9f906584e6c400e" })
 	use({ "romgrk/barbar.nvim", commit = "4a19df133df71b51e82302db06b31570d7dedd58" })
-
-	-- Additional Debugger Plugins (language specifics)
-	use({ "leoluz/nvim-dap-go", commit = "fca8bf90bf017e8ecb3a3fb8c3a3c05b60d1406d" })
-	use({ "mfussenegger/nvim-dap-python", commit = "cc6732ab33a84b3a6b4300fcda5b2f837851b88e" })
-
-	-- Refactoring Plugins
-	use({
-		"ThePrimeagen/refactoring.nvim",
-		commit = "e5da743f34340f446761846593a504d162dc0b95",
-		requires = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-treesitter/nvim-treesitter" },
-		},
-	})
 
 	-- Note taking
 	use({

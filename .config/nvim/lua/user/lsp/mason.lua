@@ -8,10 +8,10 @@ local servers = {
 	"jsonls",
 	"yamlls",
 	"gopls",
-	"clangd",
 	"rust_analyzer",
 	"taplo",
 	"svelte",
+	"bufls",
 }
 
 local settings = {

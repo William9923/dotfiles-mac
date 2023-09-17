@@ -36,6 +36,7 @@ null_ls.setup({
 				"graphql",
 				"md",
 				"txt",
+				"proto",
 			},
 			extra_filetypes = { "toml" },
 			extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" },

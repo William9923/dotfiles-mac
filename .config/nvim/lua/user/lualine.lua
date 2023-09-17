@@ -63,7 +63,7 @@ lualine.setup({
 	options = {
 		globalstatus = true,
 		icons_enabled = true,
-		theme = custom_catppuccin,
+		theme = "nord",
 		section_separators = { left = "", right = "" },
 		component_separators = { left = "", right = "" },
 		disabled_filetypes = { "alpha", "dashboard" },

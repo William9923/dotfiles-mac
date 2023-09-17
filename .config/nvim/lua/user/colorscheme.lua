@@ -1,5 +1,9 @@
 -- Gruvbox
-local colorscheme = "gruvbox"
+-- local colorscheme = "gruvbox"
+-- vim.o.background = "dark"
+
+-- Nord
+local colorscheme = "nord"
 vim.o.background = "dark"
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)

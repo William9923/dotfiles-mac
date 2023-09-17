@@ -137,40 +137,6 @@ keymap("n", "<leader>nn", "<cmd>lua _SECOND_BRAIN_TOGGLE()<CR>", opts)
 keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
 keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
 
--- DAP
-keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
-keymap("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", opts)
-keymap("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", opts)
-keymap("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", opts)
-keymap("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<cr>", opts)
-
-local dap = require("dap")
-local widgets = require("dap.ui.widgets")
-keymap("n", "<leader>dn", function()
-	dap.run_to_cursor()
-end, opts)
-keymap("n", "<leader>dR", function()
-	dap.clear_breakpoints()
-end, opts)
-keymap("n", "<leader>de", function()
-	dap.set_exception_breakpoints({ "all" })
-end, opts)
-keymap("n", "<leader>dI", function()
-	require("dap.ui.widgets").hover()
-end, opts)
-keymap("n", "<leader>d?", function()
-	widgets.centered_float(widgets.scopes)
-end, opts)
-keymap("n", "<leader>dk", ':lua require"dap".up()<CR>zz', opts)
-keymap("n", "<leader>dj", ':lua require"dap".down()<CR>zz', opts)
-
-keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
-keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
-
--- keymap("n", "<leader>;s", "<cmd>Telescope dap frames<cr>", opts)
--- keymap("n", "<leader>lb", "<cmd>Telescope dap list_breakpoints<cr>", opts)
--- keymap("n", "<leader>v", "<cmd>Telescope dap variable<sr>", opts)
-
 -- Barbar
 -- Move to previous/next tab
 keymap("n", "<leader>,", "<Cmd>BufferPrevious<CR>", opts)
