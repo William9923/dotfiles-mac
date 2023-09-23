@@ -43,19 +43,19 @@ configs.setup({
 		-- Bash & script
 		"bash",
 		"lua",
+		"vim",
 		"dockerfile",
-		"fish",
 		-- Framework specific
-		"svelte",
+		"tsx",
 	},
 	-- Install parsers synchronously (only applied to `ensure_installed`)
-	sync_install = false,
+	sync_install = true,
 	highlight = {
 		-- `false` will disable the whole extension
 		enable = true,
 		additional_vim_regex_highlighting = true,
 	},
-	indent = { enable = true, disable = { "yaml", "python", "css" } },
+	indent = { enable = true, disable = { "toml", "yaml", "python", "css" } },
 	context_commentstring = {
 		enable = true,
 		enable_autocmd = false,

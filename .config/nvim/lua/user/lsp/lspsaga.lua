@@ -29,4 +29,11 @@ lspsaga.init_lsp_saga({
 			end
 		end,
 	},
+	-- finder icons
+	finder_icons = {
+		def = "  ",
+		ref = "  ",
+		link = " ",
+		imp = " ",
+	},
 })

@@ -47,13 +47,6 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	pattern = { "*.java" },
-	callback = function()
-		vim.lsp.codelens.refresh()
-	end,
-})
-
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	callback = function()
 		vim.cmd("hi link illuminatedWord LspReferenceText")
@@ -122,7 +115,7 @@ vim.api.nvim_create_autocmd("User", {
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	callback = function()
-		vim.cmd("hi LineNrAbove guifg=yellow ctermfg=yellow")
-		vim.cmd("hi LineNrBelow guifg=green ctermfg=green")
+		vim.cmd("hi LineNrAbove guifg=lightblue ctermfg=lightblue")
+		vim.cmd("hi LineNrBelow guifg=blue ctermfg=blue")
 	end,
 })

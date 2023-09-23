@@ -23,6 +23,7 @@ end
 null_ls.setup({
 	debug = false,
 	sources = {
+		-- change the formatter used by the team here...
 		formatting.prettier.with({
 			filetypes = {
 				"javascript",
@@ -38,7 +39,6 @@ null_ls.setup({
 				"txt",
 				"proto",
 			},
-			extra_filetypes = { "toml" },
 			extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" },
 		}),
 		formatting.black.with({ extra_args = { "--fast" } }),
@@ -53,7 +53,7 @@ null_ls.setup({
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then
 			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-			vim.api.nvim_create_autocmd("BufWritePre", {
+			vim.api.nvim_create_autocmd("BufWritePre", { -- autocommand for formatting before saving the code
 				group = augroup,
 				buffer = bufnr,
 				callback = function()

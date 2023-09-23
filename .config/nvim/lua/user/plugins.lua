@@ -1,6 +1,4 @@
 local fn = vim.fn
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
-
 -- Automatically install packer
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -50,7 +48,7 @@ return packer.startup(function(use)
 	use({ "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" }) -- Autopairs, integrates with both cmp and treesitter
 	use({ "numToStr/Comment.nvim", commit = "2c26a00f32b190390b664e56e32fd5347613b9e2" })
 	use({ "JoosepAlviste/nvim-ts-context-commentstring", commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269" })
-	use({ "kyazdani42/nvim-web-devicons", commit = "563f3635c2d8a7be7933b9e547f7c178ba0d4352" })
+	use({ "kyazdani42/nvim-web-devicons", commit = "b844d3da4affb77fb2ba56ed235946f0ba0ab200" })
 	use({ "kyazdani42/nvim-tree.lua", commit = "7282f7de8aedf861fe0162a559fc2b214383c51c" })
 	use({ "nvim-lualine/lualine.nvim", commit = "a52f078026b27694d2290e34efa61a6e4a690621" })
 	use({ "akinsho/toggleterm.nvim", commit = "2a787c426ef00cb3488c11b14f5dcf892bbd0bda" })
@@ -86,8 +84,14 @@ return packer.startup(function(use)
 	-- use({ "williamboman/nvim-lsp-installer", commit = "e9f13d7acaa60aff91c58b923002228668c8c9e6" }) -- simple to use language server installer
 	use({ "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" }) -- for formatters and linters
 	use({ "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" })
-	use({ "glepnir/lspsaga.nvim", commit = "f33bc99d0ed3ed691a58b3339decf4e1933c3f9e" }) -- simple to use language server installer
 
+	use({
+		"glepnir/lspsaga.nvim",
+		commit = "f33bc99d0ed3ed691a58b3339decf4e1933c3f9e",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+		},
+	}) -- simple to use language server installer
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim", commit = "b543aaa2c9cf8123ed2fe7dbb6c211a9cd415124" })
 
@@ -106,15 +110,15 @@ return packer.startup(function(use)
 	use({ "f-person/git-blame.nvim", commit = "1087c3c78ea9f7b7825a256e8fe1ec3af1ad88d0" })
 
 	-- Additional plugins
-	use({
-		"folke/trouble.nvim",
-		commit = "929315ea5f146f1ce0e784c76c943ece6f36d786",
-		config = function()
-			require("trouble").setup({})
-		end,
-	})
 	use({ "folke/todo-comments.nvim", commit = "98b1ebf198836bdc226c0562b9f906584e6c400e" })
-	use({ "romgrk/barbar.nvim", commit = "4a19df133df71b51e82302db06b31570d7dedd58" })
+	use({
+		"romgrk/barbar.nvim",
+		commit = "283bceab39f549c5e5228212661750704fcfcd9e",
+		dependencies = {
+			"lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
+			"nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+		},
+	})
 
 	-- Note taking
 	use({
