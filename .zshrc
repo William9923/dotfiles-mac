@@ -1,96 +1,16 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# For profiling purposes
+# zmodload zsh/zprof
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="custom-linux"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    git
-    zsh-autosuggestions
-    z
-)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+source ~/zsh-defer/zsh-defer.plugin.zsh
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+export K9S_EDITOR=nvim
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -99,13 +19,26 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-export PATH="/home/william/go/bin:$PATH"
+export PATH="/opt/homebrew/Cellar:$PATH"
+export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$HOME/.cargo/env"
-zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+# export PATH="/opt/homebrew/Cellar/openjdk/21/bin:$PATH"
 
-# Example aliases
+# Directory for temporary trash
+export GRAVEYARD="~/.local/share/Trash"
+
+# Colima docker virtualbox
+export DOCKER_HOST=unix://$HOME/.colima/true/docker.sock
+
+# Postgres related library
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+
+# Protobuf protoc (proto compiler)
+export PATH="/opt/homebrew/opt/protobuf@3/bin:$PATH"
+
+# Useful alias
 alias ls="ls -p -G"
 alias la="ls -A"
 alias ll="ls -l"
@@ -116,48 +49,165 @@ alias ld=lazydocker
 alias t=tmux
 alias v=nvim
 alias ping=gping
-
-alias ll="exa -l -g --icons"
+alias ll="ls -la"
 alias lla="ll -a"
+alias c="claude"
 
 # scripts shortcuts
 alias zshconfig="nvim ~/.zshrc"
 alias syncnotes="z vimwiki && sh ~/vimwiki/sync.sh"
 
-# Fzf theme : Gruvbox
-local color00='#32302f'
-local color01='#3c3836'
-local color02='#504945'
-local color03='#665c54'
-local color04='#bdae93'
-local color05='#d5c4a1'
-local color06='#ebdbb2'
-local color07='#fbf1c7'
-local color08='#fb4934'
-local color09='#fe8019'
-local color0A='#fabd2f'
-local color0B='#b8bb26'
-local color0C='#8ec07c'
-local color0D='#83a598'
-local color0E='#d3869b'
-local color0F='#d65d0e'
-
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
-" --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D"\
-" --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C"\
-" --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D"
-
 # for atuin (commmand history) widget
-eval "$(atuin init zsh)"
+zsh-defer eval "$(atuin init zsh)"
 
-# for navi (command cheatsheet) widget
-eval "$(navi widget zsh)"
+# The next line updates PATH for the Google Cloud SDK.
+# if [ -f '/Users/william.ong/Downloads/google-cloud-sdk/path.zsh.inc' ]; then zsh-defer . '/Users/william.ong/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
-# for the fuck alias widget
-eval $(thefuck --alias)
+# The next line enables shell command completion for gcloud.
+# if [ -f '/Users/william.ong/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then zsh-defer . '/Users/william.ong/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
-# Directory for temporary trash
-export GRAVEYARD="~/.local/share/Trash"
+# gvm (go version manger)
+zsh-defer source "/Users/william.ong/.gvm/scripts/gvm"
 
-# Setting up for tre easy jump command
-tre() { command tre "$@" -e && source "/tmp/tre_aliases_$USER" 2>/dev/null; }
+# Enable syntax highlighting
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Enable directory jumping
+source ~/zsh-z/zsh-z.plugin.zsh
+
+# Enable auto-suggestion
+source ~/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# # kubernetes auto-completion
+# [[ $commands[kubectl] ]] && zsh-defer source <(kubectl completion zsh)
+
+# Load secrets from separate file (not tracked in version control)
+[ -f ~/.zsh_secrets ] && source ~/.zsh_secrets
+
+# kubectl color
+alias kubectl="kubecolor"
+
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.p10k.zsh
+
+zsh-defer eval "$(direnv hook zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+zsh-defer [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+zsh-defer [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# pyenv setup
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+zsh-defer eval "$(pyenv init --path)"
+zsh-defer eval "$(pyenv init -)"
+
+# Following line was automatically added by arttime installer
+export MANPATH=/Users/william.ong/.local/share/man:$MANPATH
+
+# Following line was automatically added by arttime installer
+export PATH=/Users/william.ong/.local/bin:$PATH
+
+export PATH="$HOME/.rbenv/versions/3.2.2/bin:$HOME/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/bin:$PATH"
+zsh-defer eval "$(rbenv init -)"
+
+# pnpm
+export PNPM_HOME="/Users/william.ong/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# bun completions
+zsh-defer [ -s "/Users/william.ong/.bun/_bun" ] && source "/Users/william.ong/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# opencode - Function to run OpenCode on an available port
+unalias op 2>/dev/null
+op() {
+  local start_port=3000
+  local end_port=3010
+  local found_port=""
+
+  for port in {$start_port..$end_port}; do
+    # Check if port is in use
+    if ! lsof -i :$port -stcp:listen -P -n >/dev/null 2>&1; then
+      found_port=$port
+      break
+    fi
+  done
+
+  if [[ -n "$found_port" ]]; then
+    echo "🚀 Launching OpenCode on port $found_port"
+    opencode --port "$found_port" "$@"
+  else
+    echo "⚠️ No ports available in range 3000-3010. Trying default..."
+    opencode "$@"
+  fi
+}
+
+# opencode preset switcher
+op-preset() {
+  local config_file="$HOME/.config/opencode/oh-my-opencode-slim.json"
+  local presets=("tier-google" "tier-opencode" "tier-github")
+
+  # Show current preset if no arguments
+  if [[ $# -eq 0 ]]; then
+    local current=$(grep -o '"preset": "[^"]*"' "$config_file" | cut -d'"' -f4)
+    echo "Current preset: $current"
+    echo ""
+    echo "Available presets:"
+    for p in "${presets[@]}"; do
+      if [[ "$p" == "$current" ]]; then
+        echo "  * $p (active)"
+      else
+        echo "    $p"
+      fi
+    done
+    echo ""
+    echo "Usage: op-preset <preset-name>"
+    echo "       op-preset --fzf    # interactive selection"
+    return 0
+  fi
+
+  # Interactive fzf mode
+  if [[ "$1" == "--fzf" ]] || [[ "$1" == "-i" ]]; then
+    local current=$(grep -o '"preset": "[^"]*"' "$config_file" | cut -d'"' -f4)
+    local selected=$(printf '%s\n' "${presets[@]}" | fzf --prompt="Select opencode preset: " --preview="echo Current: $current")
+    if [[ -n "$selected" ]]; then
+      op-preset "$selected"
+    fi
+    return 0
+  fi
+
+  # Validate preset name
+  local preset="$1"
+  local valid=false
+  for p in "${presets[@]}"; do
+    if [[ "$p" == "$preset" ]]; then
+      valid=true
+      break
+    fi
+  done
+
+  if [[ "$valid" == false ]]; then
+    echo "Error: Invalid preset '$preset'"
+    echo "Valid presets: ${presets[*]}"
+    return 1
+  fi
+
+  # Switch preset
+  sed -i "" "s/\"preset\": \".*\"/\"preset\": \"$preset\"/" "$config_file"
+  echo "Switched to preset: $preset"
+}
+
+# For profiling purposes
+# zprof
+
+
+# kc - Kubernetes database helper
+export PATH="$HOME/dev/tools/kc:$PATH"

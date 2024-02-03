@@ -1,19 +1,19 @@
 [core]
-    pager = delta
+  pager = delta
 	excludesfile = ~/.gitignore
 	editor = nvim
 	ignorecase = false
-    autocrlf = input
-    longpaths = true
-    editor = nvim
+  autocrlf = input
+  longpaths = true
+  editor = nvim
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 [user]
-	name = William9923
-	email = williamong1400@gmail.com
+	name = "William Ong"
+	email = william.ong@gojek.com
 [pull]
 	rebase = false
 [push]
@@ -43,6 +43,8 @@
 	trustExitCode = true
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[url "git@source.golabs.io:"]
+    insteadOf = https://source.golabs.io/
 [hub]
   protocol = https
 [interactive]
@@ -64,3 +66,7 @@
     light = false # use dark mode
     side-by-side = true
     line-numbers = true
+[credential]
+    helper = store
+[init]
+	templateDir = ~/.git-templates

@@ -1,9 +1,3 @@
-## Copyright (C) 2020-2022 Aditya Shakya <adi1090x@gmail.com>
-
-## Configuration for Alacritty, the GPU enhanced terminal emulator.
-## It's a very basic and simple config file, for full configuration...
-## See, /usr/share/doc/alacritty/example/alacritty.yml
-
 ## Import files (Colors, Fonts, Etc)
 import:
   - ~/.config/alacritty/colors.yml
@@ -15,7 +9,7 @@ env:
 
 font:
   normal:
-    family: 'JetBrainsMonoNerdFont'
+    family: 'JetbrainsMono Nerd Font'
     style: Medium
   size: 15.0
 
@@ -30,19 +24,15 @@ window:
     lines: 24
 
   padding:
-    x: 12
-    y: 12
+    x: 6
+    y: 6
 
   decorations: full
   startup_mode: Windowed
   dynamic_title: true
 
-  ## scrolling
-  history: 10000
-  multiplier: 3
-
   ## Background opacity
-  opacity: 0.90
+  opacity: 0.95
 
 ## Cursor
 cursor:
@@ -67,6 +57,6 @@ selection:
   save_to_clipboard: true
 
 key_bindings:
-  - { key: Return, mods: Super|Shift, action: SpawnNewInstance }
-  - { key: Left, mods: Alt, chars: "\eb" }
-  - { key: Right, mods: Alt, chars: "\ef" }
+  - {key: Return, mods: Super|Shift, action: SpawnNewInstance}
+  - {key: Left, mods: Alt, chars: "\eb"}
+  - {key: Right, mods: Alt, chars: "\ef"}
