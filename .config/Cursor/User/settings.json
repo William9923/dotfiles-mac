@@ -1,0 +1,146 @@
+{
+  // ───────────────────────── Pre-existing ─────────────────────────
+  "window.autoDetectColorScheme": true,
+  "cursor.general.fontSmoothingAntialiased": true,
+
+  // ───────────────────────── Theme (mirrors nvim Nord) ─────────────────────────
+  "workbench.preferredDarkColorTheme": "Nord",
+  "workbench.preferredLightColorTheme": "Default Light Modern",
+
+  // ───────────────────────── Terminal (mirrors .config/alacritty/alacritty.yml) ─────────────────────────
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrainsMono Nerd Font Mono', Menlo, monospace",
+  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontWeight": "500",         // alacritty style: Medium
+  "terminal.integrated.fontWeightBold": "bold",
+  "terminal.integrated.fontLigatures": true,
+  "terminal.integrated.lineHeight": 1.0,
+  "terminal.integrated.cursorStyle": "block",      // alacritty cursor.style.shape = Block
+  "terminal.integrated.cursorBlinking": true,      // alacritty cursor.style.blinking = On
+  "terminal.integrated.scrollback": 1000,          // alacritty scrolling.history
+  "terminal.integrated.mouseWheelScrollSensitivity": 3, // alacritty scrolling.multiplier
+  "terminal.integrated.fastScrollSensitivity": 5,
+  "terminal.integrated.gpuAcceleration": "on",
+  "terminal.integrated.copyOnSelection": true,     // alacritty selection.save_to_clipboard
+  "terminal.integrated.rightClickBehavior": "paste",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "zsh": { "path": "/bin/zsh", "args": ["--login"] }   // alacritty shell.program/args
+  },
+
+  // ───────────────────────── Editor (mirrors lua/user/options.lua) ─────────────────────────
+  "editor.lineNumbers": "relative",            // vim.opt.relativenumber = true
+  "editor.cursorSurroundingLines": 8,          // vim.opt.scrolloff = 8
+  "editor.cursorSurroundingLinesStyle": "all",
+  "editor.renderLineHighlight": "all",         // vim.opt.cursorline = true
+  "editor.wordWrap": "on",                     // vim.opt.wrap = true
+  "editor.tabSize": 2,                         // vim.opt.tabstop / shiftwidth
+  "editor.insertSpaces": true,                 // vim.opt.expandtab
+  "editor.detectIndentation": false,
+  "editor.smoothScrolling": true,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.minimap.enabled": false,
+  "editor.scrollBeyondLastLine": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "search.smartCase": true,                    // vim.opt.smartcase = true
+  "search.useIgnoreFiles": true,
+  "explorer.confirmDelete": false,
+  "workbench.list.smoothScrolling": true,
+
+  // ───────────────────────── Vim (vscodevim.vim) ─────────────────────────
+  "vim.leader": "<space>",                     // vim.g.mapleader = " "
+  "vim.useSystemClipboard": true,              // vim.opt.clipboard = "unnamedplus"
+  "vim.useCtrlKeys": true,
+  "vim.hlsearch": true,                        // vim.opt.hlsearch = true
+  "vim.ignorecase": true,                      // vim.opt.ignorecase = true
+  "vim.smartcase": true,                       // vim.opt.smartcase = true
+  "vim.timeout": 1000,                         // vim.opt.timeoutlen = 1000
+  "vim.easymotion": true,                      // replaces leap.nvim
+  "vim.foldfix": true,
+  "vim.visualstar": true,
+  "vim.whichwrap": "<,>,[,],h,l",              // vim.opt.whichwrap
+  "vim.iskeyword": "@,48-57,_,192-255,-",      // vim.opt.iskeyword:append("-")
+
+  // Let Vim handle these Ctrl combos instead of Cursor defaults
+  "vim.handleKeys": {
+    "<C-a>": true,
+    "<C-s>": true,
+    "<C-d>": true,
+    "<C-u>": true,
+    "<C-h>": true,
+    "<C-j>": true,
+    "<C-k>": true,
+    "<C-l>": true
+  },
+
+  // ── Insert mode ──────────────────────────────────────────────
+  "vim.insertModeKeyBindings": [
+    // kk → <Esc>  (keymap("i", "kk", "<ESC>"))
+    { "before": ["k", "k"], "after": ["<Esc>"] }
+  ],
+
+  // ── Normal mode ──────────────────────────────────────────────
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // Window navigation: <C-h/j/k/l>
+    { "before": ["<C-h>"], "commands": ["workbench.action.focusLeftGroup"] },
+    { "before": ["<C-j>"], "commands": ["workbench.action.focusBelowGroup"] },
+    { "before": ["<C-k>"], "commands": ["workbench.action.focusAboveGroup"] },
+    { "before": ["<C-l>"], "commands": ["workbench.action.focusRightGroup"] },
+
+    // Recentered scroll & search
+    { "before": ["<C-d>"], "after": ["<C-d>", "z", "z"] },
+    { "before": ["<C-u>"], "after": ["<C-u>", "z", "z"] },
+    { "before": ["n"],     "after": ["n", "z", "z", "z", "v"] },
+    { "before": ["N"],     "after": ["N", "z", "z", "z", "v"] },
+
+    // Save  (<C-s>)
+    { "before": ["<C-s>"], "commands": ["workbench.action.files.save"] },
+
+    // Select all  (<C-a> → ggVG)
+    { "before": ["<C-a>"], "after": ["g", "g", "V", "G"] },
+
+    // Easier replace  (r → R)
+    { "before": ["r"], "after": ["R"] },
+
+    // Increment / decrement  (+ / -)
+    { "before": ["+"], "after": ["<C-a>"] },
+    { "before": ["-"], "after": ["<C-x>"] },
+
+    // Delete without yanking  (d / x → black-hole register)
+    { "before": ["d"], "after": ["\"", "_", "d"] },
+    { "before": ["x"], "after": ["\"", "_", "x"] },
+
+    // Search next/prev with `f`-motion repeat   (. ↔ ;)
+    { "before": ["."], "after": [";"] },
+
+    // Clear search highlight  (<leader>h)
+    { "before": ["<leader>", "h"], "commands": [":nohl"] },
+
+    // Close active editor  (Q)
+    { "before": ["Q"], "commands": ["workbench.action.closeActiveEditor"] }
+  ],
+
+  // ── Visual mode ──────────────────────────────────────────────
+  "vim.visualModeKeyBindingsNonRecursive": [
+    // Better paste — keep yanked text in register
+    { "before": ["p"], "after": ["\"", "_", "d", "P"] },
+
+    // Stay in indent mode after < / >
+    { "before": ["<"], "after": ["<", "g", "v"] },
+    { "before": [">"], "after": [">", "g", "v"] },
+
+    // Select all
+    { "before": ["<C-a>"], "after": ["<Esc>", "g", "g", "V", "G"] },
+
+    // Move selected lines up / down  (<S-j> / <S-k>)
+    { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
+    { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
+
+    // Search next/prev with `f`-motion repeat
+    { "before": ["."], "after": [";"] }
+  ],
+  "editor.wordSeparators": "@,48-57,_,192-255,-"
+}
