@@ -1,278 +1,364 @@
 # Tyranitar Dotfiles
 
-<p align="center"> <img src="./docs/logo.png" height="300px" /> </p>
-<p align="center"><b>Tyranitar: My Personal MacOS Work Setup</b></p>
+<p align="center"><img src="./docs/logo.png" height="220px" /></p>
+<p align="center"><b>My personal macOS dev setup, managed with GNU Stow.</b></p>
 
 <p align="center">
-    <img alt="MacOS" src="https://img.shields.io/badge/Mac-silver?style=flat-square&logo=MacOS" />
-    <img alt="Editor" src="https://img.shields.io/badge/editor-nvim-019733?style=flat-square&logo=neovim" />
-    <img alt="Git" src="https://img.shields.io/badge/git-lazygit-pink?style=flat-square&logo=git" />
-    <img alt="Workflow Manager" src="https://img.shields.io/badge/multiplexer-tmux-1BB91F?style=flat-square&logo=tmux" />
-  </p>
+  <img alt="macOS" src="https://img.shields.io/badge/macOS-silver?style=flat-square&logo=apple" />
+  <img alt="Shell" src="https://img.shields.io/badge/shell-zsh-1f6feb?style=flat-square&logo=gnubash" />
+  <img alt="Editor" src="https://img.shields.io/badge/editor-neovim-019733?style=flat-square&logo=neovim" />
+  <img alt="Multiplexer" src="https://img.shields.io/badge/multiplexer-tmux-1BB91F?style=flat-square&logo=tmux" />
+  <img alt="Manager" src="https://img.shields.io/badge/manager-stow-blueviolet?style=flat-square" />
+</p>
+
+---
 
 ## ✨ Table of Contents
-* [Screenshots](#Screenshots)
-* [Overview](#Overview)
-* [Application](#Application)
 
-## Screenshots
+- [What's inside](#whats-inside)
+- [Quick start](#quick-start)
+- [Makefile cheat-sheet](#makefile-cheat-sheet)
+- [How Stow works here](#how-stow-works-here)
+- [Per-tool notes](#per-tool-notes)
+- [Maintenance](#maintenance)
+- [Known issues](#known-issues)
 
-<img alt="MacOS Rice" src="docs/screenshot/rice.png" />
+---
 
-## Overview
-Tyranitar is my MacOS specific workflow & tools for my work (as software engineer) in various tech company (Tokopedia, Shopee, and in the future).
+## What's inside
 
-It contains most of the configuration that I use, mainly tools, application and customization that I use to boost my productivity during working. 
+Everything in this repo mirrors a path under `$HOME`. When you `stow` the repo,
+the files are symlinked into the right spots.
 
-While it feels great for me, Tyranitar might not works well for you, so this repo is meant to archive my my dev toolbox along the year. Think of this dotfiles as your "engineer" work toolbox. A great engineer usually have their own set of tools that they bring everywhere because they feel comfortable using them. Also, lot's of these tools either: 1) Works out of the box after installation, 2) Can be easily configureable using a config file (text)
-
-But, I haven't had time to bootstrap all of these tools setup into a script, so
-for now let's be satisfied with the step by step on how to apply these changes.
-
-Also, I'm using [Gruvbox Theme](https://github.com/morhetz/gruvbox) as my color scheme for my daily usage theme (as it pretty comfortable in my eye, others might find it quite old but I like it) and [Jetbrains Nerd Font](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete/JetBrains%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.ttf) as default font => because it works well with a lot of Jetbrains tools, something that I use quite often during my work.
-
-## Application
-
-As I'm mainly working with Golang & Java, I usually use:
-- Terminal-based Dev Tools:
-
-| Apps           | Description                                          |
-| -----------    | -----------                                          |
-| Alacritty      | Terminal Emulator                                    |
-| Tmux           | Terminal Multiplexer                                 |
-| Zsh            | Shell Program in Terminal                            |
-| Vim            | For editing config file / remote file                |
-| Neovim         | Personal Text Editor (more resource usage)           |
-| Lazygit        | Git Client                                           |
-| Ctop           | Docker Viewer (similar to htop => but for container) |
-| redis-cli      | Redis Client                                         |
-| vimwiki        | Note Taking Apps                                     |
-| bypytop        | System Usage Profiller                               |
-| lf             | File Manager                                         |
-| magic-wormhole | Send file to other computer easily & securely        |
-
-- Productivity / Utility Tools:
-
-| Apps               | Description                                                                                                             | Reference                                                                         |
-| -----------        | -----------                                                                                                             | -----------                                                                       |
-| Scroll reverser    | Emulate natural scroll in Mac                                                                                           | https://pilotmoon.com/scrollreverser/                                             |
-| Clipy              | Clipboard Manager                                                                                                       | https://clipy-app.com/                                                            |
-| zsh-autosuggestion | Terminal Autosuggestion help                                                                                            | https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh |
-| z                  | Directory Jumper (for zsh)                                                                                              | https://github.com/agkozak/zsh-z                                                  |
-| navi               | Command cheatsheet                                                                                                      | https://github.com/denisidoro/navi                                                |
-| tre                | Jump to file / folder in a directory                                                                                    | https://github.com/dduan/tre                                                      |
-| rip                | Rm with safety (since i like to remove a file => then later want it back)                                               | https://github.com/nivekuil/rip                                                   |
-| fuck               | (don't use it often) sometimes when bad moon, good to have (just type the word and the hopefully command become better) | https://github.com/nvbn/thefuck                                                   |
-| atuin              | (very useful) to check old command history => with fzf                                                                  | https://github.com/atuinsh/atuin                                                   |
-
-- GUI-based Dev Tools:
-
-| Apps                                    | Description                                                      |
-| -----------                             | -----------                                                      |
-| Intellij (v 2022.1.5)                   | Java IDE                                                         |
-| Goland (v 2023.1.1)                     | Golang IDE                                                       |
-| Webstorm (v 2023.3.4)                   | React + Javascript IDE                                           |
-| Dbeaver (v 22.2.5)                      | SQL Editor & Database Client                                     |
-| Robo3T                                  | NoSQL Editor & NoSQL Database Client                             |
-| Another Redis Desktop Manager (v 1.5.8) | Redis Client                                                     |
-| Postman (v10.16)                        | API Client                                                       |
-| Mockoon                       | Mock API Server (for mocking external API / other microservices) |
-| Firefox                       | Browser. i like it so I don't change it                          |
-| Filezilla  (v 3.64.0)         | SFTP-based Client for accessing remote file                      |
-| Zoom                          | Online Video Meeting                                             |
-
-- Online Dev Tools (no need installation, can bookmark first!) :
-
-| Apps        | Description                                                                            | Link / Reference                      |
-| ----------- | -----------                                                                            | -----------                           |
-| ChatGPT     | An AI master for alot of my programming problem                                        | https://chat.openai.com/              |
-| Bard        | An AI master for alot of my programming problem (when i need to reference on internet) | https://bard.google.com/              |
-| Excalidraw  | An online whiteboard (for initial planning of task / project)                          | https://excalidraw.com/               |
-| Tldraw      | (Same whiteboard) But more useful when writing flowchart & sequence diagram            | https://www.tldraw.com/               |
-| JSON editor | An online json editor (because vieweing it is hard)                                    | https://jsoneditoronline.org          |
-| UML editor  | An online plant-UML based editor (to draw sequence diagram)                            | https://plantuml-editor.kkeisuke.com/ |
-| Yaml linter | An online yaml linter (to yaml based configuration)                                    | https://yamlchecker.com/              |
-| PwPush      | An online password & credential sharing system                                      | https://pwpush.com/              |
-
-
-- Browser Extension:
-
-| Apps                | Description                                                      | Reference                                             |
-| -----------         | -----------                                                      | -----------                                           |
-| Vimium C            | An extension to help using vim keybind on firefox/chrome browser | https://github.com/gdh1995/vimium-c                   |
-| Youtube Ads Blocker | An extension to help listen to music without ads                 | https://mybrowseraddon.com/adblocker-for-youtube.html |
-
-- Gaming:
-| Apps                | Description                                                      | Reference                                             |
-| -----------         | -----------                                                      | -----------                                           |
-| XPAD                | For controller setting in linux based system                     | https://github.com/paroj/xpad                         |
-| Bottles             | Run .exe in linux                                                | https://github.com/bottlesdevs/Bottles                |
-
-## How to setup...
-(anyway, the below process is a little bit deprecated (i don't always update this part since it contains a lot)) => just remember, there are only few tools that we need to setup correctly => like neovim, gitconfig (lazygit), and tmux => for the other one, i won't complain even if we only use default setup provided by the tools)
-
-
-Here is the step by step to setup all my work laptop. This is not going to be a script that are run once, but a step by step and reference on how to install it.
-
-**Homebrew**
-0. Install xcode dev tools
-```bash
-$ xcode-select --install
 ```
-1. Verify Installation of xcode (should show result if installed properly)
-```bash
-$ xcode-select -p
-```
-2. Install homebrew
-```bash
-$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-3. Update homebrew & check the installation
-```bash
-$ brew update && brew doctor
-```
-4. Install Go v1.17
-```bash
-$ brew install go@1.17
-```
-5. Install Node & NPM
-```bash
-$ brew install node
+dotfiles/
+├── Makefile                     ← run `make help` to see all commands
+├── .stow-local-ignore           ← what stow skips
+├── .zshrc                       → ~/.zshrc
+├── .p10k.zsh                    → ~/.p10k.zsh        (powerlevel10k prompt)
+├── .gitconfig                   → ~/.gitconfig
+├── opencode.json                  (top-level opencode plugin config; ignored by stow)
+├── .claude/
+│   ├── CLAUDE.md                → ~/.claude/CLAUDE.md
+│   └── settings.json            → ~/.claude/settings.json
+└── .config/
+    ├── alacritty/               → ~/.config/alacritty/
+    ├── lazygit/config.yml       → ~/.config/lazygit/config.yml
+    ├── nvim/                    → ~/.config/nvim/         (see notes)
+    ├── opencode/command/        → ~/.config/opencode/command/
+    ├── tmux/tmux.conf           → ~/.config/tmux/tmux.conf
+    └── Cursor/User/             → ~/Library/Application Support/Cursor/User/
+                                    (NOT stowed — linked via `make link-macos-apps`)
 ```
 
-**Zsh** (need change later)
-0. Install zsh
-```bash
-$ brew install zsh
-```
-1. Setup the .zshrc & alias with PATH
-```bash
-$ ln .zshrc ~/.zshrc 
-```
-2. Install omz for theme
-```bash
-$ sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-```
-3. Setup terminal prompt (POWERLEVEL 10K)
-```bash
-$ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-```
-4. Configure powerlevel10k with helper wizard
-```bash
-$ p10k configure
-```
-5. Install directory jumper (guide:
-https://github.com/agkozak/zsh-z#installation)
-6. Install zsh autosuggestion (guide:
-https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh)
+Anything in the repo root that **isn't** a real dotfile (`README.md`, `docs/`,
+`Makefile`, `LICENSE`, the `~/` trash leftover, etc.) is excluded from stowing
+via [`.stow-local-ignore`](./.stow-local-ignore). `.config/Cursor/` is also
+excluded because Cursor reads from `~/Library/Application Support/...` on
+macOS, not `~/.config/`.
 
-**Jetbrains Mono Nerd Font**
-1. Tap the homebrew
-```bash
-$ brew tap homebrew/cask-fonts
-```
-2. Install the font
-```bash
-$ brew install --cask font-jetbrains-mono
-```
-3. Check if the font already installed or not in the Font Book (Mac Built-in
-Apps)
+---
 
-**Alacritty**
-1. Install alacritty via homebrew
-```bash
-$ brew install --cask alacritty
-```
-2. Enable application from system preference
-![Security&Privacy -> General](./docs/screenshot/security-privacy.png)
+## Quick start
 
-3. Setup alacritty with custom configuration
 ```bash
-$ cd ~/.config/ && ln <path-to-dotfile>/alacritty alacritty
-```
-4. Reload...
+# 1. Install Xcode CLT + Homebrew
+xcode-select --install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-**Vim**
-1. Vim installation should be done by system (available immediately...)
-2. Copy .vimrc to `~/.vimrc` in ~/ directory
-```bash
-$ cp .vimrc ~/.vimrc
-```
-3. (Optional) Or, link the .vimrc to the ~/.vimrc
-```bash
-$ ln .vimrc ~/.vimrc
+# 2. Install the tools you need
+brew install \
+  stow git neovim tmux alacritty lazygit lazydocker \
+  zsh atuin direnv git-delta gh gping kubectl kubecolor \
+  fzf ripgrep fd bat eza \
+  pyenv nvm rbenv bun
+
+# Optional GUI casks
+brew install --cask alacritty font-jetbrains-mono-nerd-font
+
+# 3. Clone the repo so it lives at ~/dotfiles
+git clone <this-repo> ~/dotfiles
+cd ~/dotfiles
+
+# 4. Sanity-check your toolchain, then symlink everything
+make doctor          # verifies stow, brew, nvim, tmux, etc. are installed
+make check           # dry-run — shows what would happen
+make install         # creates the symlinks in $HOME
+make link-macos-apps # links Cursor & friends into ~/Library/Application Support
+make status          # confirms everything is in place
+
+# 5. Install zsh plugins / themes (see Per-tool notes)
+# 6. Open a new shell. Run `p10k configure` if you want to retune the prompt.
 ```
 
-**Git**
-1. Copy the .gitconfig file (or you could link it)
+That's it — `~/.zshrc`, `~/.gitconfig`, `~/.config/nvim`, etc. are now symlinks
+into this repo. Edit them anywhere; both paths point to the same file.
+
+---
+
+## Makefile cheat-sheet
+
+Run `make help` for the live list. Common ones:
+
+| Command                  | What it does                                                    |
+| ------------------------ | --------------------------------------------------------------- |
+| `make doctor`            | Verify `stow`, `brew`, `nvim`, `tmux`, etc. are installed.      |
+| `make check`             | Dry-run — show what `make install` *would* do.                  |
+| `make install`           | Symlink every tracked file into `$HOME` (idempotent).           |
+| `make restow`            | Un-stow + re-stow. Use after adding/moving files in the repo.   |
+| `make uninstall`         | Remove all symlinks this repo placed in `$HOME`.                |
+| `make link-macos-apps`   | Symlink Cursor's settings/keybindings into Library/App Support. |
+| `make adopt`             | **Destructive.** Move existing `$HOME` files *into* this repo, then symlink them back. Useful on a fresh machine when files already exist. Commit changes after. |
+| `make status`            | Show which tracked files are correctly linked, drifted, or missing. |
+
+---
+
+## How Stow works here
+
+This repo uses **one stow package = the entire `dotfiles/` directory**. The
+stow dir is `$HOME` (because that's where `dotfiles/` lives), the target is
+also `$HOME`, and the package name is `dotfiles`. The `Makefile` wraps all of
+this so you don't have to remember the flags — but here's what it boils down to:
+
 ```bash
-$ ln .gitconfig ~/.gitconfig
-```
-2. Copy the .ssh folder (or you could link it) -> maybe not available in repo
-```bash
-$ cd && ln <path-to-dotfile>/.ssh .ssh
-```
-3. Copy the .netrc file for authentication issue when accessing some repo
-```bash
-$ ln .netrc ~/.netrc
+cd ~
+
+# preview what stow would do (recommended first run)
+stow -t ~ -nv dotfiles                 # = make check
+
+# actually create the symlinks
+stow -t ~ -v dotfiles                  # = make install
+
+# remove all symlinks
+stow -t ~ -Dv dotfiles                 # = make uninstall
+
+# remove + re-stow (e.g. after restructuring or adding a file)
+stow -t ~ -Rv dotfiles                 # = make restow
 ```
 
-**Tmux**
-1. Install tmux
+Files / dirs listed in [`.stow-local-ignore`](./.stow-local-ignore) are skipped
+(currently: `README.md`, `LICENSE`, `Makefile`, `docs/`, `opencode.json`, the
+stray `~/` folder, `.config/Cursor/`, plus things like `.git` and `.DS_Store`).
+
+If stow refuses to link a file because something already exists at the target,
+either back up the existing file (`mv ~/.zshrc ~/.zshrc.bak`) or run
+`make adopt` (which **moves** the existing file *into* the repo — useful when
+seeding the repo from a fresh machine, but commit immediately after so you can
+see what got pulled in).
+
+---
+
+## Per-tool notes
+
+### Zsh
+
+The `.zshrc` expects these to live in `$HOME`:
+
 ```bash
-$ brew install tmux
-```
-2. Setup tmux configuration (using oh-my-tmux, with slight modification)
-```bash
-$ cp ./tmux.conf ~/.tmux.conf && cp ./tmux.conf.local ~/.tmux.conf.local
-```
-3. Or, can link the config file to the ~/ directory
-```bash
-$ ln ./tmux.conf ~/.tmux.conf && ln /tmux.conf.local ~/.tmux.conf.local
+git clone https://github.com/romkatv/powerlevel10k.git              ~/powerlevel10k
+git clone https://github.com/romkatv/zsh-defer.git                  ~/zsh-defer
+git clone https://github.com/agkozak/zsh-z.git                      ~/zsh-z
+git clone https://github.com/zsh-users/zsh-autosuggestions.git      ~/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git  ~/.zsh/zsh-syntax-highlighting
 ```
 
-**Neovim**
-1. Install neovim via homebrew (v.0.8)
-```bash
-$ brew install neovim
-```
-2. Copy .config/nvim directory to ~/.config/nvim 
-```bash
-$ cp -r .config/nvim ~/.config/nvim
-```
-3. (Optional) Or, link the directory
-```bash
-$ cd ~/.config && ln <path-to-dotfile>/.config/nvim nvim
-```
-4. Save the plugin file to re-download all neovim plugin used
-```bash
-$ nvim ~/.config/nvim/lua/user/plugin.lua  
-```
+Secrets (API keys, etc.) live in `~/.zsh_secrets` and are auto-sourced if
+present. **Never** commit that file.
 
-**Intellij / Go / Webstorm**
+### Git
 
-**Lazygit**
+Uses [delta](https://github.com/dandavidson/delta) as pager and `nvim` as editor.
+`git-lfs` filter is configured; install with `brew install git-lfs && git lfs install`.
 
-**Lazydocker**
+The `[url ...]` blocks rewrite `https://github.com/` and
+`https://source.golabs.io/` to SSH — make sure your SSH keys are loaded
+(`ssh-add -K ~/.ssh/id_ed25519`).
 
-**Firefox**
-1. Install Firefox Developer Version using homebrew
+### Neovim
+
+The `init.lua` here boots LazyVim (`require("config.lazy")`), but the **active**
+LazyVim plugin specs (`lua/config/`, `lua/plugins/`, `lua/personal/`) currently
+live in `~/.config/nvim/` and are **not** tracked by this repo — they're local
+to the machine. The `lua/user/` directory in this repo is leftover from the old
+packer-based setup and is no longer used at runtime. See [Known issues](#known-issues).
+
+### Tmux
+
 ```bash
-$ brew tap homebrew/cask-versions
-$ brew install --cask firefox-developer-edition
-```
-2. Import bookmark (from bookmark manager)
-![Import Bookmark Guide](./docs/screenshot/import-bookmark.png)
-3. Change the theme to Gruvbox (ref: https://addons.mozilla.org/en-US/firefox/addon/gruvbox-dark-theme/)
-4. Add Vimium addsOn (ref: https://addons.mozilla.org/en-US/firefox/addon/vimium-c/)
-5. Add Youtube AddsOn (ref: https://addons.mozilla.org/id/firefox/addon/adblock-for-youtube/)
-6. Apply Firefox CSS (ref: https://github.com/andreasgrafen/cascade)
-
-**Fig**
-1. Install using brew
-```bash
-$ brew install fig
+# tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# then inside tmux: prefix + I  (capital i) to install plugins
 ```
 
-## ❤️ Support
-If you feel that this repo have helped you provide more example on learning software engineering, then it is enough for me! Wanna contribute more? Please ⭐ this repo so other can see it too!
+### Alacritty
+
+Config is still in the old `.yml` format. Alacritty ≥ 0.13 prefers `.toml`;
+migrate when convenient with:
+
+```bash
+alacritty migrate
+```
+
+### Lazygit / Lazydocker
+
+No setup beyond `brew install`. Config is already wired through stow.
+
+### Atuin
+
+```bash
+atuin register   # or `atuin login` if you already have an account
+atuin import auto
+```
+
+### Claude Code
+
+- `.claude/CLAUDE.md` → `~/.claude/CLAUDE.md` (global "always-on" instructions)
+- `.claude/settings.json` → `~/.claude/settings.json` (enabled plugins)
+
+> ⚠️ The pre-existing `~/.claude/CLAUDE.md` symlink in this setup was created
+> with a *relative* target (`dotfiles/.claude/CLAUDE.md`) that resolves to a
+> non-existent path from `~/.claude/`'s perspective. Re-running `make restow`
+> fixes it — stow places the correct relative path.
+
+### Opencode
+
+- Slash commands: `.config/opencode/command/` → `~/.config/opencode/command/`
+- `opencode.json` at the repo root is **not** stowed (different schema, lives
+  outside `$HOME`).
+- `op` and `op-preset` shell helpers are defined in `.zshrc`. `op-preset`
+  toggles `~/.config/opencode/oh-my-opencode-slim.json` between
+  `tier-google`, `tier-opencode`, `tier-github`, `tier-antigravity`.
+
+### Cursor (macOS)
+
+Cursor stores user config under `~/Library/Application Support/Cursor/User/`,
+not `~/.config/`, so stow can't place it from a `.config/Cursor/...` source.
+The repo tracks the files at `.config/Cursor/User/`, and `make link-macos-apps`
+creates the right symlinks:
+
+```
+~/Library/Application Support/Cursor/User/settings.json     → repo
+~/Library/Application Support/Cursor/User/keybindings.json  → repo
+```
+
+The target is also added to `.stow-local-ignore` so a stray `make install`
+won't create a useless `~/.config/Cursor/` directory.
+
+### Language version managers
+
+`.zshrc` initializes `pyenv`, `nvm`, `rbenv`, `gvm`, `bun`, and `pnpm` (most
+lazy-loaded via `zsh-defer` so shell startup stays fast). Install whichever you
+actually use; the missing ones will print a one-time warning on first shell start
+but won't break anything.
+
+---
+
+## Maintenance
+
+### Adding a new dotfile
+
+1. Create the file at the path it would have under `$HOME`, but rooted inside
+   this repo. For example, to manage `~/.config/ghostty/config`:
+
+   ```bash
+   mkdir -p ~/dotfiles/.config/ghostty
+   mv ~/.config/ghostty/config ~/dotfiles/.config/ghostty/config
+   ```
+
+2. Re-stow and commit:
+
+   ```bash
+   make restow
+   git add .config/ghostty && git commit -m "feat(ghostty): track config"
+   ```
+
+### Excluding files from being stowed
+
+Add a pattern to [`.stow-local-ignore`](./.stow-local-ignore). Bare patterns
+match the basename anywhere in the tree; `^/...$` patterns anchor to the repo
+root. See the comments at the top of that file.
+
+### Removing a dotfile
+
+```bash
+make uninstall                 # un-stow everything
+rm dotfiles/path/inside/repo   # delete the file from the repo
+make install                   # re-stow what remains
+```
+
+### Drift check
+
+If something edited a config directly in `$HOME` instead of in the repo, `make
+status` will surface it as `DRIFT`. You can then either:
+
+- **Keep the repo version**: `make restow` (after `make uninstall` clears the
+  drifted file), or
+- **Promote the $HOME version**: `cp ~/<path> dotfiles/<path>` (or use
+  `make adopt` to do this for *all* drift in one go — destructive, commit
+  immediately after).
+
+---
+
+## Known issues
+
+These exist in the repo today and are flagged here so you can clean them up
+when you're ready. None block daily use; `make status` will help you spot
+when each one matters.
+
+### Repo cleanup
+
+1. **`~/.local/share/Trash/...` is tracked in git** — a leftover from a typo in
+   `.zshrc`:
+   ```bash
+   export GRAVEYARD="~/.local/share/Trash"   # ← `~` never expands; quoted
+   ```
+   Fix:
+   ```bash
+   git rm -r '~'                              # removes the stray dir from git
+   # then in .zshrc:  export GRAVEYARD="$HOME/.local/share/Trash"
+   ```
+2. **`.config/tmux/plugins/*` is tracked** — these are `tpm`-managed plugin
+   checkouts that should be installed at runtime, not committed.
+   ```bash
+   git rm -r --cached .config/tmux/plugins
+   echo '.config/tmux/plugins/' >> .gitignore
+   ```
+3. **`.config/nvim/lua/user/`** — old packer config, no longer referenced by
+   `init.lua` (which boots LazyVim). Safe to delete once you confirm nothing
+   imports it.
+4. **`.config/nvim/plugin/packer_compiled.lua`** — generated artifact from
+   packer. Safe to delete.
+5. **`.config/alacritty/catppuccin/`** — empty directory.
+
+### Stow setup
+
+6. **`~/.claude/CLAUDE.md` is a broken symlink**. The pre-existing link points
+   to `dotfiles/.claude/CLAUDE.md` *relative to* `~/.claude/`, which doesn't
+   exist. Fix: `make uninstall && make install` (stow will write the correct
+   relative path).
+7. **`~/.claude/settings.json` and `~/.config/opencode/command/*.md` have
+   drifted** — they exist as real files in `$HOME`, not symlinks into this
+   repo. You can either promote the `$HOME` version (`cp` into the repo) or
+   replace it (back up `$HOME` version, then `make restow`).
+
+### Shell / git config
+
+8. **`.zshrc` minor bugs**:
+   - `PATH="/opt/homebrew/Cellar:$PATH"` is a no-op — should be
+     `/opt/homebrew/bin`.
+   - `PATH="$PATH:$HOME/.cargo/env"` is wrong — `.cargo/env` is a script you
+     `source`, not a directory; should be `$HOME/.cargo/bin`.
+   - `alias ll` and `alias lla` are each defined twice (the first pair is
+     dead).
+   - `JAVA_HOME=$(/usr/libexec/java_home -v 1.8)` runs on every shell startup
+     and prints a warning if Java 1.8 isn't installed.
+9. **`.gitconfig`** — `editor = nvim` is set twice; indentation mixes tabs
+   and spaces.
+
+---
+
+## ❤️ Credits
+
+Original inspiration from various rice configs across r/unixporn. Tyranitar
+because a great engineer's toolbox should be a little chunky and a lot
+powerful. ⭐ this repo if it helped you build yours.

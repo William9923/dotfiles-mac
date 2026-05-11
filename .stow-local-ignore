@@ -1,0 +1,30 @@
+# Files / dirs that should NEVER be symlinked into $HOME by stow.
+#
+# Stow matches each pattern as a Perl regex against (a) the basename and
+# (b) the full subpath rooted at "/" inside the package. So:
+#   - bare patterns (no slash) match basenames anywhere in the tree
+#   - patterns starting with "^/..." match only at the package root
+#
+# Reference: https://www.gnu.org/software/stow/manual/html_node/Types-And-Syntax-Of-Ignore-Lists.html
+
+# ── Always ignore (anywhere in the tree) ────────────────────────────────
+\.git
+\.gitignore
+\.gitattributes
+\.stow-local-ignore
+\.DS_Store
+node_modules
+
+# ── Top-level only (so e.g. .claude/CLAUDE.md and nvim/README.md still stow) ──
+^/README\.md$
+^/LICENSE$
+^/Makefile$
+^/docs$
+^/opencode\.json$
+^/~$
+^/\.nvimlog$
+
+# ── App configs that don't actually live under ~/.config on macOS ─────────
+# Cursor reads from ~/Library/Application Support/Cursor/User/, not ~/.config.
+# We track its settings here but link them in via `make link-macos-apps`.
+^/\.config/Cursor$
