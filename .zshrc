@@ -130,7 +130,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 unalias op 2>/dev/null
 op() {
   local start_port=3000
-  local end_port=3010
+  local end_port=3100
   local found_port=""
 
   for port in {$start_port..$end_port}; do
@@ -143,17 +143,17 @@ op() {
 
   if [[ -n "$found_port" ]]; then
     echo "🚀 Launching OpenCode on port $found_port"
-    opencode --port "$found_port" "$@"
+    rtk opencode --port "$found_port" "$@"
   else
     echo "⚠️ No ports available in range 3000-3010. Trying default..."
-    opencode "$@"
+    rtk opencode "$@"
   fi
 }
 
 # opencode preset switcher
 op-preset() {
   local config_file="$HOME/.config/opencode/oh-my-opencode-slim.json"
-  local presets=("tier-google" "tier-opencode" "tier-github")
+  local presets=("tier-google" "tier-opencode" "tier-github" "tier-antigravity")
 
   # Show current preset if no arguments
   if [[ $# -eq 0 ]]; then
@@ -211,3 +211,6 @@ op-preset() {
 
 # kc - Kubernetes database helper
 export PATH="$HOME/dev/tools/kc:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/william.ong/.antigravity/antigravity/bin:$PATH"
