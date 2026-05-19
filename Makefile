@@ -60,6 +60,75 @@ restow: ## Re-stow (unstow + stow) — useful after adding new files
 	@$(STOW) $(STOW_FLAGS) --restow $(PACKAGE)
 	@echo "Done."
 
+# ── Manual linker (stow-free fallback) ─────────────────────────────────
+# stow 2.3.1 misbehaves when STOW_DIR == TARGET (both are $HOME here),
+# emitting "skipping target which was current stow directory" and planning
+# nothing. Use `make link` as a stow-free alternative — it walks the repo
+# and creates one symlink per file, mirroring directory structure into $HOME.
+
+# Files in the repo that should NEVER be linked into $HOME.
+# Keep in sync with the `status` target below and with .stow-local-ignore.
+LINK_FIND_EXCLUDES := \
+	! -path './.git/*' \
+	! -path './docs/*' \
+	! -path './~/*' \
+	! -path './.config/Cursor/*' \
+	! -name '.stow-local-ignore' \
+	! -name '.gitignore' \
+	! -name '.gitattributes' \
+	! -name '.DS_Store' \
+	! -name 'README.md' \
+	! -name 'LICENSE' \
+	! -name 'Makefile' \
+	! -name 'opencode.json' \
+	! -name '.nvimlog'
+
+.PHONY: link
+link: ## Symlink every tracked file into $HOME without stow (picks up new files; pass DRY=1 to preview)
+	@if [ "$(DRY)" = "1" ]; then echo "Linking $(DOTFILES_DIR) → $(TARGET)  [DRY RUN — no changes]"; \
+	 else echo "Linking $(DOTFILES_DIR) → $(TARGET) (manual, no stow)…"; fi
+	@cd $(DOTFILES_DIR) && find . -type f $(LINK_FIND_EXCLUDES) 2>/dev/null | \
+		sed 's|^\./||' | sort | while read -r rel; do \
+			src="$(DOTFILES_DIR)/$$rel"; \
+			dst="$(TARGET)/$$rel"; \
+			src_ino="$$(stat -Lf %i "$$src" 2>/dev/null)"; \
+			dst_ino="$$(stat -Lf %i "$$dst" 2>/dev/null)"; \
+			if [ -n "$$src_ino" ] && [ "$$src_ino" = "$$dst_ino" ]; then \
+				: ; \
+			elif [ -L "$$dst" ]; then \
+				if [ "$(DRY)" = "1" ]; then echo "  ↻ would relink $$rel  (currently points elsewhere)"; \
+				else ln -sfn "$$src" "$$dst" && echo "  ↻ $$rel  (relinked)"; fi; \
+			elif [ -e "$$dst" ]; then \
+				if [ "$(DRY)" = "1" ]; then echo "  ! would back up real file: $$rel"; \
+				else ts=$$(date +%Y%m%d-%H%M%S); \
+					mv "$$dst" "$$dst.bak.$$ts" && ln -s "$$src" "$$dst" && \
+					echo "  ✓ $$rel  (existing file backed up as $$(basename "$$dst").bak.$$ts)"; \
+				fi; \
+			else \
+				if [ "$(DRY)" = "1" ]; then echo "  + would link $$rel"; \
+				else mkdir -p "$$(dirname "$$dst")" && ln -s "$$src" "$$dst" && echo "  + $$rel"; fi; \
+			fi; \
+		done
+	@if [ "$(DRY)" = "1" ]; then echo "Dry run done — re-run without DRY=1 to apply."; \
+	 else echo "Done. (silent entries = already correctly linked)"; fi
+
+.PHONY: link-check
+link-check: ## Preview what `make link` would do, without changing anything
+	@$(MAKE) --no-print-directory link DRY=1
+
+.PHONY: unlink
+unlink: ## Remove every direct symlink this repo placed in $HOME (mirror of `link`)
+	@echo "Unlinking $(DOTFILES_DIR) from $(TARGET)…"
+	@cd $(DOTFILES_DIR) && find . -type f $(LINK_FIND_EXCLUDES) 2>/dev/null | \
+		sed 's|^\./||' | sort | while read -r rel; do \
+			src="$(DOTFILES_DIR)/$$rel"; \
+			dst="$(TARGET)/$$rel"; \
+			if [ -L "$$dst" ] && [ "$$(stat -Lf %i "$$src" 2>/dev/null)" = "$$(stat -Lf %i "$$dst" 2>/dev/null)" ]; then \
+				rm "$$dst" && echo "  - $$rel"; \
+			fi; \
+		done
+	@echo "Done."
+
 .PHONY: adopt
 adopt: ## DESTRUCTIVE: move existing files in $HOME into this repo, then symlink them back
 	@echo "⚠ This will MOVE files from $(TARGET) into $(DOTFILES_DIR) for any conflicts."
