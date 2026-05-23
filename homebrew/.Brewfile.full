@@ -36,7 +36,6 @@ brew "gitlint"
 brew "gnutls"
 brew "gping"
 brew "grep"
-brew "grip", link: false
 brew "ijq"
 brew "telnet"
 
@@ -78,6 +77,7 @@ brew "ruff-lsp"
 brew "semgrep"
 brew "shfmt"
 brew "stylua"
+brew "tree-sitter-cli"
 brew "unbound"
 
 # Personal apps
