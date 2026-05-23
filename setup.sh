@@ -172,6 +172,36 @@ link_macos_app_configs() {
   done
 }
 
+ensure_git_local_config() {
+  local target template answer
+  target="$HOME/.gitconfig.local"
+  template="$DOTFILES_DIR/git/.gitconfig.local.example"
+
+  if [ -e "$target" ]; then
+    log "Git local config already exists"
+    return
+  fi
+
+  [ -e "$template" ] || return
+
+  if [ -t 0 ] && [ -t 1 ]; then
+    printf "Create ~/.gitconfig.local from template for personal/work Git settings? [y/N] "
+    read -r answer
+    case "$answer" in
+      y|Y|yes|YES)
+        cp "$template" "$target"
+        chmod 600 "$target"
+        log "created ~/.gitconfig.local; edit placeholders before committing work"
+        ;;
+      *)
+        log "skipping ~/.gitconfig.local creation"
+        ;;
+    esac
+  else
+    log "skipping ~/.gitconfig.local prompt in non-interactive setup"
+  fi
+}
+
 install_bundle() {
   local profile brewfile
   profile="$1"
@@ -205,6 +235,7 @@ main() {
   ensure_brew_tools
   stow_packages
   link_macos_app_configs
+  ensure_git_local_config
   install_bundle "$profile"
 
   log "done"

@@ -4,6 +4,8 @@
 !.env.example
 
 # Credentials and machine-local secrets.
+.gitconfig.local
+!git/.gitconfig
 .netrc
 .git-credentials
 .ssh/

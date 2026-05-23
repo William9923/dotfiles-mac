@@ -18,6 +18,7 @@ dotfiles/
 
   git/
     .gitconfig
+    .gitconfig.local.example
     .gitignore_global
 
   homebrew/
@@ -52,6 +53,8 @@ cd ~/dotfiles
 ```
 
 `setup.sh` installs or verifies Xcode Command Line Tools, Homebrew, Git, GNU Stow, and `mas`; backs up filesystem conflicts; stows all packages; links Cursor settings into `~/Library/Application Support/Cursor/User`; then installs the selected Homebrew profile with the global Git config disabled so Homebrew HTTPS taps are not rewritten to SSH.
+
+The tracked `~/.gitconfig` stays generic and includes `~/.gitconfig.local` for personal or company-specific identity and host rewrites. During interactive setup, `setup.sh` can create `~/.gitconfig.local` from `git/.gitconfig.local.example`; non-interactive runs skip the prompt.
 
 ## Homebrew Profiles
 

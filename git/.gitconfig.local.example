@@ -1,0 +1,14 @@
+# Copy this file to ~/.gitconfig.local and replace the placeholders.
+# Keep personal, company, and machine-specific Git settings out of tracked config.
+
+[user]
+    name = Your Name
+    email = you@example.com
+
+# Example: rewrite a private Git host from HTTPS to SSH.
+# [url "git@work-git.example.com:"]
+#     insteadOf = https://work-git.example.com/
+
+# Prefer a system keychain over storing credentials in plain text.
+# [credential]
+#     helper = osxkeychain

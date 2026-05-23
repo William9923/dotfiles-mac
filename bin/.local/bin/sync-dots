@@ -46,6 +46,7 @@ assert_safe_staged_paths() {
   bad_paths="$(
     git diff --cached --name-only | awk '
       /(^|\/)\.env($|\.)/ ||
+      /(^|\/)\.gitconfig\.local$/ ||
       /(^|\/)\.ssh(\/|$)/ ||
       /(^|\/)\.git-credentials$/ ||
       /(^|\/)\.netrc$/ ||
