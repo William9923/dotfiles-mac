@@ -116,7 +116,7 @@ if command -v direnv >/dev/null 2>&1; then
 fi
 
 if command -v mise >/dev/null 2>&1; then
-  eval "$(mise activate zsh)"
+  zsh-defer eval "$(mise activate zsh)"
 fi
 
 # Following line was automatically added by arttime installer
