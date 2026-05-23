@@ -42,7 +42,7 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 
 # Protobuf protoc (proto compiler)
-export PATH="/opt/homebrew/opt/protobuf@3/bin:$PATH"
+export PATH="/opt/homebrew/opt/protobuf/bin:$PATH"
 
 # Useful alias
 alias ls="ls -p -G"
