@@ -18,12 +18,23 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
   end,
 })
 
--- NOTE: autocmd for line number color (above current line: red, below current line: blue)
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  callback = function()
-    vim.cmd("hi LineNrAbove guifg=red ctermfg=red")
-    vim.cmd("hi LineNrBelow guifg=cyan ctermfg=cyan")
-  end,
+local function set_relative_line_number_highlights()
+  local ok, colors = pcall(function()
+    return require("solarized-osaka.colors").setup()
+  end)
+
+  if ok then
+    vim.api.nvim_set_hl(0, "LineNrAbove", { fg = colors.red500 })
+    vim.api.nvim_set_hl(0, "LineNrBelow", { fg = colors.cyan500 })
+  else
+    vim.cmd("hi! link LineNrAbove LineNr")
+    vim.cmd("hi! link LineNrBelow LineNr")
+  end
+end
+
+-- Distinguish relative line numbers using the active Solarized Osaka palette.
+vim.api.nvim_create_autocmd({ "ColorScheme", "BufEnter" }, {
+  callback = set_relative_line_number_highlights,
 })
 
 -- NOTE: apply auto format on specific file type
@@ -41,8 +52,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- Disable the concealing in some file formats
 -- The default conceallevel is 3 in LazyVim
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "json", "jsonc", "markdown" },
-	callback = function()
-		vim.opt.conceallevel = 0
-	end,
+  pattern = { "json", "jsonc", "markdown" },
+  callback = function()
+    vim.opt.conceallevel = 0
+  end,
 })

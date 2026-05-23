@@ -67,25 +67,38 @@ return {
           end)
         end,
       })
-      opts.presets.lsp_doc_border = false
+      opts.presets.lsp_doc_border = true
       opts.presets.bottom_search = true
     end,
+  },
+
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      timeout = 5000,
+    },
   },
 
   -- buffer filename
   {
     "b0o/incline.nvim",
+    dependencies = { "rebelot/kanagawa.nvim" },
     event = "BufReadPre",
     priority = 1200,
     config = function()
+      local kanagawa = require("kanagawa.colors").setup({ theme = "dragon" })
+      local theme = kanagawa.theme
       require("incline").setup({
         highlight = {
           groups = {
-            InclineNormal = { guibg = "cyan", guifg = "black" },
-            InclineNormalNC = { guifg = "magenta", guibg = "black" },
+            InclineNormal = { guibg = theme.syn.operator, guifg = theme.ui.bg },
+            InclineNormalNC = { guifg = theme.syn.keyword, guibg = theme.ui.bg_m3 },
           },
         },
         window = { margin = { vertical = 0, horizontal = 1 } },
+        hide = {
+          cursorline = true,
+        },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
           if vim.bo[props.buf].modified then
@@ -102,12 +115,53 @@ return {
   -- statusline (use default status line)
   {
     "nvim-lualine/lualine.nvim",
+    dependencies = { "rebelot/kanagawa.nvim" },
     event = "VeryLazy",
-    opts = {
-      options = {
-        theme = "kanagawa",
-      },
-    },
+    opts = function(_, opts)
+      local LazyVim = require("lazyvim.util")
+      local kanagawa = require("kanagawa.colors").setup({ theme = "dragon" })
+      local theme = kanagawa.theme
+      opts.options = opts.options or {}
+      opts.options.theme = {
+        normal = {
+          a = { bg = theme.syn.fun, fg = theme.ui.bg_m3 },
+          b = { bg = theme.diff.change, fg = theme.syn.fun },
+          c = { bg = theme.ui.bg_p1, fg = theme.ui.fg },
+        },
+        insert = {
+          a = { bg = theme.diag.ok, fg = theme.ui.bg },
+          b = { bg = theme.ui.bg, fg = theme.diag.ok },
+        },
+        command = {
+          a = { bg = theme.syn.operator, fg = theme.ui.bg },
+          b = { bg = theme.ui.bg, fg = theme.syn.operator },
+        },
+        visual = {
+          a = { bg = theme.syn.keyword, fg = theme.ui.bg },
+          b = { bg = theme.ui.bg, fg = theme.syn.keyword },
+        },
+        replace = {
+          a = { bg = theme.syn.constant, fg = theme.ui.bg },
+          b = { bg = theme.ui.bg, fg = theme.syn.constant },
+        },
+        inactive = {
+          a = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+          b = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim, gui = "bold" },
+          c = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+        },
+      }
+      opts.sections.lualine_c[4] = {
+        LazyVim.lualine.pretty_path({
+          length = 0,
+          relative = "cwd",
+          modified_hl = "MatchParen",
+          directory_hl = "",
+          filename_hl = "Bold",
+          modified_sign = "",
+          readonly_icon = " 󰌾 ",
+        }),
+      }
+    end,
   },
 
   -- dashboard
@@ -115,6 +169,7 @@ return {
     "folke/snacks.nvim",
     ---@type snacks.Config
     opts = {
+      scroll = { enabled = false },
       dashboard = {
         pane_gap = 10,
         preset = {
