@@ -74,11 +74,6 @@ fi
 # The next line enables shell command completion for gcloud.
 # if [ -f '/Users/william.ong/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then zsh-defer . '/Users/william.ong/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
-# gvm (go version manger)
-if [ -r "$HOME/.gvm/scripts/gvm" ]; then
-  zsh-defer source "$HOME/.gvm/scripts/gvm"
-fi
-
 # Enable syntax highlighting
 if [ -r "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
   source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
@@ -120,16 +115,8 @@ if command -v direnv >/dev/null 2>&1; then
   zsh-defer eval "$(direnv hook zsh)"
 fi
 
-export NVM_DIR="$HOME/.nvm"
-zsh-defer [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-zsh-defer [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# pyenv setup
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv >/dev/null 2>&1; then
-  zsh-defer eval "$(pyenv init --path)"
-  zsh-defer eval "$(pyenv init -)"
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
 fi
 
 # Following line was automatically added by arttime installer
@@ -138,11 +125,6 @@ export MANPATH="$HOME/.local/share/man:$MANPATH"
 # Following line was automatically added by arttime installer
 export PATH="$HOME/.local/bin:$PATH"
 
-export PATH="$HOME/.rbenv/versions/3.2.2/bin:$HOME/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/bin:$PATH"
-if command -v rbenv >/dev/null 2>&1; then
-  zsh-defer eval "$(rbenv init -)"
-fi
-
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
@@ -150,13 +132,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
-# bun completions
-zsh-defer [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # opencode - Function to run OpenCode on an available port
 unalias op 2>/dev/null

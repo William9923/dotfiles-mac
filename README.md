@@ -69,6 +69,10 @@ make bundle-dump             # refresh homebrew/.Brewfile.full from this host
 
 `minimal` is the portable baseline for shell, Git, editor, tmux, and dotfiles sync. `full` is the non-company personal/dev setup. Keep company/private modules out of tracked Brewfiles; use an ignored local file such as `homebrew/.Brewfile.company.local` when needed.
 
+## Runtime Tools
+
+`mise` manages the default Bun, ghq, Node.js, Python, Ruby, Rust, and Go versions from `config/.config/mise/config.toml`. Shell startup activates `mise` directly, replacing the old `gvm`, `nvm`, `pyenv`, `rbenv`, and manual Bun setup.
+
 ## Commitizen
 
 The full profile installs the Node `commitizen` CLI plus the `cz-conventional-changelog` adapter globally. The `commitizen/.czrc` stow package links `~/.czrc`, so `git cz` uses Conventional Commit prompts in repositories without their own Commitizen config.
