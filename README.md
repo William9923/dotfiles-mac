@@ -40,6 +40,9 @@ dotfiles/
 
   ideavim/
     .ideavimrc
+
+  commitizen/
+    .czrc
 ```
 
 Each first-level package mirrors paths under `$HOME`. For example, `zsh/.zshrc` links to `~/.zshrc`, and `bin/.local/bin/sync-dots` links to `~/.local/bin/sync-dots`.
@@ -65,6 +68,10 @@ make bundle-dump             # refresh homebrew/.Brewfile.full from this host
 ```
 
 `minimal` is the portable baseline for shell, Git, editor, tmux, and dotfiles sync. `full` is the non-company personal/dev setup. Keep company/private modules out of tracked Brewfiles; use an ignored local file such as `homebrew/.Brewfile.company.local` when needed.
+
+## Commitizen
+
+The full profile installs the Node `commitizen` CLI plus the `cz-conventional-changelog` adapter globally. The `commitizen/.czrc` stow package links `~/.czrc`, so `git cz` uses Conventional Commit prompts in repositories without their own Commitizen config.
 
 ## Daily Sync
 
