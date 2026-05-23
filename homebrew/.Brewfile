@@ -1,0 +1,33 @@
+# Minimal portable baseline for fresh machines.
+tap "homebrew/cask-fonts"
+
+# Shell, Git, and editor basics
+brew "atuin"
+brew "bat"
+brew "curl"
+brew "direnv"
+brew "fd"
+brew "fzf"
+brew "gh"
+brew "git"
+brew "git-delta"
+brew "htop"
+brew "jq"
+brew "lazygit"
+brew "mas"
+brew "neovim"
+brew "powerlevel10k"
+brew "pyenv"
+brew "rbenv"
+brew "ripgrep"
+brew "stow"
+brew "tldr"
+brew "tmux"
+brew "wget"
+brew "yq"
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+# Prompt/editor font
+cask "font-jetbrains-mono-nerd-font"

@@ -1,3 +1,28 @@
-.ssh/
-.gitconfig
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Credentials and machine-local secrets.
 .netrc
+.git-credentials
+.ssh/
+**/.ssh/
+**/*_rsa
+**/*_dsa
+**/*_ecdsa
+**/*_ed25519
+**/*.pem
+**/*.key
+**/*.p12
+
+# Local/generated state.
+.nvimlog
+/~/
+*.log
+*.tmp
+*.bak
+*.bak.*
+homebrew/*.lock.json
+homebrew/.Brewfile.local
+homebrew/.Brewfile.company.local

@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
+DOTFILES_REMOTE="${DOTFILES_REMOTE:-origin}"
+DOTFILES_BRANCH="${DOTFILES_BRANCH:-main}"
+DOTFILES_BREW_DUMP_FILE="${DOTFILES_BREW_DUMP_FILE:-$DOTFILES_DIR/homebrew/.Brewfile.full}"
+
+log() {
+  printf '[sync-dots] %s\n' "$*"
+}
+
+die() {
+  printf '[sync-dots] error: %s\n' "$*" >&2
+  exit 1
+}
+
+require() {
+  command -v "$1" >/dev/null 2>&1 || die "missing required command: $1"
+}
+
+current_upstream() {
+  git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || true
+}
+
+pull_target() {
+  local upstream
+
+  if git ls-remote --exit-code --heads "$DOTFILES_REMOTE" "$DOTFILES_BRANCH" >/dev/null 2>&1; then
+    printf '%s %s\n' "$DOTFILES_REMOTE" "$DOTFILES_BRANCH"
+    return
+  fi
+
+  upstream="$(current_upstream)"
+  if [ -n "$upstream" ]; then
+    printf '%s %s\n' "${upstream%%/*}" "${upstream#*/}"
+    return
+  fi
+
+  die "cannot find $DOTFILES_REMOTE/$DOTFILES_BRANCH and no upstream is configured"
+}
+
+assert_safe_staged_paths() {
+  local bad_paths
+
+  bad_paths="$(
+    git diff --cached --name-only | awk '
+      /(^|\/)\.env($|\.)/ ||
+      /(^|\/)\.ssh(\/|$)/ ||
+      /(^|\/)\.git-credentials$/ ||
+      /(^|\/)\.netrc$/ ||
+      /(^|\/)id_(rsa|dsa|ecdsa|ed25519)$/ ||
+      /\.(pem|key|p12)$/ { print }
+    '
+  )"
+
+  if [ -n "$bad_paths" ]; then
+    printf '%s\n' "$bad_paths" >&2
+    die "refusing to commit sensitive-looking paths"
+  fi
+}
+
+require git
+require brew
+
+[ -d "$DOTFILES_DIR/.git" ] || die "$DOTFILES_DIR is not a git repository"
+
+cd "$DOTFILES_DIR"
+
+read -r pull_remote pull_branch <<EOF_PULL
+$(pull_target)
+EOF_PULL
+
+log "pulling $pull_remote $pull_branch with fast-forward safety"
+git pull --ff-only --autostash "$pull_remote" "$pull_branch"
+
+if [ "${DOTFILES_SYNC_BREW_BUNDLE:-0}" = "1" ]; then
+  log "refreshing Homebrew bundle at $DOTFILES_BREW_DUMP_FILE"
+  brew bundle dump --file="$DOTFILES_BREW_DUMP_FILE" --force --describe
+else
+  log "skipping Homebrew bundle dump; set DOTFILES_SYNC_BREW_BUNDLE=1 to refresh .Brewfile.full"
+fi
+
+if [ -z "$(git status --porcelain)" ]; then
+  log "no local changes detected"
+  exit 0
+fi
+
+log "staging dotfile changes"
+git add -A
+assert_safe_staged_paths
+
+timestamp="$(date '+%Y-%m-%d %H:%M:%S %z')"
+git commit -m "chore(dotfiles): sync ${timestamp}"
+
+log "pushing to $pull_remote HEAD"
+git push "$pull_remote" HEAD

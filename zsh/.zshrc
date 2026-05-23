@@ -1,7 +1,11 @@
 # For profiling purposes
 # zmodload zsh/zprof
 
-source ~/zsh-defer/zsh-defer.plugin.zsh
+if [ -r "$HOME/zsh-defer/zsh-defer.plugin.zsh" ]; then
+  source "$HOME/zsh-defer/zsh-defer.plugin.zsh"
+else
+  zsh-defer() { "$@"; }
+fi
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -19,14 +23,16 @@ export K9S_EDITOR=nvim
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-export PATH="/opt/homebrew/Cellar:$PATH"
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin"
-export PATH="$PATH:$HOME/.cargo/env"
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export PATH="$PATH:$HOME/.cargo/bin"
+if java_home="$(/usr/libexec/java_home -v 1.8 2>/dev/null)"; then
+  export JAVA_HOME="$java_home"
+fi
 # export PATH="/opt/homebrew/Cellar/openjdk/21/bin:$PATH"
 
 # Directory for temporary trash
-export GRAVEYARD="~/.local/share/Trash"
+export GRAVEYARD="$HOME/.local/share/Trash"
 
 # Colima docker virtualbox
 export DOCKER_HOST=unix://$HOME/.colima/true/docker.sock
@@ -58,7 +64,9 @@ alias zshconfig="nvim ~/.zshrc"
 alias syncnotes="z vimwiki && sh ~/vimwiki/sync.sh"
 
 # for atuin (commmand history) widget
-zsh-defer eval "$(atuin init zsh)"
+if command -v atuin >/dev/null 2>&1; then
+  zsh-defer eval "$(atuin init zsh)"
+fi
 
 # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '/Users/william.ong/Downloads/google-cloud-sdk/path.zsh.inc' ]; then zsh-defer . '/Users/william.ong/Downloads/google-cloud-sdk/path.zsh.inc'; fi
@@ -67,16 +75,28 @@ zsh-defer eval "$(atuin init zsh)"
 # if [ -f '/Users/william.ong/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then zsh-defer . '/Users/william.ong/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
 # gvm (go version manger)
-zsh-defer source "/Users/william.ong/.gvm/scripts/gvm"
+if [ -r "$HOME/.gvm/scripts/gvm" ]; then
+  zsh-defer source "$HOME/.gvm/scripts/gvm"
+fi
 
 # Enable syntax highlighting
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -r "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+  source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+elif [ -n "${HOMEBREW_PREFIX:-}" ] && [ -r "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+  source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
 
 # Enable directory jumping
-source ~/zsh-z/zsh-z.plugin.zsh
+if [ -r "$HOME/zsh-z/zsh-z.plugin.zsh" ]; then
+  source "$HOME/zsh-z/zsh-z.plugin.zsh"
+fi
 
 # Enable auto-suggestion
-source ~/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -r "$HOME/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  source "$HOME/zsh-autosuggestions/zsh-autosuggestions.zsh"
+elif [ -n "${HOMEBREW_PREFIX:-}" ] && [ -r "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
 
 # # kubernetes auto-completion
 # [[ $commands[kubectl] ]] && zsh-defer source <(kubectl completion zsh)
@@ -85,12 +105,20 @@ source ~/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f ~/.zsh_secrets ] && source ~/.zsh_secrets
 
 # kubectl color
-alias kubectl="kubecolor"
+if command -v kubecolor >/dev/null 2>&1; then
+  alias kubectl="kubecolor"
+fi
 
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-source ~/.p10k.zsh
+if [ -r "$HOME/powerlevel10k/powerlevel10k.zsh-theme" ]; then
+  source "$HOME/powerlevel10k/powerlevel10k.zsh-theme"
+elif [ -n "${HOMEBREW_PREFIX:-}" ] && [ -r "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme" ]; then
+  source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
+fi
+[ -r "$HOME/.p10k.zsh" ] && source "$HOME/.p10k.zsh"
 
-zsh-defer eval "$(direnv hook zsh)"
+if command -v direnv >/dev/null 2>&1; then
+  zsh-defer eval "$(direnv hook zsh)"
+fi
 
 export NVM_DIR="$HOME/.nvm"
 zsh-defer [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -99,20 +127,24 @@ zsh-defer [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # 
 # pyenv setup
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-zsh-defer eval "$(pyenv init --path)"
-zsh-defer eval "$(pyenv init -)"
+if command -v pyenv >/dev/null 2>&1; then
+  zsh-defer eval "$(pyenv init --path)"
+  zsh-defer eval "$(pyenv init -)"
+fi
 
 # Following line was automatically added by arttime installer
-export MANPATH=/Users/william.ong/.local/share/man:$MANPATH
+export MANPATH="$HOME/.local/share/man:$MANPATH"
 
 # Following line was automatically added by arttime installer
-export PATH=/Users/william.ong/.local/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 export PATH="$HOME/.rbenv/versions/3.2.2/bin:$HOME/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/bin:$PATH"
-zsh-defer eval "$(rbenv init -)"
+if command -v rbenv >/dev/null 2>&1; then
+  zsh-defer eval "$(rbenv init -)"
+fi
 
 # pnpm
-export PNPM_HOME="/Users/william.ong/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -120,7 +152,7 @@ esac
 # pnpm end
 
 # bun completions
-zsh-defer [ -s "/Users/william.ong/.bun/_bun" ] && source "/Users/william.ong/.bun/_bun"
+zsh-defer [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -213,4 +245,4 @@ op-preset() {
 export PATH="$HOME/dev/tools/kc:$PATH"
 
 # Added by Antigravity
-export PATH="/Users/william.ong/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
