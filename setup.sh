@@ -177,11 +177,6 @@ install_bundle() {
   profile="$1"
   brewfile="$(brewfile_for_profile "$profile")"
 
-  if [ "${DOTFILES_SKIP_BREW_BUNDLE:-0}" = "1" ]; then
-    log "skipping Homebrew bundle because DOTFILES_SKIP_BREW_BUNDLE=1"
-    return
-  fi
-
   if [ -e "$brewfile" ]; then
     log "installing Homebrew bundle ($profile)"
     GIT_CONFIG_GLOBAL=/dev/null brew bundle install --file="$brewfile" --no-lock --no-upgrade

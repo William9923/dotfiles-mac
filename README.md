@@ -51,7 +51,7 @@ cd ~/dotfiles
 ./setup.sh full     # full personal/dev profile
 ```
 
-`setup.sh` installs or verifies Xcode Command Line Tools, Homebrew, Git, GNU Stow, and `mas`; backs up filesystem conflicts; stows all packages; links Cursor settings into `~/Library/Application Support/Cursor/User`; then installs the selected Homebrew profile with the global Git config disabled so Homebrew HTTPS taps are not rewritten to SSH. Set `DOTFILES_SKIP_BREW_BUNDLE=1` to skip Brewfile installation for smoke tests.
+`setup.sh` installs or verifies Xcode Command Line Tools, Homebrew, Git, GNU Stow, and `mas`; backs up filesystem conflicts; stows all packages; links Cursor settings into `~/Library/Application Support/Cursor/User`; then installs the selected Homebrew profile with the global Git config disabled so Homebrew HTTPS taps are not rewritten to SSH.
 
 ## Homebrew Profiles
 
@@ -76,10 +76,11 @@ The command pulls upstream with fast-forward safety, stages changed dotfiles, re
 ## Verification
 
 ```bash
-./test-bootstrap.sh
+./test-bootstrap.sh minimal
+./test-bootstrap.sh full
 ```
 
-The Tart test clones `ghcr.io/cirruslabs/macos-sequoia-vanilla:latest` by default, boots a transient VM, waits for SSH, copies this repo into the VM, runs `setup.sh` with `DOTFILES_SKIP_BREW_BUNDLE=1`, checks required tools and symlinks, then deletes the VM. Override with `TART_IMAGE=ghcr.io/cirruslabs/macos-sequoia-base:latest ./test-bootstrap.sh` if you want a faster base image.
+The Tart test clones `ghcr.io/cirruslabs/macos-sequoia-vanilla:latest` by default, boots a transient VM, waits for SSH, copies this repo into the VM, runs `setup.sh` with the selected profile, checks required tools and symlinks, then deletes the VM. If no profile is passed, it defaults to `minimal`. Override with `TART_IMAGE=ghcr.io/cirruslabs/macos-sequoia-base:latest ./test-bootstrap.sh minimal` if you want a faster base image.
 
 ## Maintenance
 

@@ -19,6 +19,23 @@ die() {
   exit 1
 }
 
+usage() {
+  cat <<EOF
+Usage: ${0##*/} [minimal|full]
+
+Profiles:
+  minimal  test the portable baseline (default)
+  full     test the full personal/dev profile
+EOF
+}
+
+profile_from_args() {
+  case "${1:-${TEST_BOOTSTRAP_PROFILE:-minimal}}" in
+    minimal|full) printf '%s\n' "${1:-${TEST_BOOTSTRAP_PROFILE:-minimal}}" ;;
+    *) die "unknown profile '${1:-}'; expected minimal or full" ;;
+  esac
+}
+
 cleanup() {
   set +e
   if command -v tart >/dev/null 2>&1; then
@@ -101,6 +118,16 @@ wait_for_ssh() {
 }
 
 main() {
+  local profile
+
+  if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+    usage
+    exit 0
+  fi
+
+  [ "$#" -le 1 ] || die "expected at most one profile argument"
+  profile="$(profile_from_args "${1:-}")"
+
   require tart
   trap cleanup EXIT
 
@@ -118,8 +145,8 @@ main() {
   remote "rm -rf ~/dotfiles"
   copy_repo
 
-  log "running setup.sh inside VM"
-  remote "cd ~/dotfiles && chmod +x setup.sh bin/.local/bin/sync-dots test-bootstrap.sh && HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_ENV_HINTS=1 DOTFILES_SKIP_BREW_BUNDLE=1 ./setup.sh"
+  log "running setup.sh $profile inside VM"
+  remote "cd ~/dotfiles && chmod +x setup.sh bin/.local/bin/sync-dots test-bootstrap.sh && HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_ENV_HINTS=1 ./setup.sh '$profile'"
 
   log "verifying bootstrap state"
   remote "command -v brew >/dev/null && command -v stow >/dev/null && command -v git >/dev/null"
