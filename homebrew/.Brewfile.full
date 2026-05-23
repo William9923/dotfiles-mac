@@ -135,6 +135,8 @@ brew "sst/tap/opencode"
 # GUI apps and fonts
 cask "nikitabobko/tap/aerospace"
 cask "another-redis-desktop-manager"
+cask "cursor"
+cask "cursor-cli"
 cask "font-hack-nerd-font"
 cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
