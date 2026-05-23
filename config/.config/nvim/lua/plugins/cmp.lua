@@ -95,7 +95,7 @@ return {
       end
 
       -- Disable autocomplete on prompt
-      if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+      if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
         return false
       end
 

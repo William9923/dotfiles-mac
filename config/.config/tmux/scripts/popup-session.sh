@@ -29,4 +29,4 @@ session="${prefix}-${hash}"
 tmux has-session -t "$session" 2>/dev/null || \
     tmux new-session -d -s "$session" -c "$cwd" "$@"
 
-tmux display-popup -w 90% -h 95% -E "tmux attach-session -t $session"
+tmux display-popup -w 95% -h 95% -E "tmux attach-session -t $session"

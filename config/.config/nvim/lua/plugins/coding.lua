@@ -6,8 +6,5 @@ return {
     keys = {
       { "<leader>a", "<cmd>Outline<CR>", desc = "Toggle outline" },
     },
-    opts = {
-      -- Your setup opts here
-    },
   },
 }

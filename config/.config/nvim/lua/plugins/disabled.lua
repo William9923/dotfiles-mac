@@ -1,7 +1,7 @@
 return {
-  { "echasnovski/mini.ai", enabled = false },
+  { "nvim-mini/mini.ai", enabled = false },
   { "folke/which-key.nvim", enabled = false },
-  { "ggandor/leap.nvim", enabled = false },
+  { "https://codeberg.org/andyg/leap.nvim.git", enabled = false },
   { "folke/flash.nvim", enabled = false },
   { "mfussenegger/nvim-lint", enabled = false },
   { "nvim-pack/nvim-spectre", enabled = false },
@@ -11,13 +11,11 @@ return {
     enabled = false,
   },
   { "akinsho/bufferline.nvim", enabled = false },
-  -- { "echasnovski/mini.pairs", enabled = false },
-  -- { "echasnovski/mini.surround", enabled = false },
-  { "echasnovski/mini.animate", enabled = false },
+  { "nvim-mini/mini.animate", enabled = false },
   { "folke/tokyonight.nvim", enabled = false },
   { "catppuccin/nvim", enabled = false },
   { "nvim-telescope/telescope-fzf-native.nvim", enabled = false },
-  { "echasnovski/mini.bufremove", enabled = false },
+  { "nvim-mini/mini.bufremove", enabled = false },
   {
     "LazyVim/LazyVim",
     opts = {

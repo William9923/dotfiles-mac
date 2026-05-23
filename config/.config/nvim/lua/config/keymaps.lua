@@ -22,8 +22,6 @@ keymap("v", ".", ";", opts)
 --   term_mode = "t",
 --   command_mode = "c",
 
--- Normal --
--- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
@@ -33,23 +31,11 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
 
--- Auto close bracket
--- keymap("i", "'", "''<left>", opts)
--- keymap("i", '"', '""<left>', opts)
--- keymap("i", "(", "()<left>", opts)
--- keymap("i", "{", "{}<left>", opts)
--- keymap("i", "[", "[]<left>", opts)
--- keymap("i", "<", "<><left>", opts)
--- keymap("i", "`", "``<left>", opts)
-
 -- Clear highlights
 keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
 
 -- Close buffers
 keymap("n", "<S-q>", "<cmd>Bdelete!<CR>", opts)
-
--- Fast saving with Ctrl + s
-keymap("n", "<C-s>", ":w<CR>", opts)
 
 -- Select All with Ctrl + a
 keymap("n", "<C-a>", "gg<S-v>G", opts)
@@ -62,14 +48,11 @@ keymap("n", "+", "<C-a>", opts)
 keymap("n", "-", "<C-x>", opts)
 
 -- Delete without yanking
--- keymap("n", "d", '"_d', opts)
--- keymap("n", "x", '"_x', opts)
+keymap("n", "x", '"_x', opts)
+keymap("n", "d", '"_d', opts)
 
 -- Better paste (without removing from register)
--- keymap("n", "p", '"_p', opts)
-
--- Open current directories + File
-keymap("n", "te", ":tabedit<CR>", opts) -- new tab
+keymap("n", "p", '"_p', opts)
 
 -- Splitting windows (deprecated => should use tmux navigation...)
 keymap("n", "<leader>ss", ":split<Return><C-w>w", opts) -- split windows (horizontal)
@@ -107,9 +90,3 @@ end, opts)
 keymap("v", "<leader>ff", function()
   Util.format({ force = true })
 end, opts)
-
--- Vim Tmux Navigation
--- keymap("n", "<C-h>", ":NvimTmuxNavigateLeft<cr>", opts)
--- keymap("n", "<C-j>", ":NvimTmuxNavigateDown<cr>", opts)
--- keymap("n", "<C-k>", ":NvimTmuxNavigateUp<cr>", opts)
--- keymap("n", "<C-l>", ":NvimTmuxNavigateRight<cr>", opts)
