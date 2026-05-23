@@ -64,7 +64,7 @@ setup-full: ## Bootstrap with the full Homebrew profile
 
 .PHONY: bundle-install
 bundle-install: ## Install packages from homebrew/.Brewfile.$(BREW_PROFILE)
-	@GIT_CONFIG_GLOBAL=/dev/null brew bundle install --file="$(BREWFILE)" --no-lock --no-upgrade
+	@GIT_CONFIG_GLOBAL=/dev/null brew bundle install --file="$(BREWFILE)" --no-upgrade
 
 .PHONY: bundle-install-minimal
 bundle-install-minimal: ## Install packages from the minimal Brewfile

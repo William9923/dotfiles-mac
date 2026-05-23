@@ -179,7 +179,7 @@ install_bundle() {
 
   if [ -e "$brewfile" ]; then
     log "installing Homebrew bundle ($profile)"
-    GIT_CONFIG_GLOBAL=/dev/null brew bundle install --file="$brewfile" --no-lock --no-upgrade
+    GIT_CONFIG_GLOBAL=/dev/null brew bundle install --file="$brewfile" --no-upgrade
   else
     log "skipping brew bundle because $brewfile is missing"
   fi

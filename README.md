@@ -80,7 +80,7 @@ The command pulls upstream with fast-forward safety, stages changed dotfiles, re
 ./test-bootstrap.sh full
 ```
 
-The Tart test clones `ghcr.io/cirruslabs/macos-sequoia-vanilla:latest` by default, boots a transient VM, waits for SSH, copies this repo into the VM, runs `setup.sh` with the selected profile, checks required tools and symlinks, then deletes the VM. If no profile is passed, it defaults to `minimal`. Override with `TART_IMAGE=ghcr.io/cirruslabs/macos-sequoia-base:latest ./test-bootstrap.sh minimal` if you want a faster base image.
+The Tart test clones pinned image `ghcr.io/cirruslabs/macos-sequoia-vanilla@sha256:e0a0d651b7aba2e6d8fae510b3b31c2b927d288384bcb1a32405768747ad9961` by default, boots a transient VM, waits for SSH, copies this repo into the VM, runs `setup.sh` with the selected profile, checks required tools and symlinks, then deletes the VM. If no profile is passed, it defaults to `minimal`. Override `TART_IMAGE` when you intentionally want to test against a newer or different image.
 
 ## Maintenance
 
