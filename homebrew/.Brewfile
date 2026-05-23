@@ -1,5 +1,4 @@
 # Minimal portable baseline for fresh machines.
-tap "homebrew/cask-fonts"
 
 # Shell, Git, and editor basics
 brew "atuin"
