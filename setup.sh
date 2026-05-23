@@ -215,6 +215,18 @@ install_bundle() {
   fi
 }
 
+install_mise_tools() {
+  local config
+  config="$HOME/.config/mise/config.toml"
+
+  if command -v mise >/dev/null 2>&1 && [ -e "$config" ]; then
+    log "installing mise tools from $config"
+    mise install -y
+  else
+    log "skipping mise tools because mise or $config is missing"
+  fi
+}
+
 main() {
   local profile
 
@@ -237,6 +249,7 @@ main() {
   link_macos_app_configs
   ensure_git_local_config
   install_bundle "$profile"
+  install_mise_tools
 
   log "done"
   log "profile: $profile"

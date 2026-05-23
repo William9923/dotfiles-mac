@@ -71,7 +71,14 @@ make bundle-dump             # refresh homebrew/.Brewfile.full from this host
 
 ## Runtime Tools
 
-`mise` manages the default Bun, ghq, Node.js, Python, Ruby, Rust, and Go versions from `config/.config/mise/config.toml`. Shell startup activates `mise` directly, replacing the old `gvm`, `nvm`, `pyenv`, `rbenv`, and manual Bun setup.
+`mise` manages the default Bun, ghq, Node.js, Python, Ruby, Rust, and Go versions from `config/.config/mise/config.toml`. Shell startup activates `mise`, replacing the old `gvm`, `nvm`, `pyenv`, `rbenv`, and manual Bun setup.
+
+`setup.sh` runs `mise install -y` after the selected Homebrew bundle is installed. In an existing shell, reload zsh first:
+
+```bash
+source ~/.zshrc
+mise install
+```
 
 ## Commitizen
 
