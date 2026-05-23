@@ -47,13 +47,6 @@ keymap("n", "r", "R", opts)
 keymap("n", "+", "<C-a>", opts)
 keymap("n", "-", "<C-x>", opts)
 
--- Delete without yanking
-keymap("n", "x", '"_x', opts)
-keymap("n", "d", '"_d', opts)
-
--- Better paste (without removing from register)
-keymap("n", "p", '"_p', opts)
-
 -- Splitting windows (deprecated => should use tmux navigation...)
 keymap("n", "<leader>ss", ":split<Return><C-w>w", opts) -- split windows (horizontal)
 keymap("n", "<leader>sv", ":vsplit<Return><C-w>w", opts) -- split windows (vertical)
