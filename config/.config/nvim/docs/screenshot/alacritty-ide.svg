@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1344" viewBox="0 0 1240 1344">
+<rect width="100%" height="100%" fill="#282828"/>
+<style>text{font-family:'JetBrainsMono Nerd Font',monospace;font-size:15px;font-weight:500;fill:#dfbf8e;white-space:pre}.accent{fill:#7daea3}.path{fill:#a9b665}</style>
+<text class="" x="24" y="28">  ~/dotfiles            │   0   local date_gen = io.popen(&#x27;echo &quot;$(date +%d)/$(date +%m)/$(date +%y) ($(date +%a )) $(date +%X)&quot; | tr -d &quot;\n&quot;&#x27;)</text>
+<text class="" x="24" y="46">   bin                 │  1   local date = date_gen:read(&quot;*a&quot;)     ● Need check nil.</text>
+<text class="" x="24" y="64">   claude              │  2   date_gen:close()     ● Need check nil.</text>
+<text class="" x="24" y="82">   commitizen          │   3</text>
+<text class="" x="24" y="100">   config              │   4   return {</text>
+<text class="" x="24" y="118">     .config           │   5   │ -- messages, cmdline and the popupmenu</text>
+<text class="" x="24" y="136">       nvim            │   6   │ {</text>
+<text class="" x="24" y="154">         lua           │   7   │ │ &quot;folke/noice.nvim&quot;,</text>
+<text class="accent" x="24" y="172">           plugins     │   8   │ │ opts = function(_, opts)</text>
+<text class="accent" x="24" y="190">           └ 󰢱 ui.lua   │   9   │ │ │ table.insert(opts.routes, {</text>
+<text class="" x="24" y="208">             (13 hidden i│  10   │ │ │ │ filter = {</text>
+<text class="" x="24" y="226">           (3 hidden item│  11   │ │ │ │ │ event = &quot;notify&quot;,</text>
+<text class="" x="24" y="244">         (10 hidden items│  12   │ │ │ │ │ find = &quot;No information available&quot;,</text>
+<text class="" x="24" y="262">       (6 hidden items)  │  13   │ │ │ │ },</text>
+<text class="" x="24" y="280">     (1 hidden item)     │  14   │ │ │ │ opts = { skip = true },</text>
+<text class="" x="24" y="298">   docs                │  15   │ │ │ })</text>
+<text class="" x="24" y="316">   git                 │  16   │ │ │ table.insert(opts.routes, {</text>
+<text class="" x="24" y="334">   homebrew            │  17   │ │ │ │ filter = {</text>
+<text class="" x="24" y="352">   ideavim             │  18   │ │ │ │ │ any = {</text>
+<text class="" x="24" y="370">   macos               │ 19   │ │ │ │ │ │ -- NOTE: add any annoying message here to filter from editor</text>
+<text class="" x="24" y="388">   scripts             │  20   │ │ │ │ │ │ { find = &quot;%d+L, %d+B&quot; },</text>
+<text class="" x="24" y="406">   vim                 │  21   │ │ │ │ │ │ { find = &quot;; after #%d+&quot; },</text>
+<text class="" x="24" y="424">   zsh                 │  22   │ │ │ │ │ │ { find = &quot;; before #%d+&quot; },</text>
+<text class="" x="24" y="442">   ~                  │  23   │ │ │ │ │ │ { find = &quot;%d+ more lines&quot; },</text>
+<text class="" x="24" y="460">   󱁤 Makefile            │  24   │ │ │ │ │ │ { find = &quot;%d+ fewer lines&quot; },</text>
+<text class="" x="24" y="478">    README.md           │  25   │ │ │ │ │ │ { find = &quot;%d+ lines yanked&quot; },</text>
+<text class="" x="24" y="496">    setup.sh            │  26   │ │ │ │ │ │ { find = &quot;gitsigns: Ignoring&quot; }, -- haven&#x27;t found fix yet, so quick workaround</text>
+<text class="" x="24" y="514">    test-bootstrap.sh   │  27   │ │ │ │ │ │ { find = &quot;Invalid settings:&quot; }, -- haven&#x27;t found fix yet, so quick workaround -&gt; for gopls</text>
+<text class="" x="24" y="532">   (4 hidden items)      │  28   │ │ │ │ │ },</text>
+<text class="" x="24" y="550">                         │  29   │ │ │ │ },</text>
+<text class="" x="24" y="568">                         │  30   │ │ │ │ view = &quot;mini&quot;,</text>
+<text class="" x="24" y="586">                         │  31   │ │ │ │ opts = { skip = true },</text>
+<text class="" x="24" y="604">                         │  32   │ │ │ })</text>
+<text class="" x="24" y="622">                         │  33   │ │ │ local focused = true</text>
+<text class="" x="24" y="640">                         │  34   │ │ │ vim.api.nvim_create_autocmd(&quot;FocusGained&quot;, {</text>
+<text class="" x="24" y="658">                         │  35   │ │ │ │ callback = function()</text>
+<text class="" x="24" y="676">                         │  36   │ │ │ │ │ focused = true</text>
+<text class="" x="24" y="694">                         │  37   │ │ │ │ end,</text>
+<text class="" x="24" y="712">                         │  38   │ │ │ })</text>
+<text class="" x="24" y="730">                         │  39   │ │ │ vim.api.nvim_create_autocmd(&quot;FocusLost&quot;, {</text>
+<text class="" x="24" y="748">                         │  40   │ │ │ │ callback = function()</text>
+<text class="" x="24" y="766">                         │  41   │ │ │ │ │ focused = false</text>
+<text class="" x="24" y="784">                         │  42   │ │ │ │ end,</text>
+<text class="" x="24" y="802">                         │  43   │ │ │ })</text>
+<text class="" x="24" y="820">                         │  44   │ │ │ table.insert(opts.routes, 1, {</text>
+<text class="" x="24" y="838">                         │  45   │ │ │ │ filter = {</text>
+<text class="" x="24" y="856">                         │  46   │ │ │ │ │ cond = function()</text>
+<text class="" x="24" y="874">                         │  47   │ │ │ │ │ │ return not focused</text>
+<text class="" x="24" y="892">                         │  48   │ │ │ │ │ end,</text>
+<text class="" x="24" y="910">                         │  49   │ │ │ │ },</text>
+<text class="" x="24" y="928">                         │  50   │ │ │ │ view = &quot;notify_send&quot;,</text>
+<text class="" x="24" y="946">                         │  51   │ │ │ │ opts = { stop = false },</text>
+<text class="" x="24" y="964">                         │  52   │ │ │ })</text>
+<text class="" x="24" y="982">                         │  53   │ │ │ opts.commands = {</text>
+<text class="" x="24" y="1000">                         │  54   │ │ │ │ all = {</text>
+<text class="" x="24" y="1018">                         │  55   │ │ │ │ │ -- options for the message history that you get with `:Noice`</text>
+<text class="" x="24" y="1036">                         │  56   │ │ │ │ │ view = &quot;split&quot;,</text>
+<text class="" x="24" y="1054">                         │  57   │ │ │ │ │ opts = { enter = true, format = &quot;details&quot; },</text>
+<text class="" x="24" y="1072">                         │  58   │ │ │ │ │ filter = {},</text>
+<text class="" x="24" y="1090">                         │  59   │ │ │ │ },</text>
+<text class="" x="24" y="1108">                         │  60   │ │ │ }</text>
+<text class="" x="24" y="1126">                         │  61   │ │ │ vim.api.nvim_create_autocmd(&quot;FileType&quot;, {</text>
+<text class="" x="24" y="1144">                         │  62   │ │ │ │ pattern = &quot;markdown&quot;,</text>
+<text class="" x="24" y="1162">                         │  63   │ │ │ │ callback = function(event: vim.api.create_autocmd.callback.args|vim.api.keyset.create_autocmd.callback_args)</text>
+<text class="" x="24" y="1180">                         │  64   │ │ │ │ │ vim.schedule(function()</text>
+<text class="" x="24" y="1198">                         │  65   │ │ │ │ │ │ require(&quot;noice.text.markdown&quot;).keys(event.buf)</text>
+<text class="" x="24" y="1216">                         │  66   │ │ │ │ │ end)</text>
+<text class="" x="24" y="1234">                         │  67   │ │ │ │ end,</text>
+<text class="" x="24" y="1252">                         │  68   │ │ │ })</text>
+<text class="" x="24" y="1270">                         │  69   │ │ │ opts.presets.lsp_doc_border = true</text>
+<text class="" x="24" y="1288">                         │  70   │ │ │ opts.presets.bottom_search = true</text>
+<text class="" x="24" y="1306"> ~/dotfiles </text>
+</svg>
