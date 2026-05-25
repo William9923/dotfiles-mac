@@ -219,5 +219,8 @@ op-preset() {
 # kc - Kubernetes database helper
 export PATH="$HOME/dev/tools/kc:$PATH"
 
+# opt out openspec telemetry
+export OPENSPEC_TELEMETRY=0
+
 # Added by Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
