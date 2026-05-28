@@ -7,6 +7,7 @@ else
   zsh-defer() { "$@"; }
 fi
 
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
@@ -64,11 +65,6 @@ alias c="claude"
 alias zshconfig="nvim ~/.zshrc"
 alias syncnotes="z vimwiki && sh ~/vimwiki/sync.sh"
 
-# for atuin (commmand history) widget
-if command -v atuin >/dev/null 2>&1; then
-  zsh-defer eval "$(atuin init zsh)"
-fi
-
 # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '/Users/william.ong/Downloads/google-cloud-sdk/path.zsh.inc' ]; then zsh-defer . '/Users/william.ong/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -111,10 +107,6 @@ elif [ -n "${HOMEBREW_PREFIX:-}" ] && [ -r "$HOMEBREW_PREFIX/share/powerlevel10k
   source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 fi
 [ -r "$HOME/.p10k.zsh" ] && source "$HOME/.p10k.zsh"
-
-if command -v direnv >/dev/null 2>&1; then
-  zsh-defer eval "$(direnv hook zsh)"
-fi
 
 if command -v mise >/dev/null 2>&1; then
   zsh-defer eval "$(mise activate zsh)"
@@ -213,12 +205,44 @@ op-preset() {
   echo "Switched to preset: $preset"
 }
 
+# fzf shell integration
+if [[ -o interactive ]] && command -v fzf >/dev/null 2>&1; then
+  export FZF_CTRL_R_OPTS="
+    --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+    --color header:italic
+    --header 'Press CTRL-Y to copy command into clipboard'"
+
+  export FZF_CTRL_T_OPTS="
+    --walker-skip .git,node_modules,target
+    --bind 'ctrl-y:execute-silent(pbcopy < {+f})+abort'
+    --color header:italic
+    --header 'ENTER opens in nvim; CTRL-Y copies selected path(s) into clipboard'"
+
+  export FZF_ALT_C_OPTS="--walker-skip .git,node_modules,target"
+  if command -v tree >/dev/null 2>&1; then
+    FZF_ALT_C_OPTS+=" --preview 'tree -C {}'"
+  fi
+
+  source <(fzf --zsh)
+
+  fzf-file-widget() {
+    local selected="$(__fzf_select)"
+    local ret=$?
+    if [[ -n "${selected//[[:space:]]/}" ]]; then
+      zle push-line
+      BUFFER="nvim -- ${selected}"
+      zle accept-line
+      return $?
+    fi
+    zle reset-prompt
+    return $ret
+  }
+  zle -N fzf-file-widget
+fi
+
+
 # For profiling purposes
 # zprof
-
-
-# kc - Kubernetes database helper
-export PATH="$HOME/dev/tools/kc:$PATH"
 
 # opt out openspec telemetry
 export OPENSPEC_TELEMETRY=0
