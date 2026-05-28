@@ -4,6 +4,7 @@
 brew "atuin"
 brew "bat"
 brew "curl"
+brew "difftastic"
 brew "direnv"
 brew "fd"
 brew "fzf"
