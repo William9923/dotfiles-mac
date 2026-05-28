@@ -50,7 +50,8 @@ alias la="ls -A"
 alias ll="ls -l"
 alias lla="ll -A"
 alias g=git
-alias lg=lazygit
+alias lg="lazygit"
+alias ldiff="lazygit status --screen-mode=full"
 alias ld=lazydocker
 alias t=tmux
 alias v=nvim

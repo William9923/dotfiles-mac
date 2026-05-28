@@ -145,31 +145,52 @@ stow_packages() {
 }
 
 link_macos_app_configs() {
-  local cursor_src cursor_dst file
+  local cursor_src cursor_dst lazygit_src lazygit_dst file
   cursor_src="$DOTFILES_DIR/config/.config/Cursor/User"
   cursor_dst="$HOME/Library/Application Support/Cursor/User"
+  lazygit_src="$DOTFILES_DIR/config/.config/lazygit/config.yml"
+  lazygit_dst="$HOME/Library/Application Support/lazygit/config.yml"
 
-  [ -d "$cursor_src" ] || return
-  mkdir -p "$cursor_dst"
+  if [ -d "$cursor_src" ]; then
+    mkdir -p "$cursor_dst"
 
-  for file in settings.json keybindings.json; do
-    [ -e "$cursor_src/$file" ] || continue
-    if same_file "$cursor_src/$file" "$cursor_dst/$file"; then
-      log "Cursor $file already linked"
-    elif [ -L "$cursor_dst/$file" ]; then
-      rm "$cursor_dst/$file"
-      ln -s "$cursor_src/$file" "$cursor_dst/$file"
-      log "relinked Cursor $file"
-    elif [ -e "$cursor_dst/$file" ]; then
-      mkdir -p "$BACKUP_DIR/Cursor"
-      mv "$cursor_dst/$file" "$BACKUP_DIR/Cursor/$file"
-      ln -s "$cursor_src/$file" "$cursor_dst/$file"
-      log "linked Cursor $file after backup"
-    else
-      ln -s "$cursor_src/$file" "$cursor_dst/$file"
-      log "linked Cursor $file"
-    fi
-  done
+    for file in settings.json keybindings.json; do
+      [ -e "$cursor_src/$file" ] || continue
+      if same_file "$cursor_src/$file" "$cursor_dst/$file"; then
+        log "Cursor $file already linked"
+      elif [ -L "$cursor_dst/$file" ]; then
+        rm "$cursor_dst/$file"
+        ln -s "$cursor_src/$file" "$cursor_dst/$file"
+        log "relinked Cursor $file"
+      elif [ -e "$cursor_dst/$file" ]; then
+        mkdir -p "$BACKUP_DIR/Cursor"
+        mv "$cursor_dst/$file" "$BACKUP_DIR/Cursor/$file"
+        ln -s "$cursor_src/$file" "$cursor_dst/$file"
+        log "linked Cursor $file after backup"
+      else
+        ln -s "$cursor_src/$file" "$cursor_dst/$file"
+        log "linked Cursor $file"
+      fi
+    done
+  fi
+
+  [ -e "$lazygit_src" ] || return
+  mkdir -p "$(dirname "$lazygit_dst")"
+  if same_file "$lazygit_src" "$lazygit_dst"; then
+    log "lazygit config already linked"
+  elif [ -L "$lazygit_dst" ]; then
+    rm "$lazygit_dst"
+    ln -s "$lazygit_src" "$lazygit_dst"
+    log "relinked lazygit config"
+  elif [ -e "$lazygit_dst" ]; then
+    mkdir -p "$BACKUP_DIR/lazygit"
+    mv "$lazygit_dst" "$BACKUP_DIR/lazygit/config.yml"
+    ln -s "$lazygit_src" "$lazygit_dst"
+    log "linked lazygit config after backup"
+  else
+    ln -s "$lazygit_src" "$lazygit_dst"
+    log "linked lazygit config"
+  fi
 }
 
 ensure_git_local_config() {

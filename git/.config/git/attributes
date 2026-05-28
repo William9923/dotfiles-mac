@@ -1,0 +1,7 @@
+# Route source files through Difftastic's structural diff driver.
+*.js     diff=difftastic
+*.jsx    diff=difftastic
+*.ts     diff=difftastic
+*.tsx    diff=difftastic
+*.go     diff=difftastic
+*.py     diff=difftastic

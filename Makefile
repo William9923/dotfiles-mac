@@ -88,6 +88,15 @@ link-macos-apps: ## Link app configs that do not use XDG paths on macOS
 			echo "skip Cursor/$$f: target exists and is not a symlink"; \
 		fi; \
 	done
+	@mkdir -p "$(HOME)/Library/Application Support/lazygit"
+	@src="$(DOTFILES_DIR)/config/.config/lazygit/config.yml"; \
+	dst="$(HOME)/Library/Application Support/lazygit/config.yml"; \
+	if [ -L "$$dst" ] || [ ! -e "$$dst" ]; then \
+		ln -sfn "$$src" "$$dst"; \
+		echo "linked lazygit/config.yml"; \
+	else \
+		echo "skip lazygit/config.yml: target exists and is not a symlink"; \
+	fi
 
 .PHONY: sync
 sync: ## Run the global sync command from the repo copy

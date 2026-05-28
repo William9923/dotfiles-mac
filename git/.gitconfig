@@ -1,6 +1,7 @@
 [core]
   pager = delta
 	excludesfile = ~/.gitignore_global
+  attributesfile = ~/.config/git/attributes
 	editor = nvim
 	ignorecase = false
   autocrlf = input
@@ -34,6 +35,8 @@
 	cmd = \"\" -merge -result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [diff]
     colorMoved = default
+[diff "difftastic"]
+    command = difft --background=dark --color=always
 [difftool "nvimdiff"]
 	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
 	path =

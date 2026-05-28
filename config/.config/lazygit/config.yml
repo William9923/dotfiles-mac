@@ -6,9 +6,10 @@ customCommands:
     loadingText: "opening commitizen commit tool"
     output: terminal
 git:
-  paging:
-    colorArg: never
-    pager: delta --dark --paging=never
+  pagers:
+    - useExternalDiffGitConfig: true
+    - colorArg: never
+      pager: delta --dark --paging=never
 gui:
   theme:
     selectedLineByColor:
@@ -17,5 +18,10 @@ gui:
       - underline
   showIcons: true
 os:
- editCommand: 'vim'
- editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
+  editPreset: 'nvim'
+  edit: 'nvim {{filename}}'
+  editAtLine: 'nvim +{{line}} {{filename}}'
+  editAtLineAndWait: 'nvim +{{line}} {{filename}}'
+  editInTerminal: true
+  open: 'open {{filename}}'
+  openDirInEditor: 'nvim {{dir}}'
