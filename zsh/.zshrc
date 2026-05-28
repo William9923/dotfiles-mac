@@ -207,6 +207,13 @@ op-preset() {
 
 # fzf shell integration
 if [[ -o interactive ]] && command -v fzf >/dev/null 2>&1; then
+  # Allow Ctrl-S to be used as a key binding instead of terminal flow control.
+  stty -ixon 2>/dev/null
+
+  if [[ -n "${P10K_OSAKA_FG:-}" ]]; then
+    export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--color=fg:${P10K_OSAKA_FG},fg+:${P10K_OSAKA_FG},bg:-1,bg+:-1,hl:${P10K_OSAKA_YELLOW},hl+:${P10K_OSAKA_ORANGE},info:${P10K_OSAKA_MUTED},border:${P10K_OSAKA_DIM},prompt:${P10K_OSAKA_BLUE},pointer:${P10K_OSAKA_MAGENTA},marker:${P10K_OSAKA_GREEN},spinner:${P10K_OSAKA_CYAN},header:${P10K_OSAKA_MUTED},gutter:-1,query:${P10K_OSAKA_FG},disabled:${P10K_OSAKA_MUTED}"
+  fi
+
   export FZF_CTRL_R_OPTS="
     --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
     --color header:italic
@@ -238,6 +245,49 @@ if [[ -o interactive ]] && command -v fzf >/dev/null 2>&1; then
     return $ret
   }
   zle -N fzf-file-widget
+
+  fzf-rg-widget() {
+    if ! command -v rg >/dev/null 2>&1; then
+      zle -M "rg is required for Ctrl-S search"
+      return 1
+    fi
+
+    local selected ret file line rest
+    local preview_opts=()
+
+    if command -v bat >/dev/null 2>&1; then
+      preview_opts=(--preview 'bat --style=numbers --color=always --highlight-line {2} -- {1}')
+    fi
+
+    selected="$(
+      printf '' |
+        fzf --disabled \
+          --prompt='rg> ' \
+          --delimiter=':' \
+          --header='Type to search with rg; ENTER opens match in nvim' \
+          --bind='change:reload:test -n {q} && rg --column --line-number --no-heading --color=never --smart-case -- {q} || true' \
+          "${preview_opts[@]}"
+    )"
+    ret=$?
+
+    if [[ -n "${selected//[[:space:]]/}" ]]; then
+      file="${selected%%:*}"
+      rest="${selected#*:}"
+      line="${rest%%:*}"
+
+      if [[ -n "$file" && "$line" =~ '^[0-9]+$' ]]; then
+        zle push-line
+        BUFFER="nvim +${line} -- ${(q)file}"
+        zle accept-line
+        return $?
+      fi
+    fi
+
+    zle reset-prompt
+    return $ret
+  }
+  zle -N fzf-rg-widget
+  bindkey '^S' fzf-rg-widget
 fi
 
 
