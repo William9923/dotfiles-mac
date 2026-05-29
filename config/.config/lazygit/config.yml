@@ -12,11 +12,24 @@ git:
       pager: delta --dark --paging=never
 gui:
   theme:
-    selectedLineByColor:
-      - underline
-    selectedRangeByColor:
-      - underline
-  showIcons: true
+    activeBorderColor:
+      - blue
+      - bold
+    inactiveBorderColor:
+      - white
+    selectedLineBgColor:
+      - black
+    optionsTextColor:
+      - cyan
+    unstagedChangesColor:
+      - yellow
+    cherryPickedCommitBgColor:
+      - cyan
+    markedBaseCommitBgColor:
+      - yellow
+    defaultFgColor:
+      - default
+  nerdFontsVersion: "3"
 os:
   editPreset: 'nvim'
   edit: 'nvim {{filename}}'

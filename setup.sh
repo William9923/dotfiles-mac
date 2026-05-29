@@ -144,12 +144,36 @@ stow_packages() {
   stow --dir="$DOTFILES_DIR" --target="$HOME" --no-folding "${PACKAGES[@]}"
 }
 
+link_application_support_config() {
+  local app_name src dst
+  app_name="$1"
+  src="$2"
+  dst="$3"
+
+  [ -e "$src" ] || return
+
+  mkdir -p "$(dirname "$dst")"
+  if same_file "$src" "$dst"; then
+    log "$app_name config already linked"
+  elif [ -L "$dst" ]; then
+    rm "$dst"
+    ln -s "$src" "$dst"
+    log "relinked $app_name config"
+  elif [ -e "$dst" ]; then
+    mkdir -p "$BACKUP_DIR/$app_name"
+    mv "$dst" "$BACKUP_DIR/$app_name/config.yml"
+    ln -s "$src" "$dst"
+    log "linked $app_name config after backup"
+  else
+    ln -s "$src" "$dst"
+    log "linked $app_name config"
+  fi
+}
+
 link_macos_app_configs() {
-  local cursor_src cursor_dst lazygit_src lazygit_dst file
+  local cursor_src cursor_dst file
   cursor_src="$DOTFILES_DIR/config/.config/Cursor/User"
   cursor_dst="$HOME/Library/Application Support/Cursor/User"
-  lazygit_src="$DOTFILES_DIR/config/.config/lazygit/config.yml"
-  lazygit_dst="$HOME/Library/Application Support/lazygit/config.yml"
 
   if [ -d "$cursor_src" ]; then
     mkdir -p "$cursor_dst"
@@ -174,23 +198,15 @@ link_macos_app_configs() {
     done
   fi
 
-  [ -e "$lazygit_src" ] || return
-  mkdir -p "$(dirname "$lazygit_dst")"
-  if same_file "$lazygit_src" "$lazygit_dst"; then
-    log "lazygit config already linked"
-  elif [ -L "$lazygit_dst" ]; then
-    rm "$lazygit_dst"
-    ln -s "$lazygit_src" "$lazygit_dst"
-    log "relinked lazygit config"
-  elif [ -e "$lazygit_dst" ]; then
-    mkdir -p "$BACKUP_DIR/lazygit"
-    mv "$lazygit_dst" "$BACKUP_DIR/lazygit/config.yml"
-    ln -s "$lazygit_src" "$lazygit_dst"
-    log "linked lazygit config after backup"
-  else
-    ln -s "$lazygit_src" "$lazygit_dst"
-    log "linked lazygit config"
-  fi
+  link_application_support_config \
+    lazygit \
+    "$DOTFILES_DIR/config/.config/lazygit/config.yml" \
+    "$HOME/Library/Application Support/lazygit/config.yml"
+
+  link_application_support_config \
+    lazydocker \
+    "$DOTFILES_DIR/config/.config/lazydocker/config.yml" \
+    "$HOME/Library/Application Support/lazydocker/config.yml"
 }
 
 ensure_git_local_config() {

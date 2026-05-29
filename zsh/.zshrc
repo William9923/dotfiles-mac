@@ -107,6 +107,8 @@ elif [ -n "${HOMEBREW_PREFIX:-}" ] && [ -r "$HOMEBREW_PREFIX/share/powerlevel10k
   source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
 fi
 [ -r "$HOME/.p10k.zsh" ] && source "$HOME/.p10k.zsh"
+[[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/theme/solarized-osaka/palette.zsh" ]] &&
+  source "${XDG_CONFIG_HOME:-$HOME/.config}/theme/solarized-osaka/palette.zsh"
 
 if command -v mise >/dev/null 2>&1; then
   zsh-defer eval "$(mise activate zsh)"
@@ -210,8 +212,8 @@ if [[ -o interactive ]] && command -v fzf >/dev/null 2>&1; then
   # Allow Ctrl-S to be used as a key binding instead of terminal flow control.
   stty -ixon 2>/dev/null
 
-  if [[ -n "${P10K_OSAKA_FG:-}" ]]; then
-    export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--color=fg:${P10K_OSAKA_FG},fg+:${P10K_OSAKA_FG},bg:-1,bg+:-1,hl:${P10K_OSAKA_YELLOW},hl+:${P10K_OSAKA_ORANGE},info:${P10K_OSAKA_MUTED},border:${P10K_OSAKA_DIM},prompt:${P10K_OSAKA_BLUE},pointer:${P10K_OSAKA_MAGENTA},marker:${P10K_OSAKA_GREEN},spinner:${P10K_OSAKA_CYAN},header:${P10K_OSAKA_MUTED},gutter:-1,query:${P10K_OSAKA_FG},disabled:${P10K_OSAKA_MUTED}"
+  if [[ -n "${DOT_THEME_FG:-}" ]]; then
+    export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:+$FZF_DEFAULT_OPTS }--color=fg:${DOT_THEME_FG},fg+:${DOT_THEME_FG},bg:-1,bg+:-1,hl:${DOT_THEME_YELLOW},hl+:${DOT_THEME_ORANGE},info:${DOT_THEME_MUTED},border:${DOT_THEME_DIM},prompt:${DOT_THEME_BLUE},pointer:${DOT_THEME_MAGENTA},marker:${DOT_THEME_GREEN},spinner:${DOT_THEME_CYAN},header:${DOT_THEME_MUTED},gutter:-1,query:${DOT_THEME_FG},disabled:${DOT_THEME_MUTED}"
   fi
 
   export FZF_CTRL_R_OPTS="
