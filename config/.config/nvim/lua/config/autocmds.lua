@@ -57,3 +57,18 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt.conceallevel = 0
   end,
 })
+
+-- Start prompt-style floating inputs ready for typing.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "snacks_input",
+    "DressingInput",
+  },
+  callback = function(ev)
+    vim.schedule(function()
+      if vim.api.nvim_get_current_buf() == ev.buf then
+        vim.cmd("startinsert")
+      end
+    end)
+  end,
+})

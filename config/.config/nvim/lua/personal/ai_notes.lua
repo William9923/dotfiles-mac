@@ -5,6 +5,7 @@ local defaults = {
   default_kind = "review",
   keymap = {
     input = "<leader>an",
+    list = "<leader>al",
     delete = "<leader>ad",
   },
   use_git_root = true,
@@ -324,6 +325,54 @@ local function get_entry_picker_items(entries)
   return items
 end
 
+local function set_ai_picker_highlights()
+  local normal = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+  local normal_float = vim.api.nvim_get_hl(0, { name = "NormalFloat", link = false })
+  local float_border = vim.api.nvim_get_hl(0, { name = "FloatBorder", link = false })
+  local float_title = vim.api.nvim_get_hl(0, { name = "FloatTitle", link = false })
+  local title = vim.api.nvim_get_hl(0, { name = "Title", link = false })
+  local bg = normal.bg or normal_float.bg or 0x002b36
+  local fg = normal_float.fg or normal.fg
+
+  vim.api.nvim_set_hl(0, "AIInputPickerNormal", { bg = bg, fg = fg })
+  vim.api.nvim_set_hl(0, "AIInputPickerBorder", { bg = bg, fg = float_border.fg or fg })
+  vim.api.nvim_set_hl(0, "AIInputPickerTitle", { bg = bg, fg = float_title.fg or title.fg or fg })
+end
+
+local function get_ai_picker_win_opts(opts)
+  set_ai_picker_highlights()
+
+  local winhighlight = table.concat({
+    "Normal:AIInputPickerNormal",
+    "NormalFloat:AIInputPickerNormal",
+    "NormalNC:AIInputPickerNormal",
+    "FloatBorder:AIInputPickerBorder",
+    "FloatTitle:AIInputPickerTitle",
+    "FloatFooter:AIInputPickerTitle",
+  }, ",")
+
+  return vim.tbl_deep_extend("force", {
+    input = {
+      wo = {
+        winblend = 0,
+        winhighlight = winhighlight,
+      },
+    },
+    list = {
+      wo = {
+        winblend = 0,
+        winhighlight = winhighlight,
+      },
+    },
+    preview = {
+      wo = {
+        winblend = 0,
+        winhighlight = winhighlight,
+      },
+    },
+  }, opts or {})
+end
+
 local function open_entry(path, entry)
   vim.cmd.edit(vim.fn.fnameescape(path))
   vim.api.nvim_win_set_cursor(0, { entry.start_line, 0 })
@@ -401,7 +450,7 @@ local function show_ai_input_chunks()
     items = get_entry_picker_items(entries),
     format = "text",
     preview = "preview",
-    win = {
+    win = get_ai_picker_win_opts({
       input = {
         keys = {
           ["<Tab>"] = false,
@@ -416,7 +465,7 @@ local function show_ai_input_chunks()
           ["<C-a>"] = false,
         },
       },
-    },
+    }),
     confirm = function(active_picker, item)
       active_picker:close()
       if item then
@@ -455,6 +504,7 @@ local function show_ai_input_delete_picker()
     items = get_entry_picker_items(entries),
     format = "text",
     preview = "preview",
+    win = get_ai_picker_win_opts(),
     confirm = function(picker)
       local selected = picker:selected({ fallback = true })
       picker:close()
@@ -566,12 +616,19 @@ function M.setup(opts)
     desc = "Pick an AI input chunk to inspect",
   })
 
+  vim.keymap.set({ "n", "x", "v" }, config.keymap.list, ":AIInputChunks<CR>", {
+    desc = "Inspect AI note chunk from selection",
+  })
+
   vim.api.nvim_create_user_command("AIInputDelete", function()
     show_ai_input_delete_picker()
   end, {
     desc = "Pick AI input chunks to delete",
   })
 
+  vim.keymap.set({ "n", "x", "v" }, config.keymap.delete, ":AIInputDelete<CR>", {
+    desc = "Remove AI note chunk from selection",
+  })
 end
 
 return M
