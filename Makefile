@@ -23,14 +23,53 @@ help: ## Show this help
 
 .PHONY: doctor
 doctor: ## Check required local tooling
-	@command -v git >/dev/null 2>&1 && echo "  ok git:  $$(git --version)" || { echo "  missing git"; exit 1; }
-	@command -v stow >/dev/null 2>&1 && echo "  ok stow: $$(stow --version | awk 'NR==1 {print}')" || { echo "  missing stow"; exit 1; }
-	@command -v brew >/dev/null 2>&1 && echo "  ok brew: $$(brew --version | awk 'NR==1 {print}')" || echo "  missing brew"
-	@command -v mas >/dev/null 2>&1 && echo "  ok mas:  $$(mas version)" || echo "  missing mas"
+	@echo "Checking local tools..."
+	@echo "Status lines start with 'required' or 'optional'; other messages come from local tool startup."
+	@echo ""
+	@missing=0; \
+	if command -v git >/dev/null 2>&1; then \
+		printf "  required  ok       %-5s %s\n" "git" "$$(git --version)"; \
+	else \
+		printf "  required  missing  %-5s install Xcode Command Line Tools or Homebrew git\n" "git"; \
+		missing=1; \
+	fi; \
+	if command -v stow >/dev/null 2>&1; then \
+		printf "  required  ok       %-5s %s\n" "stow" "$$(stow --version | awk 'NR==1 {print}')"; \
+	else \
+		printf "  required  missing  %-5s install GNU Stow before linking dotfiles\n" "stow"; \
+		missing=1; \
+	fi; \
+	if command -v brew >/dev/null 2>&1; then \
+		printf "  optional  ok       %-5s %s\n" "brew" "$$(brew --version | awk 'NR==1 {print}')"; \
+	else \
+		printf "  optional  missing  %-5s install Homebrew to use bundle targets\n" "brew"; \
+	fi; \
+	if command -v mas >/dev/null 2>&1; then \
+		printf "  optional  ok       %-5s %s\n" "mas" "$$(mas version)"; \
+	else \
+		printf "  optional  missing  %-5s install mas to manage App Store apps\n" "mas"; \
+	fi; \
+	echo ""; \
+	if [ "$$missing" -eq 0 ]; then \
+		echo "All required tools are available."; \
+	else \
+		echo "Missing required tools. Install them, then rerun make doctor."; \
+		exit 1; \
+	fi
 
 .PHONY: check
 check: ## Dry-run Stow package links
+	@echo "Dry-running GNU Stow."
+	@echo "No files will be changed."
+	@echo ""
+	@echo "Packages: $(PACKAGES)"
+	@echo ""
+	@echo "Stow may print 'WARNING: in simulation mode so not modifying filesystem.'; that is expected here."
+	@echo ""
 	@$(STOW) $(STOW_FLAGS) --no --simulate $(PACKAGES)
+	@echo ""
+	@echo "Dry run completed. No files were changed."
+	@echo "Run 'make restow' to apply these links."
 
 .PHONY: install
 install: ## Link all Stow packages into HOME
