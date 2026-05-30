@@ -91,3 +91,6 @@ require("lazy").setup({
 -- Dicipline: Don't repeat same key too much
 local dicipline = require("personal.dicipline")
 dicipline.norepeat()
+
+local ai_notes = require("personal.ai_notes")
+ai_notes.setup()
