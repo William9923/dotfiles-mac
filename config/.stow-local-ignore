@@ -1,1 +1,23 @@
+# Repo/package metadata.
+\.gitignore
+\.stow-local-ignore
+\.DS_Store
+
+# Local/generated state.
+node_modules
+\.env
+\.env\..*
+.*\.log
+.*\.tmp
+.*\.bak
+.*\.bak\..*
+
+# Cursor reads from ~/Library/Application Support/Cursor/User/ on macOS.
+# The repo tracks it under config/.config/Cursor and setup.sh links it manually.
 ^/\.config/Cursor$
+
+# opencode authentication and runtime state.
+antigravity-accounts\.json
+antigravity-accounts\.json\..*\.tmp
+antigravity-signature-cache\.json
+antigravity-logs
