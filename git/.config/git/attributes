@@ -5,3 +5,4 @@
 *.tsx    diff=difftastic
 *.go     diff=difftastic
 *.py     diff=difftastic
+*.lua    diff=difftastic
