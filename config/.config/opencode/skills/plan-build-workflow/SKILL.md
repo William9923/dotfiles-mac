@@ -130,6 +130,8 @@ Dependencies: None
 - Keep changes scoped to the active task.
 - Do not commit unless the user explicitly asks.
 - Update the plan after each completed task.
+- Keep the plan status as `approved` while more tasks remain.
+- Mark the plan status as `done` when all tasks are complete.
 - If verification cannot be run, record the reason in the response.
 
 ## Stop Conditions
