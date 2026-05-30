@@ -295,6 +295,35 @@ local function summarize_entry(entry)
   return string.format("%s  %s:%s  %s", entry.kind, entry.file, entry.lines, entry.user_note)
 end
 
+local function get_snacks_picker(action)
+  local ok, snacks = pcall(require, "snacks")
+  if not ok or not snacks.picker then
+    notify("AI input " .. action .. " requires snacks.nvim", vim.log.levels.WARN)
+    return nil
+  end
+
+  return snacks.picker
+end
+
+local function get_entry_picker_items(entries)
+  local items = {}
+
+  for index, entry in ipairs(entries) do
+    table.insert(items, {
+      idx = index,
+      text = summarize_entry(entry),
+      entry = entry,
+      preview = {
+        text = entry.raw,
+        ft = "markdown",
+        loc = false,
+      },
+    })
+  end
+
+  return items
+end
+
 local function open_entry(path, entry)
   vim.cmd.edit(vim.fn.fnameescape(path))
   vim.api.nvim_win_set_cursor(0, { entry.start_line, 0 })
@@ -328,22 +357,19 @@ local function delete_ai_input_entries(path, content, entries)
   end
 
   local prompt = string.format("Delete %d AI input chunk(s)?", #entries)
-  vim.ui.select({ "Delete", "Cancel" }, {
-    prompt = prompt,
-  }, function(choice)
-    if choice ~= "Delete" then
-      return
-    end
+  local choice = vim.fn.confirm(prompt, "&Yes\n&No", 2)
+  if choice ~= 1 then
+    return
+  end
 
-    local updated_content = delete_entries_from_content(content, entries)
-    local ok, result = write_ai_input(path, updated_content)
-    if not ok then
-      notify("AI input chunks could not be deleted: " .. result, vim.log.levels.ERROR)
-      return
-    end
+  local updated_content = delete_entries_from_content(content, entries)
+  local ok, result = write_ai_input(path, updated_content)
+  if not ok then
+    notify("AI input chunks could not be deleted: " .. result, vim.log.levels.ERROR)
+    return
+  end
 
-    notify(string.format("Deleted %d AI input chunk(s): %s", #entries, result))
-  end)
+  notify(string.format("Deleted %d AI input chunk(s): %s", #entries, result))
 end
 
 local function show_ai_input_chunks()
@@ -365,16 +391,39 @@ local function show_ai_input_chunks()
     return
   end
 
-  vim.ui.select(entries, {
-    prompt = "AI input chunks",
-    format_item = summarize_entry,
-  }, function(entry)
-    if not entry then
-      return
-    end
+  local picker = get_snacks_picker("chunk picker")
+  if not picker then
+    return
+  end
 
-    open_entry(path, entry)
-  end)
+  picker.pick({
+    title = "AI input chunks",
+    items = get_entry_picker_items(entries),
+    format = "text",
+    preview = "preview",
+    win = {
+      input = {
+        keys = {
+          ["<Tab>"] = false,
+          ["<S-Tab>"] = false,
+          ["<C-a>"] = false,
+        },
+      },
+      list = {
+        keys = {
+          ["<Tab>"] = false,
+          ["<S-Tab>"] = false,
+          ["<C-a>"] = false,
+        },
+      },
+    },
+    confirm = function(active_picker, item)
+      active_picker:close()
+      if item then
+        open_entry(path, item.entry)
+      end
+    end,
+  })
 end
 
 local function show_ai_input_delete_picker()
@@ -390,9 +439,8 @@ local function show_ai_input_delete_picker()
     return
   end
 
-  local snacks_ok, snacks = pcall(require, "snacks")
-  if not snacks_ok or not snacks.picker then
-    notify("AI input multi-delete requires snacks.nvim", vim.log.levels.WARN)
+  local picker = get_snacks_picker("multi-delete")
+  if not picker then
     return
   end
 
@@ -402,19 +450,11 @@ local function show_ai_input_delete_picker()
     return
   end
 
-  local items = {}
-  for index, entry in ipairs(entries) do
-    table.insert(items, {
-      idx = index,
-      text = summarize_entry(entry),
-      entry = entry,
-    })
-  end
-
-  snacks.picker.pick({
+  picker.pick({
     title = "Delete AI input chunks",
-    items = items,
+    items = get_entry_picker_items(entries),
     format = "text",
+    preview = "preview",
     confirm = function(picker)
       local selected = picker:selected({ fallback = true })
       picker:close()
