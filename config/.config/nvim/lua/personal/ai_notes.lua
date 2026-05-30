@@ -3,7 +3,10 @@ local M = {}
 local defaults = {
   filename = "ai-input.md",
   default_kind = "review",
-  keymap = "<leader>an",
+  keymap = {
+    input = "<leader>an",
+    delete = "<leader>ad",
+  },
   use_git_root = true,
   notify = true,
   kind_order = { "review", "question", "context", "task" },
@@ -229,6 +232,19 @@ local function read_ai_input()
   return true, content, path
 end
 
+local function write_ai_input(path, content)
+  local file, err = io.open(path, "w")
+
+  if not file then
+    return false, err or path
+  end
+
+  file:write(content)
+  file:close()
+
+  return true, path
+end
+
 local function parse_entry(lines, start_line, end_line)
   local raw_lines = {}
   for index = start_line, end_line do
@@ -285,6 +301,51 @@ local function open_entry(path, entry)
   vim.cmd("normal! zz")
 end
 
+local function delete_entries_from_content(content, entries)
+  local lines = vim.split(content, "\n", { plain = true })
+
+  table.sort(entries, function(left, right)
+    return left.start_line > right.start_line
+  end)
+
+  for _, entry in ipairs(entries) do
+    for _ = entry.start_line, entry.end_line do
+      table.remove(lines, entry.start_line)
+    end
+
+    if lines[entry.start_line] == "" then
+      table.remove(lines, entry.start_line)
+    end
+  end
+
+  return table.concat(lines, "\n")
+end
+
+local function delete_ai_input_entries(path, content, entries)
+  if #entries == 0 then
+    notify("No AI input chunks selected", vim.log.levels.INFO)
+    return
+  end
+
+  local prompt = string.format("Delete %d AI input chunk(s)?", #entries)
+  vim.ui.select({ "Delete", "Cancel" }, {
+    prompt = prompt,
+  }, function(choice)
+    if choice ~= "Delete" then
+      return
+    end
+
+    local updated_content = delete_entries_from_content(content, entries)
+    local ok, result = write_ai_input(path, updated_content)
+    if not ok then
+      notify("AI input chunks could not be deleted: " .. result, vim.log.levels.ERROR)
+      return
+    end
+
+    notify(string.format("Deleted %d AI input chunk(s): %s", #entries, result))
+  end)
+end
+
 local function show_ai_input_chunks()
   local ok, content, path = read_ai_input()
 
@@ -314,6 +375,58 @@ local function show_ai_input_chunks()
 
     open_entry(path, entry)
   end)
+end
+
+local function show_ai_input_delete_picker()
+  local ok, content, path = read_ai_input()
+
+  if not ok then
+    notify("AI input file not found: " .. path, vim.log.levels.WARN)
+    return
+  end
+
+  if vim.trim(content) == "" then
+    notify("AI input file is empty: " .. path, vim.log.levels.INFO)
+    return
+  end
+
+  local snacks_ok, snacks = pcall(require, "snacks")
+  if not snacks_ok or not snacks.picker then
+    notify("AI input multi-delete requires snacks.nvim", vim.log.levels.WARN)
+    return
+  end
+
+  local entries = parse_entries(content)
+  if #entries == 0 then
+    notify("No AI input chunks found in: " .. path, vim.log.levels.WARN)
+    return
+  end
+
+  local items = {}
+  for index, entry in ipairs(entries) do
+    table.insert(items, {
+      idx = index,
+      text = summarize_entry(entry),
+      entry = entry,
+    })
+  end
+
+  snacks.picker.pick({
+    title = "Delete AI input chunks",
+    items = items,
+    format = "text",
+    confirm = function(picker)
+      local selected = picker:selected({ fallback = true })
+      picker:close()
+
+      local selected_entries = {}
+      for _, item in ipairs(selected) do
+        table.insert(selected_entries, item.entry)
+      end
+
+      delete_ai_input_entries(path, content, selected_entries)
+    end,
+  })
 end
 
 local function write_note(opts, kind, message)
@@ -403,7 +516,7 @@ function M.setup(opts)
     desc = "Pick AI note kind and append selected code",
   })
 
-  vim.keymap.set("x", config.keymap, ":AINotePick<CR>", {
+  vim.keymap.set("x", config.keymap.input, ":AINotePick<CR>", {
     desc = "AI note from selection",
   })
 
@@ -411,6 +524,12 @@ function M.setup(opts)
     show_ai_input_chunks()
   end, {
     desc = "Pick an AI input chunk to inspect",
+  })
+
+  vim.api.nvim_create_user_command("AIInputDelete", function()
+    show_ai_input_delete_picker()
+  end, {
+    desc = "Pick AI input chunks to delete",
   })
 
 end
