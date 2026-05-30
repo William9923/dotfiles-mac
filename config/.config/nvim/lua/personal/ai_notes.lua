@@ -170,7 +170,19 @@ local function blockquote(text)
   return "> " .. table.concat(lines, "\n> ")
 end
 
+local function get_code_fence(text)
+  local max_backticks = 0
+
+  for backticks in (text or ""):gmatch("`+") do
+    max_backticks = math.max(max_backticks, #backticks)
+  end
+
+  return string.rep("`", math.max(3, max_backticks + 1))
+end
+
 local function format_note(note)
+  local code_fence = get_code_fence(note.snippet)
+
   return string.format(
     "## %s: %s:%d-%d\n\n"
       .. "Prompt:\n"
@@ -182,9 +194,9 @@ local function format_note(note)
       .. "- lines: %d-%d\n"
       .. "- kind: %s\n\n"
       .. "Code:\n"
-      .. "```%s\n"
+      .. "%s%s\n"
       .. "%s\n"
-      .. "```\n\n"
+      .. "%s\n\n"
       .. "---\n\n",
     note.kind,
     note.filepath,
@@ -196,8 +208,10 @@ local function format_note(note)
     note.start_line,
     note.end_line,
     note.kind,
+    code_fence,
     note.language,
-    note.snippet
+    note.snippet,
+    code_fence
   )
 end
 
@@ -246,6 +260,10 @@ local function write_ai_input(path, content)
   return true, path
 end
 
+local function parse_note_heading(line)
+  return (line or ""):match("^##%s+([^:%s]+):%s+(.+):(%d+%-%d+)%s*$")
+end
+
 local function parse_entry(lines, start_line, end_line)
   local raw_lines = {}
   for index = start_line, end_line do
@@ -253,8 +271,7 @@ local function parse_entry(lines, start_line, end_line)
   end
 
   local raw = table.concat(raw_lines, "\n")
-  local heading = lines[start_line] or ""
-  local heading_kind, heading_file, heading_lines = heading:match("^##%s+([^:%s]+):%s+(.+):(%d+%-%d+)")
+  local heading_kind, heading_file, heading_lines = parse_note_heading(lines[start_line])
 
   return {
     start_line = start_line,
@@ -273,11 +290,7 @@ local function parse_entries(content)
   local entry_start = nil
 
   for line_number, line in ipairs(lines) do
-    if line:match("^##%s+") then
-      if entry_start then
-        table.insert(entries, parse_entry(lines, entry_start, line_number - 1))
-      end
-
+    if not entry_start and parse_note_heading(line) then
       entry_start = line_number
     elseif entry_start and line:match("^%-%-%-%s*$") then
       table.insert(entries, parse_entry(lines, entry_start, line_number))
