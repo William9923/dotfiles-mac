@@ -84,7 +84,7 @@ mise install
 
 The full profile installs the Node `commitizen` CLI plus the `cz-conventional-changelog` adapter globally. The `commitizen/.czrc` stow package links `~/.czrc`, so `git cz` uses Conventional Commit prompts in repositories without their own Commitizen config.
 
-## Daily Sync
+## Manual Sync
 
 After `setup.sh`, run this from anywhere:
 
