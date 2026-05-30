@@ -197,8 +197,12 @@ local function format_note(note)
   )
 end
 
+local function get_ai_input_path(root)
+  return joinpath(root or get_project_root(), config.filename)
+end
+
 local function append_note(root, content)
-  local output_path = joinpath(root, config.filename)
+  local output_path = get_ai_input_path(root)
   local file, err = io.open(output_path, "a")
 
   if not file then
@@ -209,6 +213,107 @@ local function append_note(root, content)
   file:close()
 
   return true, output_path
+end
+
+local function read_ai_input()
+  local path = get_ai_input_path()
+  local file, err = io.open(path, "r")
+
+  if not file then
+    return false, err or "file not found", path
+  end
+
+  local content = file:read("*a")
+  file:close()
+
+  return true, content, path
+end
+
+local function parse_entry(lines, start_line, end_line)
+  local raw_lines = {}
+  for index = start_line, end_line do
+    table.insert(raw_lines, lines[index])
+  end
+
+  local raw = table.concat(raw_lines, "\n")
+  local heading = lines[start_line] or ""
+  local heading_kind, heading_file, heading_lines = heading:match("^##%s+([^:%s]+):%s+(.+):(%d+%-%d+)")
+
+  return {
+    start_line = start_line,
+    end_line = end_line,
+    kind = raw:match("%- kind:%s*([^\n]+)") or heading_kind or "[unknown]",
+    file = raw:match("%- file:%s*`([^`]+)`") or heading_file or "[unknown]",
+    lines = raw:match("%- lines:%s*([^\n]+)") or heading_lines or "?",
+    user_note = raw:match("User note:%s*\n>%s*([^\n]+)") or "[no user note]",
+    raw = raw,
+  }
+end
+
+local function parse_entries(content)
+  local entries = {}
+  local lines = vim.split(content, "\n", { plain = true })
+  local entry_start = nil
+
+  for line_number, line in ipairs(lines) do
+    if line:match("^##%s+") then
+      if entry_start then
+        table.insert(entries, parse_entry(lines, entry_start, line_number - 1))
+      end
+
+      entry_start = line_number
+    elseif entry_start and line:match("^%-%-%-%s*$") then
+      table.insert(entries, parse_entry(lines, entry_start, line_number))
+      entry_start = nil
+    end
+  end
+
+  if entry_start then
+    table.insert(entries, parse_entry(lines, entry_start, #lines))
+  end
+
+  return entries
+end
+
+local function summarize_entry(entry)
+  return string.format("%s  %s:%s  %s", entry.kind, entry.file, entry.lines, entry.user_note)
+end
+
+local function open_entry(path, entry)
+  vim.cmd.edit(vim.fn.fnameescape(path))
+  vim.api.nvim_win_set_cursor(0, { entry.start_line, 0 })
+  vim.cmd("normal! zz")
+end
+
+local function show_ai_input_chunks()
+  local ok, content, path = read_ai_input()
+
+  if not ok then
+    notify("AI input file not found: " .. path, vim.log.levels.WARN)
+    return
+  end
+
+  if vim.trim(content) == "" then
+    notify("AI input file is empty: " .. path, vim.log.levels.INFO)
+    return
+  end
+
+  local entries = parse_entries(content)
+  if #entries == 0 then
+    notify("No AI input chunks found in: " .. path, vim.log.levels.WARN)
+    return
+  end
+
+  vim.ui.select(entries, {
+    prompt = "AI input chunks",
+    format_item = summarize_entry,
+  }, function(entry)
+    if not entry then
+      return
+    end
+
+    open_entry(path, entry)
+  end)
 end
 
 local function write_note(opts, kind, message)
@@ -291,14 +396,6 @@ end
 function M.setup(opts)
   config = merge_config(opts)
 
-  vim.api.nvim_create_user_command("AINote", function(command_opts)
-    write_note(command_opts, config.default_kind, command_opts.args)
-  end, {
-    range = true,
-    nargs = "*",
-    desc = "Append selected code and instruction to ai-input.md",
-  })
-
   vim.api.nvim_create_user_command("AINotePick", function(command_opts)
     start_note_flow(command_opts)
   end, {
@@ -309,6 +406,13 @@ function M.setup(opts)
   vim.keymap.set("x", config.keymap, ":AINotePick<CR>", {
     desc = "AI note from selection",
   })
+
+  vim.api.nvim_create_user_command("AIInputChunks", function()
+    show_ai_input_chunks()
+  end, {
+    desc = "Pick an AI input chunk to inspect",
+  })
+
 end
 
 return M
