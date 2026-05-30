@@ -1,4 +1,4 @@
-# Tyranitar Dotfiles
+# (Work) Dotfiles
 
 macOS development environment managed with GNU Stow, Homebrew Bundle, and Tart verification.
 
@@ -112,5 +112,20 @@ make restow          # relink packages
 make bundle-dump     # refresh homebrew/.Brewfile.full
 make test-bootstrap  # run Tart verification
 ```
+
+`make doctor` reports required tools first and exits non-zero only when a required tool is missing. `brew` and `mas` are shown as optional because they are only needed for Homebrew bundle and App Store package management:
+
+```text
+Checking local tools...
+
+  required  ok       git   git version 2.46.0
+  required  ok       stow  stow (GNU Stow) version 2.3.1
+  optional  ok       brew  Homebrew 5.1.14
+  optional  ok       mas   7.0.0
+
+All required tools are available.
+```
+
+`make check` is a Stow dry run. The Stow warning `WARNING: in simulation mode so not modifying filesystem.` is expected and means no files were changed. If the dry run succeeds, apply the links with `make restow`.
 
 Never commit `.env`, credentials, private SSH keys, or machine-local secrets. Shell secrets should stay in `~/.zsh_secrets`, which is intentionally unmanaged.
