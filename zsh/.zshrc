@@ -152,61 +152,6 @@ op() {
   fi
 }
 
-# opencode preset switcher
-op-preset() {
-  local config_file="$HOME/.config/opencode/oh-my-opencode-slim.json"
-  local presets=("tier-google" "tier-opencode" "tier-github" "tier-antigravity")
-
-  # Show current preset if no arguments
-  if [[ $# -eq 0 ]]; then
-    local current=$(grep -o '"preset": "[^"]*"' "$config_file" | cut -d'"' -f4)
-    echo "Current preset: $current"
-    echo ""
-    echo "Available presets:"
-    for p in "${presets[@]}"; do
-      if [[ "$p" == "$current" ]]; then
-        echo "  * $p (active)"
-      else
-        echo "    $p"
-      fi
-    done
-    echo ""
-    echo "Usage: op-preset <preset-name>"
-    echo "       op-preset --fzf    # interactive selection"
-    return 0
-  fi
-
-  # Interactive fzf mode
-  if [[ "$1" == "--fzf" ]] || [[ "$1" == "-i" ]]; then
-    local current=$(grep -o '"preset": "[^"]*"' "$config_file" | cut -d'"' -f4)
-    local selected=$(printf '%s\n' "${presets[@]}" | fzf --prompt="Select opencode preset: " --preview="echo Current: $current")
-    if [[ -n "$selected" ]]; then
-      op-preset "$selected"
-    fi
-    return 0
-  fi
-
-  # Validate preset name
-  local preset="$1"
-  local valid=false
-  for p in "${presets[@]}"; do
-    if [[ "$p" == "$preset" ]]; then
-      valid=true
-      break
-    fi
-  done
-
-  if [[ "$valid" == false ]]; then
-    echo "Error: Invalid preset '$preset'"
-    echo "Valid presets: ${presets[*]}"
-    return 1
-  fi
-
-  # Switch preset
-  sed -i "" "s/\"preset\": \".*\"/\"preset\": \"$preset\"/" "$config_file"
-  echo "Switched to preset: $preset"
-}
-
 # fzf shell integration
 if [[ -o interactive ]] && command -v fzf >/dev/null 2>&1; then
   # Allow Ctrl-S to be used as a key binding instead of terminal flow control.
