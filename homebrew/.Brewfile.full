@@ -83,6 +83,12 @@ brew "unbound"
 # Personal apps
 brew "rtk"
 
+# Window manager (config in config/.config/aerospace/)
+tap "nikitabobko/tap"
+tap "felixkratz/formulae"
+brew "borders"
+cask "aerospace"
+
 # GUI apps and fonts
 cask "another-redis-desktop-manager"
 cask "cursor"

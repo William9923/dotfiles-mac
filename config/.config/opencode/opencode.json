@@ -8,7 +8,10 @@
   "mcp": {
     "obsidian": {
       "type": "remote",
-      "url": "https://127.0.0.1:27124/mcp/"
+      "url": "http://127.0.0.1:27123/mcp/",
+      "headers": {
+        "Authorization": "Bearer {env:OBSIDIAN_MCP_TOKEN}"
+      }
     }
   },
   "$schema": "https://opencode.ai/config.json",

@@ -288,6 +288,12 @@ main() {
   install_bundle "$profile"
   install_mise_tools
 
+  if [ "${DOTFILES_MACOS_DEFAULTS:-0}" = "1" ]; then
+    log "applying macOS system defaults"
+    chmod +x "$DOTFILES_DIR/macos/defaults.sh"
+    "$DOTFILES_DIR/macos/defaults.sh"
+  fi
+
   log "done"
   log "profile: $profile"
   log "conflict backups, if any: $BACKUP_DIR"

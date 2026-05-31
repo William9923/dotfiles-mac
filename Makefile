@@ -144,3 +144,8 @@ sync: ## Run the global sync command from the repo copy
 .PHONY: test-bootstrap
 test-bootstrap: ## Verify setup.sh in a transient Tart VM
 	@./test-bootstrap.sh
+
+.PHONY: macos-defaults
+macos-defaults: ## Apply macos/defaults.sh (keyboard, Dock, Finder, screenshots)
+	@chmod +x macos/defaults.sh
+	@./macos/defaults.sh
