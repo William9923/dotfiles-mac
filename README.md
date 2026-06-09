@@ -81,12 +81,6 @@ git clone <your-dotfiles-remote> ~/dotfiles
 cd ~/dotfiles
 ```
 
-Use the branch you normally work from (for example `main` or `work`):
-
-```bash
-git checkout work   # optional
-```
-
 ### 2. Run bootstrap
 
 Pick a Homebrew profile:
