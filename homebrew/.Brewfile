@@ -1,11 +1,9 @@
 # Minimal portable baseline for fresh machines.
 
 # Shell, Git, and editor basics
-brew "atuin"
 brew "bat"
 brew "curl"
 brew "difftastic"
-brew "direnv"
 brew "fd"
 brew "fzf"
 brew "gh"

@@ -1,11 +1,9 @@
 # Full personal/dev profile. Keep company/private packages out of this file.
 
 # Minimal baseline
-brew "atuin"
 brew "bat"
 brew "curl"
 brew "difftastic"
-brew "direnv"
 brew "fd"
 brew "fzf"
 brew "gh"
@@ -102,10 +100,6 @@ cask "numi"
 cask "postman"
 
 # Selected global tools
-go "github.com/bufbuild/buf/cmd/buf"
-go "golang.org/x/tools/cmd/goimports"
-go "github.com/golang-migrate/migrate/v4/cmd/migrate"
-go "github.com/golang/mock/mockgen"
 npm "@google/gemini-cli"
 npm "commitizen"
 npm "cz-conventional-changelog"
