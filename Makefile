@@ -49,6 +49,31 @@ doctor: ## Check required local tooling
 	else \
 		printf "  optional  missing  %-5s install mas to manage App Store apps\n" "mas"; \
 	fi; \
+	if command -v pi >/dev/null 2>&1; then \
+		printf "  optional  ok       %-5s %s\n" "pi" "$$(pi --version 2>/dev/null | awk 'NR==1 {print}')"; \
+	else \
+		printf "  optional  missing  %-5s install pi (mise or npm) for the coding agent TUI\n" "pi"; \
+	fi; \
+	if command -v rtk >/dev/null 2>&1; then \
+		printf "  optional  ok       %-5s %s\n" "rtk" "$$(rtk --version 2>/dev/null | awk 'NR==1 {print}')"; \
+	else \
+		printf "  optional  missing  %-5s install rtk for token-efficient shell/OpenCode/pi rewrites\n" "rtk"; \
+	fi; \
+	if command -v obsidian >/dev/null 2>&1; then \
+		vault=$$(obsidian vault 2>/dev/null | awk '/^path/ {print $$2}'); \
+		if [ -n "$$vault" ]; then \
+			printf "  optional  ok       %-5s vault %s\n" "obsidian" "$$vault"; \
+		else \
+			printf "  optional  warn     %-5s CLI found but vault path unavailable\n" "obsidian"; \
+		fi; \
+	else \
+		printf "  optional  missing  %-5s install obsidian CLI + Local REST API plugin\n" "obsidian"; \
+	fi; \
+	if [ -L "$(TARGET)/.pi/agent/settings.json" ]; then \
+		printf "  optional  ok       %-5s settings.json linked from dotfiles\n" "pi-stow"; \
+	else \
+		printf "  optional  missing  %-5s run make restow (or make install) to link pi package\n" "pi-stow"; \
+	fi; \
 	echo ""; \
 	if [ "$$missing" -eq 0 ]; then \
 		echo "All required tools are available."; \

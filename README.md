@@ -57,6 +57,9 @@ dotfiles/
   cursor/
     .cursor/skills/                # stowed to ~/.cursor/skills/ (agent skills only)
 
+  pi/
+    .pi/agent/                     # stowed to ~/.pi/agent/ (pi coding agent)
+
   cursor-templates/
     mcp.json.example               # copy to ~/.cursor/mcp.json on new Mac
 
@@ -216,6 +219,7 @@ GIT_CONFIG_GLOBAL=/dev/null brew bundle install --file=~/dotfiles/homebrew/.Brew
 - Sign in to **Cursor**; install extensions you rely on.
 - Copy MCP config from template: `cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json` then edit (see [Cursor vs OpenCode](#cursor-vs-opencode)).
 - **OpenCode**: tracked under `config/.config/opencode/`; auth in `~/.config/opencode/antigravity-accounts.json` stays local (gitignored).
+- **Pi**: tracked under `pi/.pi/agent/`; see [Pi agent](#pi-agent). Install `pi` via mise/npm, then `make restow`. Machine-local: `~/.pi/agent/auth.json`, `sessions/`, `npm/`.
 - **Claude Code**: tracked settings live in `claude/.claude/`; sign in on the new machine as needed.
 
 #### Cloud and cluster access
@@ -251,7 +255,7 @@ DOTFILES_MACOS_DEFAULTS=1 ./setup.sh full
 # Shell secrets for OpenCode {env:VAR}
 cp ~/dotfiles/zsh/.zsh_secrets.example ~/.zsh_secrets
 chmod 600 ~/.zsh_secrets
-# Edit: CURSOR_API_KEY, OBSIDIAN_MCP_TOKEN, etc.
+# Edit: CURSOR_API_KEY, EXA_API_KEY, OBSIDIAN_MCP_TOKEN, etc.
 
 # Cursor MCP (not stowed; no {env:...} syntax in mcp.json)
 cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json
@@ -304,6 +308,7 @@ Never commit these. Restore from a password manager or encrypted backup:
 | `~/.aws/`, `~/.config/gcloud/` | Cloud CLI credentials |
 | `~/.config/gh/hosts.yml` | `gh` authentication |
 | `~/.config/opencode/antigravity-accounts.json` | OpenCode auth |
+| `~/.pi/agent/auth.json` | Pi Cursor SDK auth |
 | `~/.cursor/mcp.json` | Cursor MCP servers (often contains API keys) |
 
 Optional local Brewfile: `homebrew/.Brewfile.company.local`, `homebrew/.Brewfile.local` (both gitignored).
@@ -334,25 +339,80 @@ make bundle-dump             # refresh homebrew/.Brewfile.full from this host
 
 **Policy:** `.Brewfile.full` stays a **lean curated** list (~90 lines), not a dump of everything on this Mac. A new machine should get a sane dev baseline, not every experiment or work-only tool installed here. Use `make bundle-dump` only to *compare* against the host, then cherry-pick into `full` or a gitignored `.Brewfile.local`.
 
-## Cursor vs OpenCode
+## Cursor vs OpenCode vs Pi
 
-Both tools split config the same way: **portable settings in dotfiles**, **secrets and runtime state on the machine**.
+All three split config the same way: **portable settings in dotfiles**, **secrets and runtime state on the machine**.
 
-| | **Cursor** | **OpenCode** |
-|---|------------|--------------|
-| **Editor / app preferences** | `config/.config/Cursor/User/settings.json`, `keybindings.json` → symlinked to `~/Library/Application Support/Cursor/User/` by `setup.sh` | N/A (CLI/TUI) |
-| **Main config file** | No single `opencode.json` equivalent in dotfiles for the IDE | `config/.config/opencode/opencode.json` (stowed to `~/.config/opencode/`) |
-| **Commands / skills** | `cursor/.cursor/skills/` → stowed to `~/.cursor/skills/`; built-in Cursor plugins stay local | `config/.config/opencode/commands/`, `skills/` |
-| **Secrets** | `~/.cursor/mcp.json`, `cli-config.json`, extension state — **not** in repo | `{env:VAR}` in `opencode.json` where supported; `antigravity-accounts.json` gitignored |
-| **Templates** | `cursor-templates/mcp.json.example` → copy to `~/.cursor/mcp.json` | Use `{env:...}` in tracked JSON; set vars in `~/.zsh_secrets` |
+| | **Cursor** | **OpenCode** | **Pi** |
+|---|------------|--------------|--------|
+| **Editor / app preferences** | `config/.config/Cursor/User/` → symlinked to `~/Library/Application Support/Cursor/User/` by `setup.sh` | N/A (CLI/TUI) | N/A (TUI) |
+| **Main config** | No single IDE config in dotfiles | `config/.config/opencode/opencode.json` | `pi/.pi/agent/settings.json` |
+| **Commands / skills** | `cursor/.cursor/skills/` | `config/.config/opencode/commands/`, `skills/` | `pi/.pi/agent/prompts/`, `skills/` |
+| **Extensions / plugins** | Cursor marketplace | `config/.config/opencode/plugins/` (e.g. `rtk.ts`) | `pi/.pi/agent/extensions/` (e.g. `rtk.ts`) |
+| **Secrets** | `~/.cursor/mcp.json` — **not** in repo | `{env:VAR}` in `opencode.json`; `antigravity-accounts.json` gitignored | `~/.pi/agent/auth.json`, `npm/` — **not** in repo; API keys in `~/.zsh_secrets` |
+| **Templates** | `cursor-templates/mcp.json.example` | `{env:...}` in tracked JSON | Prompt templates in `pi/.pi/agent/prompts/` |
 
-OpenCode supports `{env:VAR}` in config (e.g. `CURSOR_API_KEY`, `OBSIDIAN_MCP_TOKEN`). Cursor’s `mcp.json` does **not** use that syntax — copy the template and paste tokens locally, or keep `~/.cursor/mcp.json` only on the machine / in a password manager.
+OpenCode supports `{env:VAR}` in config (e.g. `CURSOR_API_KEY`, `OBSIDIAN_MCP_TOKEN`). Cursor’s `mcp.json` does **not** use that syntax — copy the template and paste tokens locally. Pi has no built-in MCP; use **skills** (`exa-search`, `obsidian`) plus shell tools instead.
 
 ```bash
 cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json
 chmod 600 ~/.cursor/mcp.json
 # Edit URLs and Authorization headers; do not commit ~/.cursor/mcp.json
 ```
+
+## Pi agent
+
+The `pi` stow package links `pi/.pi/agent/` → `~/.pi/agent/`. Install the [pi coding agent](https://pi.dev/) separately (mise, npm, or `setup.sh` after adding it to your Brewfile), then link dotfiles:
+
+```bash
+cd ~/dotfiles
+make restow    # or ./setup.sh
+make doctor    # optional pi/rtk/obsidian/pi-stow checks
+```
+
+### Tracked in dotfiles
+
+| Path | Purpose |
+|------|---------|
+| `settings.json` | Cursor provider, `composer-2-5:fast` default, model cycle, Solarized Osaka theme |
+| `keybindings.json` | tmux-friendly input (`ctrl+j` newline, `ctrl+n/p` in selects) |
+| `themes/solarized-osaka.json` | TUI theme aligned with shell/nvim/tmux |
+| `prompts/plan.md` | `/plan` — build verifiable steps, write `plan.md` |
+| `prompts/proceed.md` | `/proceed` — execute one plan step at a time |
+| `prompts/archive-plan.md` | `/archive-plan` — move `plan.md` to Obsidian `plan/` |
+| `skills/exa-search/` | Web search via Exa API (`EXA_API_KEY`) |
+| `skills/obsidian/` | Vault access via obsidian CLI (`OBSIDIAN_MCP_TOKEN`) |
+| `extensions/rtk.ts` | Rewrites bash tool calls through `rtk rewrite` |
+
+Default model cycle (Ctrl+P): `composer-2-5:fast`, `composer-2-5:slow`, `gpt-5.5@272k`, `gpt-5.3-codex`.
+
+### Machine-local (never stowed)
+
+| Path | Purpose |
+|------|---------|
+| `~/.pi/agent/auth.json` | Cursor SDK auth state |
+| `~/.pi/agent/npm/` | `pi-cursor-sdk` package install |
+| `~/.pi/agent/sessions/` | Conversation history |
+| `~/.pi/agent/cursor-sdk-model-list.json` | Cached model list |
+
+### Secrets and Obsidian
+
+Set in `~/.zsh_secrets` (see `zsh/.zsh_secrets.example`):
+
+- `CURSOR_API_KEY` — pi Cursor provider
+- `EXA_API_KEY` — exa-search skill
+- `OBSIDIAN_MCP_TOKEN` — obsidian CLI / Local REST API plugin
+
+Vault path: `/Users/william.ong/obsidian-notes` (used by `/archive-plan` and obsidian skill).
+
+```bash
+obsidian vault
+pi
+/reload
+/settings    # provider=cursor, theme=solarized-osaka
+```
+
+RTK: OpenCode uses `config/.config/opencode/plugins/rtk.ts`; pi uses `extensions/rtk.ts`. Both delegate to the `rtk` binary in PATH.
 
 ## macOS system defaults (optional)
 
@@ -409,7 +469,7 @@ make bundle-dump     # refresh homebrew/.Brewfile.full
 make test-bootstrap  # run Tart verification
 ```
 
-`make doctor` reports required tools first and exits non-zero only when a required tool is missing. `brew` and `mas` are shown as optional because they are only needed for Homebrew bundle and App Store package management:
+`make doctor` reports required tools first and exits non-zero only when a required tool is missing. `brew`, `mas`, `pi`, `rtk`, `obsidian`, and `pi-stow` are optional — useful for Homebrew bundle, App Store apps, and the pi agent stack:
 
 ```text
 Checking local tools...
@@ -418,6 +478,10 @@ Checking local tools...
   required  ok       stow  stow (GNU Stow) version 2.3.1
   optional  ok       brew  Homebrew 5.1.14
   optional  ok       mas   7.0.0
+  optional  ok       pi    pi 0.79.6
+  optional  ok       rtk   rtk 0.42.4
+  optional  ok       obsidian vault /Users/william.ong/obsidian-notes
+  optional  ok       pi-stow settings.json linked from dotfiles
 
 All required tools are available.
 ```
