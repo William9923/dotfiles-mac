@@ -54,6 +54,9 @@ dotfiles/
     defaults.sh                    # optional system prefs (keyboard, Dock, Finder)
     README.md
 
+  cursor/
+    .cursor/skills/                # stowed to ~/.cursor/skills/ (agent skills only)
+
   cursor-templates/
     mcp.json.example               # copy to ~/.cursor/mcp.json on new Mac
 
@@ -339,7 +342,7 @@ Both tools split config the same way: **portable settings in dotfiles**, **secre
 |---|------------|--------------|
 | **Editor / app preferences** | `config/.config/Cursor/User/settings.json`, `keybindings.json` → symlinked to `~/Library/Application Support/Cursor/User/` by `setup.sh` | N/A (CLI/TUI) |
 | **Main config file** | No single `opencode.json` equivalent in dotfiles for the IDE | `config/.config/opencode/opencode.json` (stowed to `~/.config/opencode/`) |
-| **Commands / skills** | Cursor rules/skills live under `~/.cursor/` (plugins, not stowed) | `config/.config/opencode/commands/`, `skills/` |
+| **Commands / skills** | `cursor/.cursor/skills/` → stowed to `~/.cursor/skills/`; built-in Cursor plugins stay local | `config/.config/opencode/commands/`, `skills/` |
 | **Secrets** | `~/.cursor/mcp.json`, `cli-config.json`, extension state — **not** in repo | `{env:VAR}` in `opencode.json` where supported; `antigravity-accounts.json` gitignored |
 | **Templates** | `cursor-templates/mcp.json.example` → copy to `~/.cursor/mcp.json` | Use `{env:...}` in tracked JSON; set vars in `~/.zsh_secrets` |
 
