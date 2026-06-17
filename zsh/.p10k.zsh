@@ -120,9 +120,9 @@
   typeset -g POWERLEVEL9K_{LEFT,RIGHT}_SUBSEGMENT_SEPARATOR=' '  # separate segments with a space
   typeset -g POWERLEVEL9K_{LEFT,RIGHT}_SEGMENT_SEPARATOR=        # no end-of-line symbol
 
-  # Solarized Osaka dark palette.
-  [[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/theme/solarized-osaka/palette.zsh" ]] &&
-    source "${XDG_CONFIG_HOME:-$HOME/.config}/theme/solarized-osaka/palette.zsh"
+  # Kanagawa Dragon palette.
+  [[ -r "${XDG_CONFIG_HOME:-$HOME/.config}/theme/kanagawa-dragon/palette.zsh" ]] &&
+    source "${XDG_CONFIG_HOME:-$HOME/.config}/theme/kanagawa-dragon/palette.zsh"
 
   # When set to true, icons appear before content on both sides of the prompt. When set
   # to false, icons go after content. If empty or not set, icons go before content in the left

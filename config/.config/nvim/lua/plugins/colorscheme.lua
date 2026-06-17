@@ -1,7 +1,6 @@
 return {
   {
-    "craftzdog/solarized-osaka.nvim",
-    dependencies = { "rebelot/kanagawa.nvim" },
+    "rebelot/kanagawa.nvim",
     lazy = false,
     priority = 1000,
     opts = function()
@@ -13,11 +12,16 @@ return {
       end
 
       return {
+        theme = "dragon",
+        background = {
+          dark = "dragon",
+          light = "lotus",
+        },
         transparent = false,
-        on_highlights = function(hl)
+        overrides = function()
           local kanagawa = kanagawa_dragon()
           if not kanagawa then
-            return
+            return {}
           end
 
           local theme = kanagawa.theme
@@ -26,8 +30,8 @@ return {
           local syn = theme.syn
           local diag = theme.diag
           local vcs = theme.vcs
+          local hl = {}
 
-          -- Keep the editor on Solarized Osaka, but give side UI a Kanagawa Dragon surface.
           hl.NormalFloat = { fg = ui.float.fg, bg = ui.float.bg }
           hl.FloatBorder = { fg = ui.float.fg_border, bg = ui.float.bg_border }
           hl.FloatTitle = { fg = syn.identifier, bg = ui.float.bg }
@@ -84,6 +88,7 @@ return {
           hl.NotifyHINTBorder = { fg = diag.hint, bg = ui.bg }
           hl.NotifyDEBUGBorder = { fg = ui.nontext, bg = ui.bg }
           hl.NotifyTRACEBorder = { fg = palette.dragonViolet, bg = ui.bg }
+          return hl
         end,
       }
     end,

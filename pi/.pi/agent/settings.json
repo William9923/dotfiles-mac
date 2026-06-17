@@ -2,9 +2,9 @@
   "defaultProvider": "cursor",
   "defaultModel": "gpt-5.3-codex",
   "defaultThinkingLevel": "medium",
-  "theme": "solarized-osaka",
+  "theme": "kanagawa-dragon",
   "themes": [
-    "~/.pi/agent/themes/solarized-osaka.json"
+    "~/.pi/agent/themes/kanagawa-dragon.json"
   ],
   "prompts": [
     "~/.pi/agent/prompts"

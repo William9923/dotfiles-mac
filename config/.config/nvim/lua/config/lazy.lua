@@ -27,7 +27,7 @@ require("lazy").setup({
         }
       end,
       opts = {
-        colorscheme = "solarized-osaka",
+        colorscheme = "kanagawa-dragon",
       },
     },
 
