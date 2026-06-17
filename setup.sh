@@ -18,6 +18,7 @@ die() {
 usage() {
   cat <<EOF
 Usage: ${0##*/} [minimal|full]
+       ${0##*/} --set-default-terminal
 
 Profiles:
   minimal  portable shell, Git, editor, and dotfiles baseline (default)
@@ -264,11 +265,45 @@ install_mise_tools() {
   fi
 }
 
+set_ghostty_default_terminal() {
+  local bundle_id app_path
+  bundle_id="com.mitchellh.ghostty"
+  app_path=""
+
+  if [ -d "/Applications/Ghostty.app" ]; then
+    app_path="/Applications/Ghostty.app"
+  elif [ -d "$HOME/Applications/Ghostty.app" ]; then
+    app_path="$HOME/Applications/Ghostty.app"
+  fi
+
+  if [ -z "$app_path" ]; then
+    log "skipping default terminal setup because Ghostty.app is not installed"
+    return
+  fi
+
+  if ! command -v duti >/dev/null 2>&1; then
+    log "skipping default terminal setup because duti is not installed"
+    return
+  fi
+
+  log "setting Ghostty as default terminal handlers"
+  duti -s "$bundle_id" public.unix-executable all || true
+  duti -s "$bundle_id" public.shell-script all || true
+  duti -s "$bundle_id" public.zsh-script all || true
+  duti -s "$bundle_id" public.bash-script all || true
+}
+
 main() {
   local profile
 
   if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
     usage
+    exit 0
+  fi
+
+  if [ "${1:-}" = "--set-default-terminal" ]; then
+    is_macos || die "--set-default-terminal supports macOS only"
+    set_ghostty_default_terminal
     exit 0
   fi
 
@@ -286,6 +321,7 @@ main() {
   link_macos_app_configs
   ensure_git_local_config
   install_bundle "$profile"
+  set_ghostty_default_terminal
   install_mise_tools
 
   if [ "${DOTFILES_MACOS_DEFAULTS:-0}" = "1" ]; then

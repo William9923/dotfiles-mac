@@ -126,6 +126,10 @@ setup-minimal: ## Bootstrap with the minimal Homebrew profile
 setup-full: ## Bootstrap with the full Homebrew profile
 	@./setup.sh full
 
+.PHONY: set-default-terminal
+set-default-terminal: ## Set Ghostty as default terminal handlers on macOS
+	@./setup.sh --set-default-terminal
+
 .PHONY: bundle-install
 bundle-install: ## Install packages from homebrew/.Brewfile.$(BREW_PROFILE)
 	@GIT_CONFIG_GLOBAL=/dev/null brew bundle install --file="$(BREWFILE)" --no-upgrade

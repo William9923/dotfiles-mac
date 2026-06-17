@@ -32,7 +32,7 @@ dotfiles/
   config/
     .config/
       aerospace/                 # AeroSpace window manager (aerospace.toml)
-      alacritty/
+      ghostty/
       mise/
       nvim/
       tmux/
