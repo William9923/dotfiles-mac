@@ -152,6 +152,25 @@ op() {
   fi
 }
 
+# Cross-session history sync for tmux panes/windows.
+if [[ -o interactive ]]; then
+  HISTFILE="${HISTFILE:-$HOME/.zsh_history}"
+  HISTSIZE=50000
+  SAVEHIST=50000
+
+  setopt APPEND_HISTORY
+  setopt INC_APPEND_HISTORY
+  setopt INC_APPEND_HISTORY_TIME
+  setopt EXTENDED_HISTORY
+  setopt SHARE_HISTORY
+
+  __sync_zsh_history() {
+    fc -RII "$HISTFILE" 2>/dev/null
+  }
+
+  precmd_functions+=(__sync_zsh_history)
+fi
+
 # fzf shell integration
 if [[ -o interactive ]] && command -v fzf >/dev/null 2>&1; then
   # Allow Ctrl-S to be used as a key binding instead of terminal flow control.
@@ -178,6 +197,17 @@ if [[ -o interactive ]] && command -v fzf >/dev/null 2>&1; then
   fi
 
   source <(fzf --zsh)
+
+  if (( ${+functions[fzf-history-widget]} )); then
+    # Wrap once per definition so re-sourcing does not nest wrappers.
+    if (( ! ${+functions[fzf-history-widget-orig]} )) || [[ ${functions[fzf-history-widget]} != *"__sync_zsh_history"* ]]; then
+      functions[fzf-history-widget-orig]=$functions[fzf-history-widget]
+      function fzf-history-widget() {
+        __sync_zsh_history
+        fzf-history-widget-orig
+      }
+    fi
+  fi
 
   fzf-file-widget() {
     local selected="$(__fzf_select)"
@@ -246,3 +276,6 @@ export OPENSPEC_TELEMETRY=0
 
 # Added by Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
+# Pi
+export PATH="/Users/william.ong/.local/share/mise/installs/node/26.2.0/bin:$PATH"
