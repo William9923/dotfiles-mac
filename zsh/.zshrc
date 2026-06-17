@@ -59,10 +59,7 @@ alias v=nvim
 alias ping=gping
 alias ll="ls -la"
 alias lla="ll -a"
-
-# scripts shortcuts
 alias zshconfig="nvim ~/.zshrc"
-alias syncnotes="z vimwiki && sh ~/vimwiki/sync.sh"
 
 # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '/Users/william.ong/Downloads/google-cloud-sdk/path.zsh.inc' ]; then zsh-defer . '/Users/william.ong/Downloads/google-cloud-sdk/path.zsh.inc'; fi
@@ -78,8 +75,12 @@ elif [ -n "${HOMEBREW_PREFIX:-}" ] && [ -r "$HOMEBREW_PREFIX/share/zsh-syntax-hi
 fi
 
 # Enable directory jumping
-if [ -r "$HOME/zsh-z/zsh-z.plugin.zsh" ]; then
-  source "$HOME/zsh-z/zsh-z.plugin.zsh"
+if command -v zoxide >/dev/null 2>&1; then
+  # Clean up legacy z/zsh-z aliases so zoxide can own these commands.
+  (( $+aliases[z] )) && unalias z
+  (( $+aliases[zi] )) && unalias zi
+  (( $+aliases[zq] )) && unalias zq
+  eval "$(zoxide init zsh)"
 fi
 
 # Enable auto-suggestion
@@ -241,6 +242,15 @@ if [[ -o interactive ]] && command -v fzf >/dev/null 2>&1; then
   zle -N fzf-rg-widget
   bindkey '^S' fzf-rg-widget
 fi
+
+# yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	command rm -f -- "$tmp"
+}
 
 
 # For profiling purposes

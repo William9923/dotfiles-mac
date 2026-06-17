@@ -120,7 +120,13 @@ Confirm tools resolve:
 
 ```bash
 make doctor
-which git stow brew mise nvim
+which git stow brew mise nvim zoxide
+```
+
+Directory jumping is managed by `zoxide` (initialized in `~/.zshrc`), so after opening a new shell you can use:
+
+```bash
+z <partial-directory-name>
 ```
 
 ### 4. Post-setup (manual)

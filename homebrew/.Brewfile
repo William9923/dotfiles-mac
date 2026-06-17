@@ -22,9 +22,11 @@ brew "tldr"
 brew "tmux"
 brew "wget"
 brew "yq"
+brew "yazi"
 brew "zsh"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
+brew "zoxide"
 
 # Prompt/editor font
 cask "font-jetbrains-mono-nerd-font"
