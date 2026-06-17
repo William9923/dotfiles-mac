@@ -2,6 +2,10 @@
   "defaultProvider": "cursor",
   "defaultModel": "composer-2-5:fast",
   "defaultThinkingLevel": "medium",
+  "theme": "solarized-osaka",
+  "themes": [
+    "~/.pi/agent/themes/solarized-osaka.json"
+  ],
   "packages": [
     "npm:pi-cursor-sdk"
   ],
