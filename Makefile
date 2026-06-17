@@ -3,7 +3,7 @@
 DOTFILES_DIR := $(shell pwd)
 TARGET       := $(HOME)
 STOW         ?= stow
-PACKAGES     := zsh git homebrew bin config cursor claude vim ideavim commitizen
+PACKAGES     := zsh git homebrew bin config cursor claude vim ideavim commitizen pi
 STOW_FLAGS   := --dir=$(DOTFILES_DIR) --target=$(TARGET) --verbose=1 --no-folding
 BREW_PROFILE ?= minimal
 BREWFILE     := $(DOTFILES_DIR)/homebrew/.Brewfile.$(BREW_PROFILE)
