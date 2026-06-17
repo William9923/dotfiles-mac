@@ -6,6 +6,9 @@
   "themes": [
     "~/.pi/agent/themes/solarized-osaka.json"
   ],
+  "prompts": [
+    "~/.pi/agent/prompts"
+  ],
   "packages": [
     "npm:pi-cursor-sdk"
   ],
