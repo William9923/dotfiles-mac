@@ -1,6 +1,0 @@
-# Local opencode authentication and runtime state.
-antigravity-accounts.json
-antigravity-accounts.json.*.tmp
-antigravity-signature-cache.json
-antigravity-logs/
-node_modules/

@@ -16,8 +16,3 @@ node_modules
 # The repo tracks it under config/.config/Cursor and setup.sh links it manually.
 ^/\.config/Cursor$
 
-# opencode authentication and runtime state.
-antigravity-accounts\.json
-antigravity-accounts\.json\..*\.tmp
-antigravity-signature-cache\.json
-antigravity-logs

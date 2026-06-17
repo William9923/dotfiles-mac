@@ -59,7 +59,6 @@ alias v=nvim
 alias ping=gping
 alias ll="ls -la"
 alias lla="ll -a"
-alias c="claude"
 
 # scripts shortcuts
 alias zshconfig="nvim ~/.zshrc"
@@ -127,30 +126,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
-# opencode - Function to run OpenCode on an available port
-unalias op 2>/dev/null
-op() {
-  local start_port=3000
-  local end_port=3100
-  local found_port=""
-
-  for port in {$start_port..$end_port}; do
-    # Check if port is in use
-    if ! lsof -i :$port -stcp:listen -P -n >/dev/null 2>&1; then
-      found_port=$port
-      break
-    fi
-  done
-
-  if [[ -n "$found_port" ]]; then
-    echo "🚀 Launching OpenCode on port $found_port"
-    rtk opencode --port "$found_port" "$@"
-  else
-    echo "⚠️ No ports available in range 3000-3010. Trying default..."
-    rtk opencode "$@"
-  fi
-}
 
 # Cross-session history sync for tmux panes/windows.
 if [[ -o interactive ]]; then

@@ -5,7 +5,7 @@
 #   popup-session.sh <prefix> <cwd> <command...>
 #
 # Example (from a tmux binding):
-#   run-shell "~/.config/tmux/scripts/popup-session.sh opencode '#{pane_current_path}' opencode"
+#   run-shell "~/.config/tmux/scripts/popup-session.sh pi '#{pane_current_path}' pi"
 #
 # Behavior:
 #   - Hashes <cwd> to derive a stable session name: "<prefix>-<hash>"

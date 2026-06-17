@@ -1,6 +1,6 @@
 {
   "defaultProvider": "cursor",
-  "defaultModel": "composer-2-5:fast",
+  "defaultModel": "gpt-5.3-codex",
   "defaultThinkingLevel": "medium",
   "theme": "solarized-osaka",
   "themes": [
@@ -19,5 +19,6 @@
     "cursor/composer-2-5:slow",
     "cursor/gpt-5.5@272k",
     "cursor/gpt-5.3-codex"
-  ]
+  ],
+  "lastChangelogVersion": "0.79.6"
 }

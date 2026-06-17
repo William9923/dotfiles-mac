@@ -30,7 +30,7 @@
 <text class="" x="24" y="496">                                                                                                                                        * 60deab8 update neovim</text>
 <text class="" x="24" y="514">                                                                                                                                        * aca1ba6 remove unused dependencies</text>
 <text class="" x="24" y="532">                                                                                                                                        * c207605 splitting credential</text>
-<text class="" x="24" y="550">                                                                                                                                        * 12c1619 remove unnecessary opencode command (utilize ski</text>
+<text class="" x="24" y="550">                                                                                                                                        * 12c1619 remove unnecessary shell helper command</text>
 <text class="" x="24" y="568">                                                                                                                                        ll instead)</text>
 <text class="" x="24" y="586">                                                                                                                                        * 2ebf961 chore: pin the macbook image to the specific seq</text>
 <text class="" x="24" y="604">                                                                                                                                        :</text>

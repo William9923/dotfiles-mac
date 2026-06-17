@@ -3,7 +3,7 @@
 <style>text{font-family:'JetBrainsMono Nerd Font',monospace;font-size:15px;font-weight:500;fill:#dfbf8e;white-space:pre}.accent{fill:#7daea3}.path{fill:#a9b665}</style>
 <text class="" x="24" y="28">  ~/dotfiles            │   0   local date_gen = io.popen(&#x27;echo &quot;$(date +%d)/$(date +%m)/$(date +%y) ($(date +%a )) $(date +%X)&quot; | tr -d &quot;\n&quot;&#x27;)</text>
 <text class="" x="24" y="46">   bin                 │  1   local date = date_gen:read(&quot;*a&quot;)     ● Need check nil.</text>
-<text class="" x="24" y="64">   claude              │  2   date_gen:close()     ● Need check nil.</text>
+<text class="" x="24" y="64">   cursor              │  2   date_gen:close()     ● Need check nil.</text>
 <text class="" x="24" y="82">   commitizen          │   3</text>
 <text class="" x="24" y="100">   config              │   4   return {</text>
 <text class="" x="24" y="118">     .config           │   5   │ -- messages, cmdline and the popupmenu</text>

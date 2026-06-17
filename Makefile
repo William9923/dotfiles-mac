@@ -3,7 +3,7 @@
 DOTFILES_DIR := $(shell pwd)
 TARGET       := $(HOME)
 STOW         ?= stow
-PACKAGES     := zsh git homebrew bin config cursor claude vim ideavim commitizen pi
+PACKAGES     := zsh git homebrew bin config cursor vim ideavim commitizen pi
 STOW_FLAGS   := --dir=$(DOTFILES_DIR) --target=$(TARGET) --verbose=1 --no-folding
 BREW_PROFILE ?= minimal
 BREWFILE     := $(DOTFILES_DIR)/homebrew/.Brewfile.$(BREW_PROFILE)
@@ -57,7 +57,7 @@ doctor: ## Check required local tooling
 	if command -v rtk >/dev/null 2>&1; then \
 		printf "  optional  ok       %-5s %s\n" "rtk" "$$(rtk --version 2>/dev/null | awk 'NR==1 {print}')"; \
 	else \
-		printf "  optional  missing  %-5s install rtk for token-efficient shell/OpenCode/pi rewrites\n" "rtk"; \
+		printf "  optional  missing  %-5s install rtk for token-efficient shell/pi rewrites\n" "rtk"; \
 	fi; \
 	if command -v obsidian >/dev/null 2>&1; then \
 		vault=$$(obsidian vault 2>/dev/null | awk '/^path/ {print $$2}'); \

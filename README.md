@@ -38,9 +38,6 @@ dotfiles/
       tmux/
       ...
 
-  claude/
-    .claude/...
-
   vim/
     .vimrc
 
@@ -217,10 +214,8 @@ GIT_CONFIG_GLOBAL=/dev/null brew bundle install --file=~/dotfiles/homebrew/.Brew
 #### Cursor and AI tooling
 
 - Sign in to **Cursor**; install extensions you rely on.
-- Copy MCP config from template: `cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json` then edit (see [Cursor vs OpenCode](#cursor-vs-opencode)).
-- **OpenCode**: tracked under `config/.config/opencode/`; auth in `~/.config/opencode/antigravity-accounts.json` stays local (gitignored).
+- Copy MCP config from template: `cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json` then edit (see [Cursor vs Pi](#cursor-vs-pi)).
 - **Pi**: tracked under `pi/.pi/agent/`; see [Pi agent](#pi-agent). Install `pi` via mise/npm, then `make restow`. Machine-local: `~/.pi/agent/auth.json`, `sessions/`, `npm/`.
-- **Claude Code**: tracked settings live in `claude/.claude/`; sign in on the new machine as needed.
 
 #### Cloud and cluster access
 
@@ -252,7 +247,7 @@ DOTFILES_MACOS_DEFAULTS=1 ./setup.sh full
 ### 6. Secrets and templates
 
 ```bash
-# Shell secrets for OpenCode {env:VAR}
+# Shell secrets for pi skills/provider
 cp ~/dotfiles/zsh/.zsh_secrets.example ~/.zsh_secrets
 chmod 600 ~/.zsh_secrets
 # Edit: CURSOR_API_KEY, EXA_API_KEY, OBSIDIAN_MCP_TOKEN, etc.
@@ -307,7 +302,6 @@ Never commit these. Restore from a password manager or encrypted backup:
 | `~/.netrc`, `~/.npmrc` | HTTP/registry tokens |
 | `~/.aws/`, `~/.config/gcloud/` | Cloud CLI credentials |
 | `~/.config/gh/hosts.yml` | `gh` authentication |
-| `~/.config/opencode/antigravity-accounts.json` | OpenCode auth |
 | `~/.pi/agent/auth.json` | Pi Cursor SDK auth |
 | `~/.cursor/mcp.json` | Cursor MCP servers (often contains API keys) |
 
@@ -339,20 +333,20 @@ make bundle-dump             # refresh homebrew/.Brewfile.full from this host
 
 **Policy:** `.Brewfile.full` stays a **lean curated** list (~90 lines), not a dump of everything on this Mac. A new machine should get a sane dev baseline, not every experiment or work-only tool installed here. Use `make bundle-dump` only to *compare* against the host, then cherry-pick into `full` or a gitignored `.Brewfile.local`.
 
-## Cursor vs OpenCode vs Pi
+## Cursor vs Pi
 
-All three split config the same way: **portable settings in dotfiles**, **secrets and runtime state on the machine**.
+Both split config the same way: **portable settings in dotfiles**, **secrets and runtime state on the machine**.
 
-| | **Cursor** | **OpenCode** | **Pi** |
-|---|------------|--------------|--------|
-| **Editor / app preferences** | `config/.config/Cursor/User/` → symlinked to `~/Library/Application Support/Cursor/User/` by `setup.sh` | N/A (CLI/TUI) | N/A (TUI) |
-| **Main config** | No single IDE config in dotfiles | `config/.config/opencode/opencode.json` | `pi/.pi/agent/settings.json` |
-| **Commands / skills** | `cursor/.cursor/skills/` | `config/.config/opencode/commands/`, `skills/` | `pi/.pi/agent/prompts/`, `skills/` |
-| **Extensions / plugins** | Cursor marketplace | `config/.config/opencode/plugins/` (e.g. `rtk.ts`) | `pi/.pi/agent/extensions/` (e.g. `rtk.ts`) |
-| **Secrets** | `~/.cursor/mcp.json` — **not** in repo | `{env:VAR}` in `opencode.json`; `antigravity-accounts.json` gitignored | `~/.pi/agent/auth.json`, `npm/` — **not** in repo; API keys in `~/.zsh_secrets` |
-| **Templates** | `cursor-templates/mcp.json.example` | `{env:...}` in tracked JSON | Prompt templates in `pi/.pi/agent/prompts/` |
+| | **Cursor** | **Pi** |
+|---|------------|--------|
+| **Editor / app preferences** | `config/.config/Cursor/User/` → symlinked to `~/Library/Application Support/Cursor/User/` by `setup.sh` | N/A (TUI) |
+| **Main config** | No single IDE config in dotfiles | `pi/.pi/agent/settings.json` |
+| **Commands / skills** | `cursor/.cursor/skills/` | `pi/.pi/agent/prompts/`, `skills/` |
+| **Extensions / plugins** | Cursor marketplace | `pi/.pi/agent/extensions/` (e.g. `rtk.ts`) |
+| **Secrets** | `~/.cursor/mcp.json` — **not** in repo | `~/.pi/agent/auth.json`, `npm/` — **not** in repo; API keys in `~/.zsh_secrets` |
+| **Templates** | `cursor-templates/mcp.json.example` | Prompt templates in `pi/.pi/agent/prompts/` |
 
-OpenCode supports `{env:VAR}` in config (e.g. `CURSOR_API_KEY`, `OBSIDIAN_MCP_TOKEN`). Cursor’s `mcp.json` does **not** use that syntax — copy the template and paste tokens locally. Pi has no built-in MCP; use **skills** (`exa-search`, `obsidian`) plus shell tools instead.
+Cursor’s `mcp.json` does **not** support `{env:VAR}` placeholders — copy the template and paste tokens locally. Pi has no built-in MCP; use **skills** (`exa-search`, `obsidian`) plus shell tools instead.
 
 ```bash
 cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json
@@ -412,7 +406,7 @@ pi
 /settings    # provider=cursor, theme=solarized-osaka
 ```
 
-RTK: OpenCode uses `config/.config/opencode/plugins/rtk.ts`; pi uses `extensions/rtk.ts`. Both delegate to the `rtk` binary in PATH.
+RTK: pi uses `extensions/rtk.ts`, which delegates to the `rtk` binary in PATH.
 
 ## macOS system defaults (optional)
 
