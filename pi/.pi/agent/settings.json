@@ -1,0 +1,16 @@
+{
+  "defaultProvider": "cursor",
+  "defaultModel": "composer-2-5:fast",
+  "defaultThinkingLevel": "medium",
+  "packages": [
+    "npm:pi-cursor-sdk"
+  ],
+  "shellCommandPrefix": "bind -m vi-insert 'jj' vi-movement-mode",
+  "editorPaddingX": 1,
+  "enabledModels": [
+    "cursor/composer-2-5:fast",
+    "cursor/composer-2-5:slow",
+    "cursor/gpt-5.5@272k",
+    "cursor/gpt-5.3-codex"
+  ]
+}

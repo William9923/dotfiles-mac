@@ -1,0 +1,7 @@
+{
+  "tui.input.newLine": ["ctrl+j"],
+  "tui.editor.cursorDown": ["down"],
+  "tui.editor.cursorUp": ["up", "ctrl+k"],
+  "tui.select.down": ["down", "ctrl+n"],
+  "tui.select.up": ["up", "ctrl+p"]
+}

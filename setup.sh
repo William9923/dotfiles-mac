@@ -4,7 +4,7 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 BACKUP_ROOT="${DOTFILES_BACKUP_ROOT:-$HOME/.dotfiles-backups}"
 BACKUP_DIR="$BACKUP_ROOT/$(date +%Y%m%d-%H%M%S)-setup"
-PACKAGES=(zsh git homebrew bin config cursor claude vim ideavim commitizen)
+PACKAGES=(zsh git homebrew bin config cursor claude vim ideavim commitizen pi)
 
 log() {
   printf '[setup] %s\n' "$*"
