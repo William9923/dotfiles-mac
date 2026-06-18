@@ -30,14 +30,12 @@ brew "zoxide"
 
 # CLI utilities
 brew "aria2"
-brew "bench"
 brew "bpytop"
 brew "cmake"
 brew "gitlint"
 brew "gnutls"
 brew "gping"
 brew "grep"
-brew "ijq"
 brew "telnet"
 
 # Containers, cloud, and Kubernetes
