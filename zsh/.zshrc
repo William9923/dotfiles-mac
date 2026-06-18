@@ -111,7 +111,7 @@ fi
   source "${XDG_CONFIG_HOME:-$HOME/.config}/theme/solarized-osaka/palette.zsh"
 
 if command -v mise >/dev/null 2>&1; then
-  zsh-defer eval "$(mise activate zsh)"
+  eval "$(mise activate zsh)"
 fi
 
 # Following line was automatically added by arttime installer
@@ -264,3 +264,5 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # Pi
 export PATH="/Users/william.ong/.local/share/mise/installs/node/26.2.0/bin:$PATH"
+HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/opt/homebrew}"
+export PATH="$HOMEBREW_PREFIX/opt/findutils/libexec/gnubin:$HOMEBREW_PREFIX/opt/gnu-getopt/bin:$HOMEBREW_PREFIX/opt/make/libexec/gnubin:$HOMEBREW_PREFIX/opt/util-linux/bin:$PATH"
