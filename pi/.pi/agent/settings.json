@@ -1,8 +1,8 @@
 {
-  "defaultProvider": "cursor",
-  "defaultModel": "gpt-5.3-codex",
+  "defaultProvider": "opencode",
+  "defaultModel": "big-pickle",
   "defaultThinkingLevel": "medium",
-  "theme": "kanagawa-dragon",
+  "theme": "solarized-osaka",
   "themes": [
     "~/.pi/agent/themes/kanagawa-dragon.json"
   ],
@@ -10,15 +10,14 @@
     "~/.pi/agent/prompts"
   ],
   "packages": [
-    "npm:pi-cursor-sdk"
+    "npm:pi-cursor-sdk",
+    "git:github.com/DietrichGebert/ponytail"
   ],
   "shellCommandPrefix": "bind -m vi-insert 'jj' vi-movement-mode",
   "editorPaddingX": 1,
   "enabledModels": [
-    "cursor/composer-2-5:fast",
-    "cursor/composer-2-5:slow",
-    "cursor/gpt-5.5@272k",
-    "cursor/gpt-5.3-codex"
+    "opencode/deepseek-v4-flash-free",
+    "opencode/big-pickle"
   ],
-  "lastChangelogVersion": "0.79.6"
+  "lastChangelogVersion": "0.79.10"
 }
