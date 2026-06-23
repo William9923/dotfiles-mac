@@ -83,3 +83,8 @@ end, opts)
 keymap("v", "<leader>ff", function()
   Util.format({ force = true })
 end, opts)
+
+-- Diff
+keymap("n", "<leader>gd", ":Gitsigns change_base ", opts)
+keymap("n", "<leader>gh", ":Gitsigns diffthis ", opts)
+keymap("n", "<leader>gq", "<cmd>lua require(\"gitsigns\").setloclist(\"all\")<CR>", opts)
