@@ -317,10 +317,10 @@ main() {
   ensure_xcode_cli_tools
   ensure_homebrew
   ensure_brew_tools
-  stow_packages
   link_macos_app_configs
   ensure_git_local_config
   install_bundle "$profile"
+  stow_packages
   set_ghostty_default_terminal
   install_mise_tools
 
