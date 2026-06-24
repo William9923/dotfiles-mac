@@ -4,7 +4,7 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 BACKUP_ROOT="${DOTFILES_BACKUP_ROOT:-$HOME/.dotfiles-backups}"
 BACKUP_DIR="$BACKUP_ROOT/$(date +%Y%m%d-%H%M%S)-setup"
-PACKAGES=(zsh git homebrew bin config cursor vim ideavim commitizen pi)
+PACKAGES=(zsh git homebrew bin config vim ideavim pi)
 
 log() {
   printf '[setup] %s\n' "$*"
@@ -106,7 +106,6 @@ same_file() {
 should_skip_source() {
   case "$1" in
     */.DS_Store|*/.gitignore|*/.env|*/.env.*|*.log|*.tmp|*.bak|*.bak.*) return 0 ;;
-    config/.config/Cursor/*) return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -172,32 +171,7 @@ link_application_support_config() {
 }
 
 link_macos_app_configs() {
-  local cursor_src cursor_dst file
-  cursor_src="$DOTFILES_DIR/config/.config/Cursor/User"
-  cursor_dst="$HOME/Library/Application Support/Cursor/User"
-
-  if [ -d "$cursor_src" ]; then
-    mkdir -p "$cursor_dst"
-
-    for file in settings.json keybindings.json; do
-      [ -e "$cursor_src/$file" ] || continue
-      if same_file "$cursor_src/$file" "$cursor_dst/$file"; then
-        log "Cursor $file already linked"
-      elif [ -L "$cursor_dst/$file" ]; then
-        rm "$cursor_dst/$file"
-        ln -s "$cursor_src/$file" "$cursor_dst/$file"
-        log "relinked Cursor $file"
-      elif [ -e "$cursor_dst/$file" ]; then
-        mkdir -p "$BACKUP_DIR/Cursor"
-        mv "$cursor_dst/$file" "$BACKUP_DIR/Cursor/$file"
-        ln -s "$cursor_src/$file" "$cursor_dst/$file"
-        log "linked Cursor $file after backup"
-      else
-        ln -s "$cursor_src/$file" "$cursor_dst/$file"
-        log "linked Cursor $file"
-      fi
-    done
-  fi
+  local file
 
   link_application_support_config \
     lazygit \

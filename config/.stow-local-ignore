@@ -12,7 +12,5 @@ node_modules
 .*\.bak
 .*\.bak\..*
 
-# Cursor reads from ~/Library/Application Support/Cursor/User/ on macOS.
-# The repo tracks it under config/.config/Cursor and setup.sh links it manually.
-^/\.config/Cursor$
+
 

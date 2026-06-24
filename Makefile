@@ -3,7 +3,7 @@
 DOTFILES_DIR := $(shell pwd)
 TARGET       := $(HOME)
 STOW         ?= stow
-PACKAGES     := zsh git homebrew bin config cursor vim ideavim commitizen pi
+PACKAGES     := zsh git homebrew bin config vim ideavim pi
 STOW_FLAGS   := --dir=$(DOTFILES_DIR) --target=$(TARGET) --verbose=1 --no-folding
 BREW_PROFILE ?= minimal
 BREWFILE     := $(DOTFILES_DIR)/homebrew/.Brewfile.$(BREW_PROFILE)
@@ -144,18 +144,6 @@ bundle-install-full: ## Install packages from the full Brewfile
 
 .PHONY: link-macos-apps
 link-macos-apps: ## Link app configs that do not use XDG paths on macOS
-	@mkdir -p "$(HOME)/Library/Application Support/Cursor/User"
-	@for f in settings.json keybindings.json; do \
-		src="$(DOTFILES_DIR)/config/.config/Cursor/User/$$f"; \
-		dst="$(HOME)/Library/Application Support/Cursor/User/$$f"; \
-		[ -e "$$src" ] || continue; \
-		if [ -L "$$dst" ] || [ ! -e "$$dst" ]; then \
-			ln -sfn "$$src" "$$dst"; \
-			echo "linked Cursor/$$f"; \
-		else \
-			echo "skip Cursor/$$f: target exists and is not a symlink"; \
-		fi; \
-	done
 	@mkdir -p "$(HOME)/Library/Application Support/lazygit"
 	@src="$(DOTFILES_DIR)/config/.config/lazygit/config.yml"; \
 	dst="$(HOME)/Library/Application Support/lazygit/config.yml"; \

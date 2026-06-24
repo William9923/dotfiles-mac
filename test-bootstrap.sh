@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-TART_IMAGE="${TART_IMAGE:-ghcr.io/cirruslabs/macos-sequoia-vanilla@sha256:e0a0d651b7aba2e6d8fae510b3b31c2b927d288384bcb1a32405768747ad9961}"
+TART_IMAGE="${TART_IMAGE:-ghcr.io/cirruslabs/macos-sequoia-vanilla@sha256:e0a0d651b7aba2e6d8fae510b3b31c2b927d288384bcb1a32405768747ad9961}" # pin version so we don't keep re-downloading
 VM_NAME="${VM_NAME:-dotfiles-bootstrap-$(date +%Y%m%d-%H%M%S)}"
 VM_USER="${VM_USER:-admin}"
 VM_PASSWORD="${VM_PASSWORD:-admin}"

@@ -51,14 +51,8 @@ dotfiles/
     defaults.sh                    # optional system prefs (keyboard, Dock, Finder)
     README.md
 
-  cursor/
-    .cursor/skills/                # stowed to ~/.cursor/skills/ (agent skills only)
-
   pi/
     .pi/agent/                     # stowed to ~/.pi/agent/ (pi coding agent)
-
-  cursor-templates/
-    mcp.json.example               # copy to ~/.cursor/mcp.json on new Mac
 
   zsh/
     .zsh_secrets.example           # copy to ~/.zsh_secrets (never commit)
@@ -91,7 +85,7 @@ Pick a Homebrew profile:
 | Profile | Command | Use when |
 |---------|---------|----------|
 | **minimal** | `./setup.sh` or `./setup.sh minimal` | Portable shell, Git, Neovim, tmux, and core CLI only |
-| **full** | `./setup.sh full` | Personal/dev machine (Docker/Colima, K8s CLIs, Cursor casks, language tooling) |
+| **full** | `./setup.sh full` | Personal/dev machine (Docker/Colima, K8s CLIs, language tooling) |
 
 `setup.sh` on macOS will:
 
@@ -100,11 +94,10 @@ Pick a Homebrew profile:
 3. Install **git**, **stow**, and **mas**
 4. Back up any conflicting files under `~/.dotfiles-backups/<timestamp>-setup/`
 5. **Stow** all packages into `$HOME`
-6. Symlink **Cursor** `settings.json` and `keybindings.json` into `~/Library/Application Support/Cursor/User/`
-7. Symlink **lazygit** and **lazydocker** configs into `~/Library/Application Support/`
-8. Optionally create `~/.gitconfig.local` from the template (interactive prompt only)
+6. Symlink **lazygit** and **lazydocker** configs into `~/Library/Application Support/`
+7. Optionally create `~/.gitconfig.local` from the template (interactive prompt only)
 9. Run `brew bundle install` for the selected profile
-10. Run `mise install -y` from `~/.config/mise/config.toml`
+9. Run `mise install -y` from `~/.config/mise/config.toml`
 
 Non-interactive runs (CI, scripts) skip the `~/.gitconfig.local` prompt — create that file yourself afterward.
 
@@ -151,7 +144,7 @@ ssh-keygen -t ed25519  # if you need a new SSH key; add the public key to GitHub
 ```bash
 cp ~/dotfiles/zsh/.zsh_secrets.example ~/.zsh_secrets
 chmod 600 ~/.zsh_secrets
-# Add CURSOR_API_KEY, OBSIDIAN_MCP_TOKEN, etc. (see zsh/.zsh_secrets.example)
+# Edit for your API keys (see zsh/.zsh_secrets.example)
 ```
 
 Reload: `source ~/.zshrc`
@@ -217,12 +210,6 @@ For work-only formulas and casks, use a **gitignored** local file (never commit 
 GIT_CONFIG_GLOBAL=/dev/null brew bundle install --file=~/dotfiles/homebrew/.Brewfile.company.local
 ```
 
-#### Cursor and AI tooling
-
-- Sign in to **Cursor**; install extensions you rely on.
-- Copy MCP config from template: `cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json` then edit (see [Cursor vs Pi](#cursor-vs-pi)).
-- **Pi**: tracked under `pi/.pi/agent/`; see [Pi agent](#pi-agent). Install `pi` via mise/npm, then `make restow`. Machine-local: `~/.pi/agent/auth.json`, `sessions/`, `npm/`.
-
 #### Cloud and cluster access
 
 Re-authenticate per provider (not stored in dotfiles):
@@ -250,18 +237,13 @@ Or during bootstrap:
 DOTFILES_MACOS_DEFAULTS=1 ./setup.sh full
 ```
 
-### 6. Secrets and templates
+### 6. Secrets
 
 ```bash
 # Shell secrets for pi skills/provider
 cp ~/dotfiles/zsh/.zsh_secrets.example ~/.zsh_secrets
 chmod 600 ~/.zsh_secrets
 # Edit: CURSOR_API_KEY, EXA_API_KEY, OBSIDIAN_MCP_TOKEN, etc.
-
-# Cursor MCP (not stowed; no {env:...} syntax in mcp.json)
-cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json
-chmod 600 ~/.cursor/mcp.json
-# Edit URLs and Authorization headers
 ```
 
 Reload the shell: `source ~/.zshrc`
@@ -291,8 +273,7 @@ exec zsh -l
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 make macos-defaults
 cp ~/dotfiles/zsh/.zsh_secrets.example ~/.zsh_secrets && chmod 600 ~/.zsh_secrets
-cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json && chmod 600 ~/.cursor/mcp.json
-# then: edit secrets, gitconfig.local, gh auth, atuin register, colima start, Cursor sign-in
+# then: edit secrets, gitconfig.local, gh auth, atuin register, colima start
 ```
 
 ### Secrets and machine-local files
@@ -309,7 +290,6 @@ Never commit these. Restore from a password manager or encrypted backup:
 | `~/.aws/`, `~/.config/gcloud/` | Cloud CLI credentials |
 | `~/.config/gh/hosts.yml` | `gh` authentication |
 | `~/.pi/agent/auth.json` | Pi Cursor SDK auth |
-| `~/.cursor/mcp.json` | Cursor MCP servers (often contains API keys) |
 
 Optional local Brewfile: `homebrew/.Brewfile.company.local`, `homebrew/.Brewfile.local` (both gitignored).
 
@@ -323,7 +303,7 @@ cd ~/dotfiles
 ./setup.sh full     # full personal/dev profile
 ```
 
-`setup.sh` installs or verifies Xcode Command Line Tools, Homebrew, Git, GNU Stow, and `mas`; backs up filesystem conflicts; stows all packages; links Cursor settings into `~/Library/Application Support/Cursor/User`; then installs the selected Homebrew profile with the global Git config disabled so Homebrew HTTPS taps are not rewritten to SSH.
+`setup.sh` installs or verifies Xcode Command Line Tools, Homebrew, Git, GNU Stow, and `mas`; backs up filesystem conflicts; stows all packages; then installs the selected Homebrew profile with the global Git config disabled so Homebrew HTTPS taps are not rewritten to SSH.
 
 The tracked `~/.gitconfig` stays generic and includes `~/.gitconfig.local` for personal or company-specific identity and host rewrites. During interactive setup, `setup.sh` can create `~/.gitconfig.local` from `git/.gitconfig.local.example`; non-interactive runs skip the prompt.
 
@@ -339,27 +319,6 @@ make bundle-dump             # refresh homebrew/.Brewfile.full from this host
 
 **Policy:** `.Brewfile.full` stays a **lean curated** list (~90 lines), not a dump of everything on this Mac. A new machine should get a sane dev baseline, not every experiment or work-only tool installed here. Use `make bundle-dump` only to *compare* against the host, then cherry-pick into `full` or a gitignored `.Brewfile.local`.
 
-## Cursor vs Pi
-
-Both split config the same way: **portable settings in dotfiles**, **secrets and runtime state on the machine**.
-
-| | **Cursor** | **Pi** |
-|---|------------|--------|
-| **Editor / app preferences** | `config/.config/Cursor/User/` → symlinked to `~/Library/Application Support/Cursor/User/` by `setup.sh` | N/A (TUI) |
-| **Main config** | No single IDE config in dotfiles | `pi/.pi/agent/settings.json` |
-| **Commands / skills** | `cursor/.cursor/skills/` | `pi/.pi/agent/prompts/`, `skills/` |
-| **Extensions / plugins** | Cursor marketplace | `pi/.pi/agent/extensions/` (e.g. `rtk.ts`) |
-| **Secrets** | `~/.cursor/mcp.json` — **not** in repo | `~/.pi/agent/auth.json`, `npm/` — **not** in repo; API keys in `~/.zsh_secrets` |
-| **Templates** | `cursor-templates/mcp.json.example` | Prompt templates in `pi/.pi/agent/prompts/` |
-
-Cursor’s `mcp.json` does **not** support `{env:VAR}` placeholders — copy the template and paste tokens locally. Pi has no built-in MCP; use **skills** (`exa-search`, `obsidian`) plus shell tools instead.
-
-```bash
-cp ~/dotfiles/cursor-templates/mcp.json.example ~/.cursor/mcp.json
-chmod 600 ~/.cursor/mcp.json
-# Edit URLs and Authorization headers; do not commit ~/.cursor/mcp.json
-```
-
 ## Pi agent
 
 The `pi` stow package links `pi/.pi/agent/` → `~/.pi/agent/`. Install the [pi coding agent](https://pi.dev/) separately (mise, npm, or `setup.sh` after adding it to your Brewfile), then link dotfiles:
@@ -374,7 +333,7 @@ make doctor    # optional pi/rtk/obsidian/pi-stow checks
 
 | Path | Purpose |
 |------|---------|
-| `settings.json` | Cursor provider, `composer-2-5:fast` default, model cycle, Solarized Osaka theme |
+| `settings.json` | Provider, model, theme, prompts, and extension config |
 | `keybindings.json` | tmux-friendly input (`ctrl+j` newline, `ctrl+n/p` in selects) |
 | `themes/solarized-osaka.json` | TUI theme aligned with shell/nvim/tmux |
 | `prompts/plan.md` | `/plan` — build verifiable steps, write `plan.md` |
@@ -435,10 +394,6 @@ Details and customization: `macos/README.md`. Not run automatically unless `DOTF
 source ~/.zshrc
 mise install
 ```
-
-## Commitizen
-
-The full profile installs the Node `commitizen` CLI plus the `cz-conventional-changelog` adapter globally. The `commitizen/.czrc` stow package links `~/.czrc`, so `git cz` uses Conventional Commit prompts in repositories without their own Commitizen config.
 
 ## Manual Sync
 

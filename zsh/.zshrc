@@ -253,9 +253,6 @@ function y() {
 }
 
 
-# For profiling purposes
-# zprof
-
 # opt out openspec telemetry
 export OPENSPEC_TELEMETRY=0
 
@@ -266,3 +263,6 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 export PATH="/Users/william.ong/.local/share/mise/installs/node/26.2.0/bin:$PATH"
 HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/opt/homebrew}"
 export PATH="$HOMEBREW_PREFIX/opt/findutils/libexec/gnubin:$HOMEBREW_PREFIX/opt/gnu-getopt/bin:$HOMEBREW_PREFIX/opt/make/libexec/gnubin:$HOMEBREW_PREFIX/opt/util-linux/bin:$PATH"
+
+# For profiling purposes
+# zprof
